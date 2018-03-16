@@ -4,23 +4,28 @@ import React from 'react'
 
 
 const Signup = () => {
-  return (
-    // const signupAnom = () => auth.signInAnonymously()
+  // const signupAnom = () => auth.signInAnonymously()
 
-    // const signupGoogle = () => auth
+  // const signupGoogle = () => auth
+  return (
     <div>
       <form>
-      <div>
-        <input name="firstName" />
+        <h4>Sign up</h4>
+        <div>
+          <h8>First Name</h8>
+          <input name="firstName" />
         </div>
         <div>
-        <input name="lastName" />
+          <h8>Last Name</h8>
+          <input name="lastName" />
         </div>
         <div>
-        <input name="email" />
+          <h8>Email</h8>
+          <input name="email" />
         </div>
         <div>
-        <input name="password" />
+          <h8>Password</h8>
+          <input name="password" />
         </div>
       </form>
       <button>Sign up</button>
