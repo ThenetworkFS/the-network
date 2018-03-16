@@ -1,8 +1,6 @@
 import fire from '../fire.js'
 import React from 'react'
 
-fire.auth()
-
 class Signup extends React.Component {
   constructor(props) {
     super(props)
@@ -10,13 +8,21 @@ class Signup extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleSubmit(event) {
-    console.log('submit')
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
+    const firstName = event.target.firstName.value
+    const lastName = event.target.lastName.value
     fire.auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(user => console.log(user))
+      .then(user => {
+        console.log(user.uid)
+        console.log(fire.collection('users'))
+        // user.set({
+        //   firstName,
+        //   lastName,
+        // })
+      })
   }
 
   render() {
@@ -40,15 +46,14 @@ class Signup extends React.Component {
             <h6>Password</h6>
             <input name="password" />
           </div>
-        <button type="submit">Sign up</button>
+          <button type="submit">Sign up</button>
+          <h6>OR</h6>
+          <h6>Sign up with</h6>
+          <button>Google</button>
         </form>
-        <h6>OR</h6>
-        <h6>Sign up with</h6>
-        <button>Google</button>
       </div>
     )
   }
 }
 
-
-export default Signup
+export default Signup;
