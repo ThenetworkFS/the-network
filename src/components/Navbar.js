@@ -15,30 +15,26 @@ export default class Navbar extends Component {
     return (
       <div>
         <Menu icon>
-        <Menu.Item name='The Network' >
+        <Menu.Item name='The Network' />
 
-          </Menu.Item>
-          <Menu.Item name='browser' active={activeItem === 'browser'} onClick={this.handleItemClick}>
-            <Icon name='browser' />
-          </Menu.Item>
+          <Link to='/home'>
+            <Menu.Item name='browser' active={activeItem === 'browser'} onClick={this.handleItemClick}>
+              <Icon name='browser' />
+            </Menu.Item>
+          </Link>
 
+        <Link to='/allUsers'>
           <Menu.Item name='users' active={activeItem === 'users'} onClick={this.handleItemClick}>
             <Icon name='users' />
           </Menu.Item>
+        </Link>
 
-          <Link to="/home">
-          <Menu.Item name='user' active={activeItem === 'user'} onClick={this.handleItemClick}>
-            <Icon name='user' />
-          </Menu.Item>
+          <Link to="/userProfile">
+            <Menu.Item name='user' active={activeItem === 'user'} onClick={this.handleItemClick}>
+              <Icon name='user' />
+            </Menu.Item>
           </Link>
         </Menu>
-        <nav>
-
-          <Link to="/home">Home</Link>
-          <Link to="/">Login</Link>
-          <Link to="/signup">Signup</Link>
-          <Link to="/">Sign out</Link>
-        </nav>
       </div>
     )
   }
