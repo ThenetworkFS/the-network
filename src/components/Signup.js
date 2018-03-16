@@ -1,12 +1,13 @@
 import { fire, db } from '../fire'
 import React from 'react'
+import firebase from 'firebase'
 
 class Signup extends React.Component {
   constructor(props) {
     super(props)
-
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
   handleSubmit(event) {
     event.preventDefault()
     const email = event.target.email.value
@@ -15,11 +16,18 @@ class Signup extends React.Component {
     const lastName = event.target.lastName.value
     const user = {
       email,
-      password,
       firstName,
       lastName,
     }
-    return db.collection('users').add(user)
+    fire.auth().createUserWithEmailAndPassword(email, password)
+    db.collection('users').doc(email).set(user)
+      .catch(err => console.error(err))
+  }
+
+  googleSignUp() {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    return fire.auth().signInWithRedirect(provider)
+    .then(user => db.collection('users').doc(user.email).set(user))
   }
 
   render() {
@@ -44,10 +52,10 @@ class Signup extends React.Component {
             <input name="password" />
           </div>
           <button type="submit">Sign up</button>
+          </form>
           <h6>OR</h6>
           <h6>Sign up with</h6>
-          <button>Google</button>
-        </form>
+          <button onClick={this.googleSignUp}>Google</button>
       </div>
     )
   }
