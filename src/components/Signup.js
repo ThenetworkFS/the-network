@@ -19,12 +19,7 @@ class Signup extends React.Component {
       firstName,
       lastName,
     }
-    db.collection('users').add(user)
-    // fire.auth()
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then(user => {
-    //     console.log(user.uid)
-    //   })
+    return db.collection('users').add(user)
   }
 
   render() {
