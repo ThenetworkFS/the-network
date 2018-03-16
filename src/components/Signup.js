@@ -1,4 +1,4 @@
-import fire from '../fire.js'
+import { fire, db } from '../fire'
 import React from 'react'
 
 class Signup extends React.Component {
@@ -13,16 +13,18 @@ class Signup extends React.Component {
     const password = event.target.password.value
     const firstName = event.target.firstName.value
     const lastName = event.target.lastName.value
-    fire.auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        console.log(user.uid)
-        console.log(fire.collection('users'))
-        // user.set({
-        //   firstName,
-        //   lastName,
-        // })
-      })
+    const user = {
+      email,
+      password,
+      firstName,
+      lastName,
+    }
+    db.collection('users').add(user)
+    // fire.auth()
+    //   .createUserWithEmailAndPassword(email, password)
+    //   .then(user => {
+    //     console.log(user.uid)
+    //   })
   }
 
   render() {
