@@ -36,18 +36,4 @@ class UserProfile extends React.Component {
 
 const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
 
-
-const UserProfile = () => {
-
-  return (
-    <div>
-      <h1>User Profile</h1>
-      <nav>
-
-      </nav>
-    </div>
-  )
-}
-
 export default connect(mapStateToProps)(UserProfile)
-
