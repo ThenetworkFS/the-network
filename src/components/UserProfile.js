@@ -24,6 +24,7 @@ class UserProfile extends React.Component {
 
   render() {
     const user= this.props.loggedInUser;
+    console.log(user)
     return (
       <div>
         <h1>{user.firstName} {user.lastName}</h1>

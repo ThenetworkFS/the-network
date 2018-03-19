@@ -5,10 +5,17 @@ import { connect } from 'react-redux'
 import history from '../history'
 import { getUser } from '../store'
 
+
+
 class EditProfile extends React.Component {
   constructor(props) {
     super(props)
+    this.state= {
+      isClicked: false
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.addProject = this.addProject.bind(this)
+    this.isClicked = this.isClicked.bind(this)
   }
 
 
@@ -19,7 +26,6 @@ class EditProfile extends React.Component {
     const editedUser = {
       firstName: event.target.firstName.value,
       lastName: event.target.lastName.value,
-      email: event.target.email.value,
       city: event.target.city.value,
       state: event.target.state.value,
       country: event.target.country.value,
@@ -27,15 +33,37 @@ class EditProfile extends React.Component {
       slack: event.target.slack.value,
       github: event.target.github.value,
       linkedin: event.target.linkedin.value,
-      // projects: event.target.projects.value
     }
-    db.collection('users').doc(email).set(editedUser)
+    db.collection('users').doc(email).update(editedUser)
       .then(() => {
-        getUser(editedUser)
         history.push('/profile')
       })
       .catch(err => console.error(err))
   }
+
+
+  isClicked(event){
+    event.preventDefault()
+    this.setState({ isClicked: true})
+  }
+
+
+  addProject(event){
+    event.preventDefault()
+    const email = this.props.loggedInUser.email
+    const user= this.props.loggedInUser
+    const projects = this.props.loggedInUser.projects || [];
+    this.setState({ isClicked: false })
+    projects.push({ title: event.target.title.value, description: event.target.description.value })
+    const editedUser= {
+      projects
+    }
+    console.log(editedUser)
+    db.collection('users').doc(email).update(editedUser)
+      .catch(err => console.error(err))
+  }
+
+
 
   render() {
     const user = this.props.loggedInUser;
@@ -49,9 +77,20 @@ class EditProfile extends React.Component {
           <h6>Slack: <input name="slack" defaultValue={user.slack} /></h6>
           <h6>Github: <input name="github" defaultValue={user.github} /></h6>
           <h6>Linkedin: <input name="linkedin" defaultValue={user.linkedin} /></h6>
-          <h5>Projects:</h5>
           <button type="submit">Save</button>
-        </form>
+         </form>
+          <h5>Projects:</h5>
+          { this.state.isClicked ? 
+            <div>
+            <form onSubmit={this.addProject}>
+            <h6>Title: <input name="title" /></h6>
+            <h6>Description: <input name="description" /></h6>
+            <button type="submit">Add Project</button>
+            </form>
+            </div>
+            : 
+            <button onClick={this.isClicked}>Add New Project</button>
+          }
       </div>
     )
   }
@@ -76,3 +115,4 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile)
+

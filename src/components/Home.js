@@ -68,9 +68,9 @@ class Home extends React.Component{
             Submit
           </button>
        </form>
-    {this.state.posts.map((post) => {
+    {this.state.posts.map((post, index) => {
       return (
-        <div>
+        <div key={index}>
           <h1> {post.user.firstName} {post.user.lastName} </h1>
           <h2> {post.content} </h2>
           <br></br>
