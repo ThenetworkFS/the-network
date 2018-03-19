@@ -7,9 +7,9 @@ import { Search, Grid, Header } from 'semantic-ui-react'
 import _ from 'lodash'
 
 
-const source = [{"title": "Beth", description: 'A cool person', price: 999999 },{"title": "Johnny", description: 'Another coolio', price: 2.50 } ]
+// const source = this.state.users;
 
-
+// [{"title": "Beth", description: 'A cool person', price: 999999 },{"title": "Johnny", description: 'Another coolio', price: 2.50 } ]
 
 
 class AllUsers extends React.Component {
@@ -43,7 +43,6 @@ class AllUsers extends React.Component {
         }
     });
   })
-
     }
 
     resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
@@ -52,6 +51,16 @@ class AllUsers extends React.Component {
 
       handleSearchChange = (e, { value }) => {
         this.setState({ isLoading: true, value })
+        // async call / dispatch / similar
+
+        // ({ image, price, title, description }) => [
+        //   image && <div key='image' className='image'>{createHTMLImage(image)}</div>,
+        //   <div key='content' className='content'>
+        //     {price && <div className='price'>{price}</div>}
+        //     {title && <div className='title'>{title}</div>}
+        //     {description && <div className='description'>{description}</div>}
+        //   </div>,
+        // ]
 
           if (value.length < 1) return this.resetComponent()
 
@@ -62,7 +71,7 @@ class AllUsers extends React.Component {
 
           this.setState({
             isLoading: false,
-            results: _.filter(source, isMatch),
+            results: _.filter(this.state.users, isMatch),
           })
           // console.log('re: ', re, 'results: ' , this.state.results)
       }
@@ -89,7 +98,7 @@ class AllUsers extends React.Component {
           <Header>State</Header>
           <pre>{JSON.stringify(this.state, null, 2)}</pre>
           <Header>Options</Header>
-          <pre>{JSON.stringify(source, null, 2)}</pre>
+          <pre>{JSON.stringify(this.state.users, null, 2)}</pre>
         </Grid.Column>
       </Grid>
     )
