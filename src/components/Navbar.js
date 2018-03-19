@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 //   constructor(props) {
 //     super(props)
 //   }
-  
+
 //   render() {
 //     const user= this.props.loggedInUser
 //     return (
@@ -42,7 +42,7 @@ class Navbar extends Component {
     super(props)
     this.state = { activeItem: 'browser' }
   }
-  
+
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
