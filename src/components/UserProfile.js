@@ -2,12 +2,28 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { fire, db } from '../fire'
 import { connect } from 'react-redux'
-
+import { getUser } from '../store'
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props)
   }
+
+
+  componentDidMount() {
+    fire.auth().onAuthStateChanged(user => {
+      if(user){
+      return db.collection('users')
+      .doc(user.email)
+      .get()
+        .then((user) => {
+          this.props.getUser(user.data())
+        })
+      }
+    })
+  }
+
+
 
   renderProjects(projects){
     if(projects[0].title){
@@ -44,4 +60,10 @@ class UserProfile extends React.Component {
 
 const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
 
-export default connect(mapStateToProps)(UserProfile)
+const mapDispatchToProps = (dispatch) => ({
+  getUser: (user) => {
+    dispatch(getUser(user))
+  }
+}) 
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)
