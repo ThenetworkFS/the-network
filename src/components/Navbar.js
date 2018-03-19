@@ -9,11 +9,13 @@ import { Icon, Menu } from 'semantic-ui-react'
 class Navbar extends Component {
   constructor(props) {
     super(props)
-    this.state = { activeItem: 'browser' }
+    this.state = { activeItem: 'home' }
   }
-  
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name })
+    history.push(`/${name}`)
+  }
 
   render() {
     const { activeItem } = this.state
@@ -22,38 +24,33 @@ class Navbar extends Component {
       <div>
         <h1>The Network</h1>
         <nav>
-          { user.email ? (
-          <div>
-            <Menu icon>
-            <Menu.Item name='The Network' />
-              <Link to='/home'>
-                <Menu.Item name='browser' active={activeItem === 'browser'} onClick={this.handleItemClick}>
-                  <Icon name='browser' />
-                </Menu.Item>
-              </Link>
+          {user && user.email ? (
+            <div>
+              <Menu icon>
+                <Menu.Item name='The Network' />
+                  <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
+                    <Icon name='browser' />
+                  </Menu.Item>
 
-            <Link to='/allUsers'>
-              <Menu.Item name='users' active={activeItem === 'users'} onClick={this.handleItemClick}>
-                <Icon name='users' />
-              </Menu.Item>
-            </Link>
-
-              <Link to="/userProfile">
-                <Menu.Item name='user' active={activeItem === 'user'} onClick={this.handleItemClick}>
-                  <Icon name='user' />
-                </Menu.Item>
-              </Link>
-              <a href="#" onClick={this.props.removeUser}>
-                Sign out
-              </a>
-            </Menu>
-          </div>
+                  <Menu.Item name='allUsers' active={activeItem === 'allUsers'} onClick={this.handleItemClick}>
+                    <Icon name='users' />
+                  </Menu.Item>
+          
+                  <Menu.Item name='profile' active={activeItem === 'profile'} onClick={this.handleItemClick}>
+                    <Icon name='user' />
+                  </Menu.Item>
+            
+                <button onClick={this.props.removeUser}>
+                  Sign out
+                </button>
+              </Menu>
+            </div>
           ) : (
-          <div>
-            <Link to="/">Login</Link>
-            <Link to="/signup">Signup</Link>
-          </div>
-          )}
+              <div>
+                <Link to="/">Login</Link>
+                <Link to="/signup">Signup</Link>
+              </div>
+            )}
         </nav>
       </div>
     )
@@ -62,7 +59,6 @@ class Navbar extends Component {
 
 
 const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
-
 
 const mapDispatchToProps = (dispatch) => ({
   removeUser: () => {
