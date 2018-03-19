@@ -16,9 +16,9 @@ class Signup extends React.Component {
       .then(result => {
         if (result.user) {
           console.log('result', result)
-          const firstName= result.user.displayName.split(' ')[0]
-          const lastName= result.user.displayName.split(' ')[1]
-          const email= result.user.email
+          const firstName = result.user.displayName.split(' ')[0]
+          const lastName = result.user.displayName.split(' ')[1]
+          const email = result.user.email
           db.collection('users').doc(email).set({ firstName, lastName, email })
         }
       })
@@ -36,10 +36,12 @@ class Signup extends React.Component {
       firstName,
       lastName,
     }
-    fire.auth().createUserWithEmailAndPassword(email, password)
-    db.collection('users').doc(email).set(user)
-      .then(() => history.push('/home'))
-      .catch(err => console.error(err))
+    return fire.auth().createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        db.collection('users').doc(email).set(user)
+          .then(() => history.push('/home'))
+          .catch(err => console.error(err))
+      })
   }
 
 
