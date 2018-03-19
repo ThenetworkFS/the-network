@@ -4,7 +4,7 @@ import { fire, db } from '../fire'
 import { connect } from 'react-redux'
 
 
-class UserProfile extends React.Component {
+class EditProfile extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -25,7 +25,6 @@ class UserProfile extends React.Component {
     return (
       <div>
         <h1>{user.firstName} {user.lastName}</h1>
-        <Link to='/profile/edit'>Edit Profile</Link>
         <h6>Lives in {user.city}, {user.state}</h6>
         <h6>Is interested in: {user.interests && user.interests.join(', ')}</h6>
         <h6>Email: {user.email}</h6>
@@ -41,4 +40,4 @@ class UserProfile extends React.Component {
 
 const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
 
-export default connect(mapStateToProps)(UserProfile)
+export default connect(mapStateToProps)(EditProfile)
