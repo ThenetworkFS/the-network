@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { fire, db } from '../fire'
 import { connect } from 'react-redux'
+import ImagePicker from './ImagePicker'
 import history from '../history'
 import { getUser } from '../store'
 
@@ -71,6 +72,7 @@ class EditProfile extends React.Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <h6><input name="firstName" defaultValue={user.firstName} /> <input name="lastName" defaultValue={user.lastName} /></h6>
+          <ImagePicker />
           <h6>Lives in <input name="city" placeholder="City" defaultValue={user.city} />, <input name="state" placeholder="State" defaultValue={user.state} /> <input name="country" placeholder="Country" defaultValue={user.country} /></h6>
           <h6>Is interested in: <input name="interests" defaultValue={user.interests} /></h6>
           <h6>Email: <input name="email" defaultValue={user.email} /></h6>
