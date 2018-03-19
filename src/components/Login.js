@@ -3,11 +3,26 @@ import React from 'react'
 import { getUser } from '../store'
 import { connect } from 'react-redux'
 import history from '../history'
+import firebase from 'firebase'
 
 class Login extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      isRedirect: false
+    }
     this.signInAnonymously = this.signInAnonymously.bind(this)
+    this.googleLogin = this.googleLogin.bind(this)
+  }
+
+
+  componentDidMount() {
+    if (this.state.isRedirect) {
+      fire.auth().getRedirectResult()
+        .then(result => {
+          db.collection('users').doc(result.user.email).set({ email: result.user.email })
+        })
+    }
   }
 
 
@@ -19,6 +34,14 @@ class Login extends React.Component {
     .then(() => history.push('/home'))
       .catch(err => console.error(err))
   }
+
+  
+ googleLogin(event){
+  event.preventDefault()
+  const provider = new firebase.auth.GoogleAuthProvider()
+    fire.auth().signInWithRedirect(provider)
+    this.setState({ isRedirect: true })
+ }
 
 
   render() {
@@ -38,7 +61,7 @@ class Login extends React.Component {
           </form>
           <h6>OR</h6>
           <h6>Login with</h6>
-          <button>Google</button>
+          <button onClick={this.googleLogin}>Google</button>
       </div>
     )
   }

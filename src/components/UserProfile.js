@@ -8,18 +8,7 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props)
   }
-
-  //   db.collection("users").add({
-  //     first: "John",
-  //     last: "Dude",
-  //     born: 1500
-  // })
-  // .then(function(docRef) {
-  //     console.log("Document written with ID: ", docRef.id);
-  // })
-  // .catch(function(error) {
-  //     console.error("Error adding document: ", error);
-  // });
+  
   render() {
     console.log('loggedInUser', this.props.loggedInUser)
     return (
