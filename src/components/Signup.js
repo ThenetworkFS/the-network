@@ -6,21 +6,22 @@ import history from '../history'
 class Signup extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      isRedirect: false
-    }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.googleSignUp = this.googleSignUp.bind(this)
   }
 
 
   componentDidMount() {
-    if (this.state.isRedirect) {
-      fire.auth().getRedirectResult()
-        .then(result => {
-          db.collection('users').doc(result.user.email).set({ email: result.user.email })
-        })
-    }
+    fire.auth().getRedirectResult()
+      .then(result => {
+        if (result.user) {
+          console.log('result', result)
+          const firstName= result.user.displayName.split(' ')[0]
+          const lastName= result.user.displayName.split(' ')[1]
+          const email= result.user.email
+          db.collection('users').doc(email).set({ firstName, lastName, email })
+        }
+      })
   }
 
 
@@ -45,10 +46,9 @@ class Signup extends React.Component {
   googleSignUp() {
     const provider = new firebase.auth.GoogleAuthProvider()
     fire.auth().signInWithRedirect(provider)
-    this.setState({ isRedirect: true })
   }
 
-  
+
   render() {
     return (
       <div>
