@@ -51,7 +51,6 @@ class Navbar extends Component {
     const user = this.props.loggedInUser
     return (
       <div>
-        <h1>The Network</h1>
         <nav>
           { user.email ? (
           <div>
