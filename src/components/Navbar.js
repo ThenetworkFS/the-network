@@ -63,12 +63,12 @@ class Navbar extends Component {
                   <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
                     <Icon name='browser' />
                   </Menu.Item>
-                  
+
                   <Menu.Item name='allUsers' active={activeItem === 'allUsers'} onClick={this.handleItemClick}>
                     <Icon name='users' />
                   </Menu.Item>
           
-                  <Menu.Item name='userProfile' active={activeItem === 'userProfile'} onClick={this.handleItemClick}>
+                  <Menu.Item name='profile' active={activeItem === 'profile'} onClick={this.handleItemClick}>
                     <Icon name='user' />
                   </Menu.Item>
             
