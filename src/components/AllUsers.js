@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import { fire, db } from '../fire'
 import { connect } from 'react-redux'
 import history from '../history'
-import _ from 'lodash'
 import { Search, Grid, Header } from 'semantic-ui-react'
+import _ from 'lodash'
 
 
-const source = [{"name": "Beth"},{"name": "Johnny"} ]
+const source = [{"title": "Beth", description: 'A cool person', price: 999999 },{"title": "Johnny", description: 'Another coolio', price: 2.50 } ]
 
 
 
@@ -53,20 +53,18 @@ class AllUsers extends React.Component {
       handleSearchChange = (e, { value }) => {
         this.setState({ isLoading: true, value })
 
-        setTimeout(() => {
-          if (this.state.value.length < 1) return this.resetComponent()
+          if (value.length < 1) return this.resetComponent()
 
-          const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+          const re = new RegExp(_.escapeRegExp(value), 'i')
 
           const isMatch = result => re.test(result.title)
-          console.log('did we match? ', isMatch)
+          // console.log('did we match? ', isMatch)
 
           this.setState({
             isLoading: false,
             results: _.filter(source, isMatch),
           })
-          console.log('re: ', re, 'results: ' , this.state.results)
-        }, 500)
+          // console.log('re: ', re, 'results: ' , this.state.results)
       }
 
 
