@@ -6,6 +6,7 @@
     "firebase": "^4.11.0",
     "fireview": "0.0.7",
     "history": "^4.7.2",
+    "lodash": "^4.17.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
