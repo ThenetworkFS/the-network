@@ -1,12 +1,28 @@
 import { fire, db } from '../fire'
 import React from 'react'
 import firebase from 'firebase'
+import history from '../history'
 
 class Signup extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      isRedirect: false
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.googleSignUp = this.googleSignUp.bind(this)
   }
+
+
+  componentDidMount() {
+    if (this.state.isRedirect) {
+      fire.auth().getRedirectResult()
+        .then(result => {
+          db.collection('users').doc(result.user.email).set({ email: result.user.email })
+        })
+    }
+  }
+
 
   handleSubmit(event) {
     event.preventDefault()
@@ -21,15 +37,18 @@ class Signup extends React.Component {
     }
     fire.auth().createUserWithEmailAndPassword(email, password)
     db.collection('users').doc(email).set(user)
+      .then(() => history.push('/home'))
       .catch(err => console.error(err))
   }
 
+
   googleSignUp() {
     const provider = new firebase.auth.GoogleAuthProvider()
-    return fire.auth().signInWithRedirect(provider)
-    .then(user => db.collection('users').doc(user.email).set(user))
+    fire.auth().signInWithRedirect(provider)
+    this.setState({ isRedirect: true })
   }
 
+  
   render() {
     return (
       <div>
@@ -52,13 +71,14 @@ class Signup extends React.Component {
             <input name="password" />
           </div>
           <button type="submit">Sign up</button>
-          </form>
-          <h6>OR</h6>
-          <h6>Sign up with</h6>
-          <button onClick={this.googleSignUp}>Google</button>
+        </form>
+        <h6>OR</h6>
+        <h6>Sign up with</h6>
+        <button onClick={this.googleSignUp}>Google</button>
       </div>
     )
   }
 }
+
 
 export default Signup;

@@ -22,7 +22,7 @@ class App extends Component {
       .get()
         .then((user) => {
           this.props.getUser(user.data())
-          console.log(this.props.loggedInUser)
+          history.push('/home')
         })
       }
     })
