@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { fire, db } from '../fire'
 import { connect } from 'react-redux'
-
+import ImagePicker from './ImagePicker'
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -25,6 +25,7 @@ class EditProfile extends React.Component {
     return (
       <div>
         <h1>{user.firstName} {user.lastName}</h1>
+        <ImagePicker />
         <h6>Lives in {user.city}, {user.state}</h6>
         <h6>Is interested in: {user.interests && user.interests.join(', ')}</h6>
         <h6>Email: {user.email}</h6>
