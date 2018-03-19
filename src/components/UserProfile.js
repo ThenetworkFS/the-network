@@ -10,6 +10,7 @@ class UserProfile extends React.Component {
   }
 
   renderProjects(projects){
+    if(projects[0].title){
     return projects.map(project => {
       return (
         <div>
@@ -19,6 +20,7 @@ class UserProfile extends React.Component {
       )
     })
   }
+  }
 
   render() {
     const user= this.props.loggedInUser;
@@ -26,12 +28,12 @@ class UserProfile extends React.Component {
       <div>
         <h1>{user.firstName} {user.lastName}</h1>
         <Link to='/profile/edit'>Edit Profile</Link>
-        <h6>Lives in {user.city}, {user.state}</h6>
-        <h6>Is interested in: {user.interests && user.interests.join(', ')}</h6>
+        <h6>Lives in {user.city}, {user.state} {user.country}</h6>
+        <h6>Is interested in: {user.interests}</h6>
         <h6>Email: {user.email}</h6>
         <h6>Slack: {user.slack}</h6>
         <h6>Github: {user.github}</h6>
-        <h6>Linkedin: {user.linkedIn}</h6>
+        <h6>Linkedin: {user.linkedin}</h6>
         <h5>Projects: {user.projects && this.renderProjects(user.projects)}</h5>
       </div>
     )
