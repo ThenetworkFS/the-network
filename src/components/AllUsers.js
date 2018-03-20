@@ -89,7 +89,14 @@ class AllUsers extends React.Component {
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={this.handleSearchChange}
-            results={results}
+            results={[{ firstName: '', lastName: '' }]}
+            resultRenderer={({ firstName, lastName}) => [
+              <div key='content' className='content'>
+                {firstName && <div className='firstName'>{firstName}</div>}
+                {lastName && <div className='lastName'>{lastName}</div>}
+
+              </div>,
+            ]}
             value={value}
             {...this.props}
           />
