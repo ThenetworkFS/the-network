@@ -66,11 +66,11 @@ class Navbar extends Component {
                   <Menu.Item name='allUsers' active={activeItem === 'allUsers'} onClick={this.handleItemClick}>
                     <Icon name='users' />
                   </Menu.Item>
-          
+
                   <Menu.Item name='profile' active={activeItem === 'profile'} onClick={this.handleItemClick}>
                     <Icon name='user' />
                   </Menu.Item>
-            
+
                 <button onClick={this.props.removeUser}>
                   Sign out
                 </button>

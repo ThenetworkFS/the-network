@@ -5,7 +5,6 @@ import firebase from 'firebase'
 import history from '../history'
 import { connect } from 'react-redux'
 
-
 class Home extends React.Component{
   constructor(props) {
     super(props)
@@ -19,7 +18,7 @@ class Home extends React.Component{
   componentDidMount(){
     let currentComponent = this
 
-    //THIS IS GETTING THE STATE INTIALLY
+  //THIS IS GETTING THE STATE INTIALLY
   //   db.collection("posts").get().then(function(querySnapshot) {
   //     querySnapshot.forEach((doc)=>{
   //         currentComponent.setState({
