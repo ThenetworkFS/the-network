@@ -42,14 +42,10 @@ class UserProfile extends React.Component {
 }
 
 
-const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
+const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
 
-
-const mapDispatchToProps = (dispatch) => ({
-  getUser: (user) => {
-    dispatch(getUser(user))
-  }
-})
-
+const mapDispatchToProps = {
+  getUser
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)

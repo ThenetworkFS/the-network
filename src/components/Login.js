@@ -9,23 +9,10 @@ import firebase from 'firebase'
 class Login extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      isRedirect: false
-    }
+    
     this.signInAnonymously = this.signInAnonymously.bind(this)
     this.googleLogin = this.googleLogin.bind(this)
   }
-
-
-  componentDidMount() {
-    if (this.state.isRedirect) {
-      fire.auth().getRedirectResult()
-        .then(result => {
-          db.collection('users').doc(result.user.email).set({ email: result.user.email })
-        })
-    }
-  }
-
 
   componentWillReceiveProps(nextProps){
     if(nextProps.loggedInUser.email){
@@ -48,7 +35,6 @@ class Login extends React.Component {
     event.preventDefault()
     const provider = new firebase.auth.GoogleAuthProvider()
     fire.auth().signInWithRedirect(provider)
-    this.setState({ isRedirect: true })
   }
 
 
@@ -76,7 +62,6 @@ class Login extends React.Component {
 }
 
 
-const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
-
+const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
 
 export default connect(mapStateToProps)(Login)

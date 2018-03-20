@@ -23,6 +23,12 @@ class App extends Component {
           })
       }
     })
+    fire.auth().getRedirectResult()
+    .then(result => {
+      if (result.credential) {
+        db.collection('users').doc(result.user.email).set({ email: result.user.email })          
+      }
+    })
   }
 
 
@@ -40,12 +46,6 @@ class App extends Component {
 
 
 const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
-
-// const mapDispatchToProps = (dispatch) => ({
-//   getUser: (user) => {
-//     dispatch(getUser(user))
-//   }
-// })
 
 const mapDispatchToProps = {
   getUser

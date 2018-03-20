@@ -37,7 +37,6 @@ class ImagePicker extends React.Component {
 }
 
 
-const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
-
+const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
 
 export default connect(mapStateToProps)(ImagePicker)
