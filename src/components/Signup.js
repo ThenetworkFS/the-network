@@ -8,8 +8,6 @@ import { connect } from 'react-redux'
 class Signup extends React.Component {
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.googleSignUp = this.googleSignUp.bind(this)
   }
 
 
@@ -33,7 +31,7 @@ class Signup extends React.Component {
   }
 
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
@@ -53,7 +51,7 @@ class Signup extends React.Component {
   }
 
 
-  googleSignUp() {
+  googleSignUp = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     fire.auth().signInWithRedirect(provider)
   }

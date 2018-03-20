@@ -8,11 +8,10 @@ import Dropzone from 'react-dropzone'
 class ImagePicker extends React.Component {
   constructor(props) {
     super(props)
-    this.onDrop = this.onDrop.bind(this)
   }
 
 
-  onDrop(acceptedFiles, rejectedFiles) {
+  onDrop = (acceptedFiles, rejectedFiles) => {
     const user = this.props.loggedInUser;
     const storageRef = firebase.storage().ref();
     const imagesRef = storageRef.child(`userImages/${user.email}/${acceptedFiles[0].name}`);

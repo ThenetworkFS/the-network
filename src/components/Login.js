@@ -9,9 +9,6 @@ import firebase from 'firebase'
 class Login extends React.Component {
   constructor(props) {
     super(props)
-    
-    this.signInAnonymously = this.signInAnonymously.bind(this)
-    this.googleLogin = this.googleLogin.bind(this)
   }
 
   componentWillReceiveProps(nextProps){
@@ -21,7 +18,7 @@ class Login extends React.Component {
   }
 
 
-  signInAnonymously(event) {
+  signInAnonymously = (event) => {
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
@@ -31,7 +28,7 @@ class Login extends React.Component {
   }
 
 
-  googleLogin(event) {
+  googleLogin = (event) => {
     event.preventDefault()
     const provider = new firebase.auth.GoogleAuthProvider()
     fire.auth().signInWithRedirect(provider)

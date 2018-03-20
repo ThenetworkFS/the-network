@@ -44,7 +44,7 @@ class Home extends React.Component {
   }
 
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     db.collection("posts").add({
       user: this.props.loggedInUser,

@@ -16,14 +16,9 @@ class EditProfile extends React.Component {
       editId: '',
       loggedInUser: props.loggedInUser,
     }
-    // this.handleProfileSubmit = this.handleProfileSubmit.bind(this)
-    // this.handleProjectSubmit = this.handleProjectSubmit.bind(this)
-    // this.addProject = this.addProject.bind(this)
-    // this.addIsClicked = this.addIsClicked.bind(this)
-    // this.editIsClicked = this.editIsClicked.bind(this)
   }
 
-  componentWillReceiveProps = (nextProps) => {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.loggedInUser !== this.state.loggedInUser) {
       this.setState(() => ({
         loggedInUser: nextProps.loggedInUser,

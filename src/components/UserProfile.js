@@ -6,9 +6,11 @@ import { getUser } from '../store'
 
 
 class UserProfile extends React.Component {
+  constructor(props) {
+    super(props)
+  }
 
-
-  renderProjects(projects) {
+  renderProjects = (projects) => {
     return projects.map(project => {
       return (
         <div key={project.id}>
