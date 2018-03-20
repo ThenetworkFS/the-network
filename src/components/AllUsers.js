@@ -7,11 +7,6 @@ import { Search, Grid, Header } from 'semantic-ui-react'
 import _ from 'lodash'
 
 
-// const source = this.state.users;
-
-// [{"title": "Beth", description: 'A cool person', price: 999999 },{"title": "Johnny", description: 'Another coolio', price: 2.50 } ]
-
-
 class AllUsers extends React.Component {
   constructor(props) {
     super(props)
@@ -52,16 +47,7 @@ class AllUsers extends React.Component {
 
       handleSearchChange = (e, { value }) => {
         this.setState({ isLoading: true, value })
-        // async call / dispatch / similar
 
-        // ({ image, price, title, description }) => [
-        //   image && <div key='image' className='image'>{createHTMLImage(image)}</div>,
-        //   <div key='content' className='content'>
-        //     {price && <div className='price'>{price}</div>}
-        //     {title && <div className='title'>{title}</div>}
-        //     {description && <div className='description'>{description}</div>}
-        //   </div>,
-        // ]
 
           if (value.length < 1) return this.resetComponent()
 
@@ -81,8 +67,6 @@ class AllUsers extends React.Component {
 
   render() {
     const { isLoading, value, results } = this.state
-
-    console.log('STATE: ', this.state)
     return (
       <Grid>
         <Grid.Column width={8}>

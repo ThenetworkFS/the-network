@@ -2,6 +2,8 @@ import { fire, db } from '../fire'
 import React from 'react'
 import firebase from 'firebase'
 import history from '../history'
+import { connect } from 'react-redux'
+
 
 class Signup extends React.Component {
   constructor(props) {
@@ -15,13 +17,19 @@ class Signup extends React.Component {
     fire.auth().getRedirectResult()
       .then(result => {
         if (result.user) {
-          console.log('result', result)
           const firstName = result.user.displayName.split(' ')[0]
           const lastName = result.user.displayName.split(' ')[1]
           const email = result.user.email
           db.collection('users').doc(email).set({ firstName, lastName, email })
         }
       })
+  }
+
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.loggedInUser.email){
+      history.push('/home')
+    }
   }
 
 
@@ -83,4 +91,7 @@ class Signup extends React.Component {
 }
 
 
-export default Signup;
+const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
+
+
+export default connect(mapStateToProps)(Signup)

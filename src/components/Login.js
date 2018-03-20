@@ -6,6 +6,7 @@ import history from '../history'
 import firebase from 'firebase'
 import { Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
+
 class Login extends React.Component {
   constructor(props) {
     super(props)
@@ -27,12 +28,19 @@ class Login extends React.Component {
   }
 
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.loggedInUser.email){
+      history.push('/home')
+    }
+  }
+
+
   signInAnonymously(event) {
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
     return fire.auth().signInWithEmailAndPassword(email, password)
-    .then(() => history.push('/home'))
+      .then(() => history.push('/home'))
       .catch(err => console.error(err))
   }
 
@@ -42,28 +50,11 @@ class Login extends React.Component {
   const provider = new firebase.auth.GoogleAuthProvider()
     fire.auth().signInWithRedirect(provider)
     this.setState({ isRedirect: true })
- }
+  }
 
 
   render() {
     return (
-      // <div>
-      //   <form onSubmit={this.signInAnonymously}>
-      //     <h4>Login</h4>
-      //     <div>
-      //       <h6>Email</h6>
-      //       <input name="email" />
-      //     </div>
-      //     <div>
-      //       <h6>Password</h6>
-      //       <input name="password" />
-      //     </div>
-      //     <button type="submit">Login</button>
-      //     </form>
-      //     <h6>OR</h6>
-      //     <h6>Login with</h6>
-      //     <button onClick={this.googleLogin}>Google</button>
-      // </div>
       <div className='login-form'>
       {/*
         Heads up! The styles below are necessary for the correct render of this example.
@@ -123,4 +114,8 @@ class Login extends React.Component {
 
 
 
-export default Login
+const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
+
+
+export default connect(mapStateToProps)(Login)
+
