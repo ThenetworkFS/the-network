@@ -9,13 +9,13 @@ import projects from './projects'
 const reducer = combineReducers({user, projects})
 
 
-// const middleware = composeWithDevTools(applyMiddleware(
-//   thunkMiddleware,
-//   createLogger({collapsed: true})
-// ))
+const middleware = composeWithDevTools(applyMiddleware(
+  thunkMiddleware,
+  createLogger({collapsed: true})
+))
 
 
-const store = createStore(reducer)
+const store = createStore(reducer, middleware)
 
 
 export default store

@@ -16,7 +16,7 @@ export const removeUser = () => ({ type: REMOVE_USER })
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
-      return Object.assign({}, state, { loggedInUser: action.user });
+      return { ...state, loggedInUser: action.user };
     case REMOVE_USER:
       return Object.assign({}, state, { loggedInUser: {} });
     default:
