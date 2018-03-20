@@ -6,6 +6,7 @@ import history from '../history'
 import { Search, Grid, Header } from 'semantic-ui-react'
 import _ from 'lodash'
 import { Input } from 'semantic-ui-react'
+import {AdvancedSearch} from './index.js'
 
 class AllUsers extends React.Component {
   constructor(props) {
@@ -46,10 +47,11 @@ class AllUsers extends React.Component {
 
   render() {
 
-    console.log('STATE: ', this.state)
+    console.log('All users STATE: ', this.state)
 
     const filteredUsers = this.state.users.filter((user) => {
-      return user.firstName.includes(this.state.searchVal)
+      return user.firstName.includes(this.state.searchVal) ||
+             user.lastName.includes(this.state.searchVal)
     })
 
     return (
@@ -59,20 +61,28 @@ class AllUsers extends React.Component {
           icon={{ name: 'search', circular: true, link: true }}
           placeholder='Search...'
         />
+        <AdvancedSearch />
         {this.state.searchVal
           ? filteredUsers.map((user => {
             return (
-              <h1>{user.firstName}</h1>
+              <div>
+                <h1>{user.firstName}</h1>
+                <h1>{user.lastName}</h1>
+              </div>
               )
             })
           )
           : this.state.users.map((user => {
             return (
-              <h1>{user.firstName}</h1>
+              <div>
+                <h1>{user.firstName}</h1>
+                <h1>{user.lastName}</h1>
+            </div>
               )
             })
           )
         }
+
       </div>
     )
   }
