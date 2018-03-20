@@ -59,8 +59,7 @@ class Navbar extends Component {
 }
 
 
-const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
-
+const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
 
 const mapDispatchToProps = (dispatch) => ({
   removeUser: () => {

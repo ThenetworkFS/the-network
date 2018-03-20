@@ -17,9 +17,6 @@ class AllUsers extends React.Component {
       isLoading: false,
       value: ''
     }
-    this.resetComponent = this.resetComponent.bind(this)
-    this.handleResultSelect = this.handleResultSelect.bind(this)
-    this.handleSearchChange = this.handleSearchChange.bind(this)
   }
 
   componentWillMount() {
@@ -41,27 +38,21 @@ class AllUsers extends React.Component {
   }
 
 
-    resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
+  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
-      handleResultSelect = (e, { result }) => this.setState({ value: result.title })
+  handleResultSelect = (e, { result }) => this.setState({ value: result.title })
 
-      handleSearchChange = (e, { value }) => {
-        this.setState({ isLoading: true, value })
+  handleSearchChange = (e, { value }) => {
+    this.setState({ isLoading: true, value })
+    if (value.length < 1) return this.resetComponent()
+    const re = new RegExp(_.escapeRegExp(value), 'i')
+    const isMatch = result => re.test(result.title)
 
-
-          if (value.length < 1) return this.resetComponent()
-
-          const re = new RegExp(_.escapeRegExp(value), 'i')
-
-          const isMatch = result => re.test(result.title)
-          // console.log('did we match? ', isMatch)
-
-          this.setState({
-            isLoading: false,
-            results: _.filter(this.state.users, isMatch),
-          })
-          // console.log('re: ', re, 'results: ' , this.state.results)
-      }
+    this.setState({
+      isLoading: false,
+      results: _.filter(this.state.users, isMatch),
+    })
+  }
 
 
 
@@ -90,6 +81,6 @@ class AllUsers extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
+const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
 
 export default connect(mapStateToProps)(AllUsers)

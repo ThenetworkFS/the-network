@@ -35,7 +35,7 @@ class Home extends React.Component {
   }
 
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     db.collection("posts").add({
       user: this.props.loggedInUser,
@@ -74,7 +74,6 @@ class Home extends React.Component {
 }
 
 
-const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
-
+const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
 
 export default connect(mapStateToProps)(Home)
