@@ -41,7 +41,6 @@ class Navbar extends Component {
                 <Menu.Item name='profile' active={activeItem === 'profile'} onClick={this.handleItemClick}>
                   <Icon name='user' />
                 </Menu.Item>
-
                 <button onClick={this.props.removeUser}>
                   Sign out
                 </button>

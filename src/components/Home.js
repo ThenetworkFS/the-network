@@ -20,15 +20,6 @@ class Home extends React.Component {
   componentDidMount() {
     let currentComponent = this
 
-    //THIS IS GETTING THE STATE INTIALLY
-    //   db.collection("posts").get().then(function(querySnapshot) {
-    //     querySnapshot.forEach((doc)=>{
-    //         currentComponent.setState({
-    //           posts: currentComponent.state.posts.concat(doc.data())
-    //         })
-    //     });
-    // });
-
     //THIS IS LISTENING FOR CHANGES IN DB AND ADDING TO STATE
     //ordering by most recent on first render, but not when adding new
     db.collection("posts").orderBy("timestamp", "desc")
