@@ -4,43 +4,24 @@ import { fire, db } from '../fire'
 import { connect } from 'react-redux'
 import { getUser } from '../store'
 
+
 class UserProfile extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
 
-  componentDidMount() {
-    fire.auth().onAuthStateChanged(user => {
-      if(user){
-      return db.collection('users')
-      .doc(user.email)
-      .get()
-        .then((user) => {
-          this.props.getUser(user.data())
-        })
-      }
-    })
-  }
-
-
-
-  renderProjects(projects){
-    if(projects[0].title){
+  renderProjects(projects) {
     return projects.map(project => {
       return (
-        <div>
+        <div key={project.id}>
           <h6>Title: {project.title}</h6>
           <h6>Description: {project.description}</h6>
         </div>
       )
     })
   }
-  }
+
 
   render() {
-    const user= this.props.loggedInUser;
-    console.log(user)
+    const user = this.props.loggedInUser;
     return (
       <div>
         <h1>{user.firstName} {user.lastName}</h1>
@@ -51,7 +32,10 @@ class UserProfile extends React.Component {
         <h6>Slack: {user.slack}</h6>
         <h6>Github: {user.github}</h6>
         <h6>Linkedin: {user.linkedin}</h6>
-        <h5>Projects: {user.projects && this.renderProjects(user.projects)}</h5>
+        {user.projects ?
+          <h5>Projects: {user.projects.length && this.renderProjects(user.projects)}</h5>
+          : null
+        }
       </div>
     )
   }
@@ -60,10 +44,12 @@ class UserProfile extends React.Component {
 
 const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
 
+
 const mapDispatchToProps = (dispatch) => ({
   getUser: (user) => {
     dispatch(getUser(user))
   }
-}) 
+})
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)
