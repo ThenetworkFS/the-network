@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import Routes from './Routes'
 import { Router } from 'react-router-dom'
@@ -9,24 +9,22 @@ import { getUser } from './store'
 import { connect } from 'react-redux'
 import { fire, db } from './fire'
 
+
 class App extends Component {
-  constructor(props) {
-    super(props)
-  }
+
 
   componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
-      if(user){
-      return db.collection('users')
-      .doc(user.email)
-      .get()
-        .then((user) => {
-          this.props.getUser(user.data())
-          history.push('/home')
-        })
+      if (user) {
+        return db.collection('users')
+          .doc(user.email)
+          .onSnapshot(user => {
+            this.props.getUser(user.data())
+          })
       }
     })
   }
+
 
   render() {
     return (

@@ -1,6 +1,7 @@
 import { withRouter, Route, Switch } from 'react-router-dom'
 import React from 'react'
-import { Signup, Login, Home, UserProfile, AllUsers, EditProfile} from './components'
+import { Signup, Login, Home, UserProfile, AllUsers, EditProfile } from './components'
+
 
 const Routes = () => {
     return (
@@ -14,5 +15,6 @@ const Routes = () => {
         </Switch>
     )
 }
+
 
 export default Routes

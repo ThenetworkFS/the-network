@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import history from '../history'
 import firebase from 'firebase'
 
+
 class Login extends React.Component {
   constructor(props) {
     super(props)
@@ -26,22 +27,29 @@ class Login extends React.Component {
   }
 
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.loggedInUser.email){
+      history.push('/home')
+    }
+  }
+
+
   signInAnonymously(event) {
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
     return fire.auth().signInWithEmailAndPassword(email, password)
-    .then(() => history.push('/home'))
+      .then(() => history.push('/home'))
       .catch(err => console.error(err))
   }
 
-  
- googleLogin(event){
-  event.preventDefault()
-  const provider = new firebase.auth.GoogleAuthProvider()
+
+  googleLogin(event) {
+    event.preventDefault()
+    const provider = new firebase.auth.GoogleAuthProvider()
     fire.auth().signInWithRedirect(provider)
     this.setState({ isRedirect: true })
- }
+  }
 
 
   render() {
@@ -58,14 +66,17 @@ class Login extends React.Component {
             <input name="password" />
           </div>
           <button type="submit">Login</button>
-          </form>
-          <h6>OR</h6>
-          <h6>Login with</h6>
-          <button onClick={this.googleLogin}>Google</button>
+        </form>
+        <h6>OR</h6>
+        <h6>Login with</h6>
+        <button onClick={this.googleLogin}>Google</button>
       </div>
     )
   }
 }
 
 
-export default Login
+const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
+
+
+export default connect(mapStateToProps)(Login)
