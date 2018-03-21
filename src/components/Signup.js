@@ -48,7 +48,7 @@ class Signup extends React.Component {
     this.setState({ isRedirect: true })
   }
 
-  
+
   render() {
     return (
       <div>

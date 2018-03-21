@@ -1,6 +1,6 @@
 import { withRouter, Route, Switch } from 'react-router-dom'
 import React from 'react'
-import { Signup, Login, Home, UserProfile, AllUsers} from './components'
+import { Signup, Login, Home, UserProfile, AllUsers, SearchResults} from './components'
 
 const Routes = () => {
     return (
@@ -10,6 +10,7 @@ const Routes = () => {
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/profile" component={UserProfile} />
             <Route exact path="/allUsers" component={AllUsers} />
+            <Route exact path="/search" component={SearchResults} />
         </Switch>
     )
 }

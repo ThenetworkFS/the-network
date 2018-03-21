@@ -13,21 +13,40 @@ export default class AdvancedSearch extends React.Component {
     this.state = {
       users: [],
       cohortValue: '',
-      cohortNumValue: ''
+      cohortNumValue: '',
+      city: '',
+      company: '',
+      industry: ''
     }
     this.submitHandler = this.submitHandler.bind(this)
 
   }
-
-  componentWillMount() {
-  }
-
   componentDidMount() {
     let currentComponent = this
+
+    db.collection("users")
+      .onSnapshot(function (querySnapshot) {
+        querySnapshot.docChanges.forEach((change) => {
+          if (change.type === "added") {
+            currentComponent.setState({
+              users: currentComponent.state.users.concat(change.doc.data())
+            });
+          }
+        });
+      })
   }
+
   submitHandler(event){
     event.preventDefault()
-    console.log('STATE', this.state)
+    history.push(`/search?
+      cohort=${this.state.cohortValue}
+      &cohortNum=${this.state.cohortNumValue}
+      &city=${this.state.city}
+      &company=${this.state.company}
+      &industry=${this.state.industry}
+      `)
+
+    console.log('STATE on submit ', this.state)
   }
 
   handleCohortChange = (e, { value }) => this.setState({ cohortValue: value })
