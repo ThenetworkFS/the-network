@@ -13,3 +13,9 @@ body > div > div > div.login-form {
 .login-form {
   height: 100vh;
 }
+
+/* .ui.stacked.segment:after
+.ui.stacked.segments:after {
+  background: none!important;
+  border-top: none !important;
+} */

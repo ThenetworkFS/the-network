@@ -48,7 +48,7 @@ class Login extends React.Component {
                   {' '}Log-in to your account
                 </Header>
                 <Form onSubmit={this.signInAnonymously} size="large">
-                  <Segment stacked>
+                  <Segment>
                     <Form.Input
                       name="email"
                       fluid
@@ -64,16 +64,17 @@ class Login extends React.Component {
                       placeholder="Password"
                       type="password"
                     />
-      
                     <Button color="teal" fluid size="large" type="submit">Login</Button>
                   </Segment>
                 </Form>
                 <Message>
                   New to us? <a href="/signup">Sign Up</a>
                 </Message>
-                <h6>OR</h6>
-                <h6>Login with</h6>
-                <Icon name="google" className="large google icon" onClick={this.googleLogin} />
+                <h4>OR</h4>
+                <Button color="teal" size="small" type="submit">
+                  {`Login with `}
+                  <Icon name="google" className="large google icon" onClick={this.googleLogin} />
+                </Button>
               </Grid.Column>
             </Grid>
           </div>
