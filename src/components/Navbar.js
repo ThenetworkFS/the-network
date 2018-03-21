@@ -25,9 +25,8 @@ class Navbar extends Component {
     const user = this.props.loggedInUser
     return (
       <div>
-        <nav>
           {user && user.email ? (
-            <div>
+            <nav>
               <Menu icon>
                 <Menu.Item name='The Network' />
                 <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
@@ -41,18 +40,12 @@ class Navbar extends Component {
                 <Menu.Item name='profile' active={activeItem === 'profile'} onClick={this.handleItemClick}>
                   <Icon name='user' />
                 </Menu.Item>
-                <button onClick={this.props.removeUser}>
-                  Sign out
-                </button>
+                <button onClick={this.props.removeUser}>Sign out</button>
               </Menu>
-            </div>
+            </nav>
           ) : (
-              <div>
-                <Link to="/">Login</Link>
-                <Link to="/signup">Signup</Link>
-              </div>
-            )}
-        </nav>
+            null
+          )}
       </div>
     )
   }
