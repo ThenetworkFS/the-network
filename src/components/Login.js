@@ -1,8 +1,7 @@
-import { fire, db } from '../fire'
+import { fire } from '../fire'
 import React from 'react'
 import { startFetch } from '../store'
 import { connect } from 'react-redux'
-import history from '../history'
 import firebase from 'firebase'
 import { 
   Button,
@@ -11,7 +10,6 @@ import {
   Grid,
   Header,
   Image,
-  Message,
   Segment
 } from 'semantic-ui-react'
 
@@ -61,9 +59,11 @@ class Login extends React.Component {
                     <Form.Input
                       name="email"
                       fluid
-                      icon="user"
+                      icon="email outline"
                       iconPosition="left"
                       placeholder="E-mail address"
+                      type="email"
+                      required
                     />
                     <Form.Input
                       fluid
@@ -72,6 +72,7 @@ class Login extends React.Component {
                       iconPosition="left"
                       placeholder="Password"
                       type="password"
+                      required
                     />
                     <Button className="login-form-button" color="teal" fluid size="large" type="submit">Login</Button>
                   </Segment>
@@ -80,9 +81,9 @@ class Login extends React.Component {
                   Don't have an account? <a href="/signup">Sign Up Now</a>
                 </h5>
                 <h4>OR</h4>
-                <Button className="google-login-button"color="blue" size="small" type="submit">
+                <Button className="google-login-button"color="blue" size="small" onClick={this.googleLogin}>
                   <span>Login with</span>
-                  <Icon name="google" className="large google icon google-login-icon" onClick={this.googleLogin} />
+                  <Icon name="google" className="large google icon google-login-icon" />
                 </Button>
               </Grid.Column>
             </Grid>
@@ -94,7 +95,6 @@ class Login extends React.Component {
     )
   }
 }
-
 
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 const mapDispatchToProps = {

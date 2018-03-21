@@ -5,7 +5,8 @@ body {
 }
 
 .login-form-container,
-.login-form {
+.login-form,
+.login-form.grid {
   height: 100vh;
 }
 
@@ -29,5 +30,3 @@ body {
   position: relative;
   top: -2px;
 }
-
-/* #4386fc */
