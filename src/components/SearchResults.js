@@ -4,6 +4,8 @@ import { db } from '../fire'
 import history from '../history'
 import { withRouter } from 'react-router'
 import queryString from 'query-string';
+import { Button } from 'semantic-ui-react'
+import AdvancedSearch from './AdvancedSearch';
 
 class SearchResults extends React.Component {
   constructor(props) {
@@ -48,6 +50,9 @@ console.log('PARAMS-query', params)
 
     return (
       <div>
+        <Link to='/advancedSearch'>
+        <Button>Back to Search</Button>
+        </Link>
        <h1>Search Results</h1>
        {this.state.usersResults.map((user) => {
           return (
