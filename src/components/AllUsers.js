@@ -7,6 +7,7 @@ import { Search, Grid, Header } from 'semantic-ui-react'
 import _ from 'lodash'
 import { Input } from 'semantic-ui-react'
 import {AdvancedSearch} from './index.js'
+import { Card, Icon, Image } from 'semantic-ui-react'
 
 class AllUsers extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class AllUsers extends React.Component {
 
     return (
       <div>
+      <h1>Search Users: </h1>
         <Input
           onChange={this.handleInputChange}
           icon={{ name: 'search', circular: true, link: true }}
@@ -66,8 +68,13 @@ class AllUsers extends React.Component {
           ? filteredUsers.map((user => {
             return (
               <div>
-                <h1>{user.firstName}</h1>
-                <h1>{user.lastName}</h1>
+                <Card>
+                {/* <Image src='./download.jpg' /> */}
+                <Card.Content>
+                  <Card.Header>{user.firstName} {user.lastName}</Card.Header>
+                  <Card.Meta>{user.cohort} {user.cohortNum}</Card.Meta>
+                </Card.Content>
+            </Card>
               </div>
               )
             })
@@ -75,8 +82,13 @@ class AllUsers extends React.Component {
           : this.state.users.map((user => {
             return (
               <div>
-                <h1>{user.firstName}</h1>
-                <h1>{user.lastName}</h1>
+                <Card>
+                {/* <Image src='./download.jpg' /> */}
+                <Card.Content>
+                  <Card.Header>{user.firstName} {user.lastName}</Card.Header>
+                  <Card.Meta>{user.cohort} {user.cohortNum}</Card.Meta>
+                </Card.Content>
+            </Card>
             </div>
               )
             })
