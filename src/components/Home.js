@@ -40,7 +40,13 @@ class Home extends React.Component {
     const parseLinkExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
     const regex = new RegExp(parseLinkExpression);
     const linkInContent = content.match(regex);
-    return linkInContent[0];
+    let link;
+    if (linkInContent) {
+      link = linkInContent[0];
+    } else {
+      link = '';
+    }
+    return link;
   }
 
   formatPostWithLink = (post) => {
