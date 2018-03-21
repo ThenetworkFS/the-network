@@ -11,36 +11,40 @@ class AllUsers extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state={
-      users:[],
+    this.state = {
+      users: [],
       results: [],
       isLoading: false,
       value: ''
     }
   }
 
+
   componentWillMount() {
     this.resetComponent()
   }
 
-  componentDidMount(){
+
+  componentDidMount() {
     let currentComponent = this
     db.collection("users")
-    .onSnapshot(function(querySnapshot) {
-      querySnapshot.docChanges.forEach((change) => {
-        if(change.type === "added"){
-          currentComponent.setState({
-            users: currentComponent.state.users.concat(change.doc.data())
-         });
-        }
-      });
-    })
+      .onSnapshot(function (querySnapshot) {
+        querySnapshot.docChanges.forEach((change) => {
+          if (change.type === "added") {
+            currentComponent.setState({
+              users: currentComponent.state.users.concat(change.doc.data())
+            });
+          }
+        });
+      })
   }
 
 
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
+
   handleResultSelect = (e, { result }) => this.setState({ value: result.title })
+
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
@@ -53,7 +57,6 @@ class AllUsers extends React.Component {
       results: _.filter(this.state.users, isMatch),
     })
   }
-
 
 
   render() {
@@ -81,6 +84,8 @@ class AllUsers extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+
+const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
 
 export default connect(mapStateToProps)(AllUsers)

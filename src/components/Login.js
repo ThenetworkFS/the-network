@@ -12,6 +12,7 @@ class Login extends React.Component {
     super(props)
   }
 
+  
   componentWillReceiveProps(nextProps){
     if(nextProps.loggedInUser.email){
       history.push('/home')
@@ -97,6 +98,7 @@ class Login extends React.Component {
 
 
 const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+
 
 export default connect(mapStateToProps)(Login)
 

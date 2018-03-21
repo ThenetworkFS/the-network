@@ -7,6 +7,7 @@ import history from '../history'
 import { getUser } from '../store'
 const uuidv1 = require('uuid/v1')
 
+
 class EditProfile extends React.Component {
   constructor(props) {
     super(props)
@@ -18,6 +19,7 @@ class EditProfile extends React.Component {
     }
   }
 
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.loggedInUser !== this.state.loggedInUser) {
       this.setState(() => ({
@@ -26,18 +28,20 @@ class EditProfile extends React.Component {
     }
   }
 
+
   handleProfileSubmit = (event) => {
     event.preventDefault()
-    const email = this.props.loggedInUser.email
+    const user = this.props.loggedInUser
     db
       .collection('users')
-      .doc(email)
+      .doc(user.email)
       .update(this.state.loggedInUser)
       .then(() => {
-        history.push('/profile')
+        history.push(`/profile/${user.id}`)
       })
       .catch(err => console.error(err))
   }
+
 
   handleProjectSubmit = (event, id) => {
     event.preventDefault()
@@ -61,15 +65,18 @@ class EditProfile extends React.Component {
       .update(editedUser)
   }
 
+
   addIsClicked = (event) => {
     event.preventDefault()
     this.setState({ addIsClicked: true })
   }
 
+
   editIsClicked = (event, id) => {
     event.preventDefault()
     this.setState({ editIsClicked: true, editId: id })
   }
+
 
   onDeleteClick = (event, id) => {
     event.preventDefault()
@@ -84,6 +91,7 @@ class EditProfile extends React.Component {
       .doc(this.props.loggedInUser.email)
       .update(editedUser)
   }
+
 
   addProject = (event) => {
     event.preventDefault()
@@ -106,6 +114,7 @@ class EditProfile extends React.Component {
       .catch(err => console.error(err))
   }
 
+
   handleChange = event => {
     event.preventDefault()
     console.log(event.target.name, event.target.value)
@@ -117,7 +126,9 @@ class EditProfile extends React.Component {
     })
   }
 
+
   noop = () => { }
+
 
   render() {
     const user = this.state.loggedInUser
@@ -274,10 +285,13 @@ class EditProfile extends React.Component {
   }
 }
 
+
 const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
 
 const mapDispatchToProps = {
   getUser
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile)

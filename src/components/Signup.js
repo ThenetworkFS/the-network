@@ -5,10 +5,12 @@ import history from '../history'
 import { connect } from 'react-redux'
 const uuidv1 = require('uuid/v1')
 
+
 class Signup extends React.Component {
   constructor(props) {
     super(props)
   }
+
 
   componentWillReceiveProps(nextProps){
     if(nextProps.loggedInUser.email){
@@ -30,6 +32,7 @@ class Signup extends React.Component {
       lastName,
       id
     }
+    console.log('user', user)
     return fire.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         db.collection('users').doc(email).set(user)
@@ -78,5 +81,6 @@ class Signup extends React.Component {
 
 
 const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+
 
 export default connect(mapStateToProps)(Signup)

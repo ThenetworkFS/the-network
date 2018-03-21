@@ -10,6 +10,7 @@ class UserProfile extends React.Component {
     super(props)
   }
 
+
   renderProjects = (projects) => {
     return projects.map(project => {
       return (
@@ -23,12 +24,15 @@ class UserProfile extends React.Component {
 
 
   render() {
-    const user = this.props.loggedInUser;
-    console.log(user)
+    const user = this.props.selectedUser;
+    const loggedInUser = this.props.loggedInUser;
     return (
       <div>
         <h1>{user.firstName} {user.lastName}</h1>
-        <Link to='/profile/edit'>Edit Profile</Link>
+        {user.email === loggedInUser.email ?
+          <Link to={`/profile/${loggedInUser.id}/edit`}>Edit Profile</Link>
+          : null
+        }
         <h6>Lives in {user.city}, {user.state} {user.country}</h6>
         <h6>Is interested in: {user.interests}</h6>
         <h6>Email: {user.email}</h6>
@@ -45,10 +49,12 @@ class UserProfile extends React.Component {
 }
 
 
-const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+const mapStateToProps = ({ user: { loggedInUser, selectedUser } }) => ({ loggedInUser, selectedUser })
+
 
 const mapDispatchToProps = {
   getUser
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)
