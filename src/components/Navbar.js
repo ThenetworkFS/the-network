@@ -30,7 +30,7 @@ class Navbar extends Component {
             <div>
               <Menu icon>
                 <Menu.Item name='The Network' />
-                <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
+                <Menu.Item name='home/news' active={activeItem === 'home/news'} onClick={this.handleItemClick}>
                   <Icon name='browser' />
                 </Menu.Item>
 
