@@ -23,8 +23,8 @@ class App extends Component {
         .doc(user.email)
         .onSnapshot(user => {
           this.props.getUser(user.data())
+          this.props.stopFetch()
         })
-        this.props.stopFetch()
       }
     })
     fire.auth().getRedirectResult()
@@ -42,6 +42,17 @@ class App extends Component {
         })          
       }
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // only go to /home when we get the user from Firestore
+    if(
+      Object.keys(this.props.loggedInUser).length === 0 &&
+      this.props.loggedInUser.constructor === Object &&
+      nextProps.loggedInUser.email
+    ){
+      history.push('/home')
+    }
   }
 
   render() {

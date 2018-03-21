@@ -12,33 +12,25 @@ class Login extends React.Component {
     super(props)
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.loggedInUser.email){
-      history.push('/home')
-    }
-  }
-
   signInAnonymously = (event) => {
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
-    return fire.auth().signInWithEmailAndPassword(email, password)
-      .then(() => history.push('/home'))
-      .catch(err => console.error(err))
+    fire.auth()
+    .signInWithEmailAndPassword(email, password)
+    .catch(err => console.error(err))
   }
-
 
   googleLogin = (event) => {
     event.preventDefault()
     const provider = new firebase.auth.GoogleAuthProvider()
     localStorage.setItem('googleLogin', '1');
-    fire.auth().signInWithRedirect(provider)
+    fire.auth()
+    .signInWithRedirect(provider)
     .catch(() => {
       localStorage.removeItem('googleLogin');
     })
-    
   }
-
 
   render() {
     return (
@@ -89,7 +81,7 @@ class Login extends React.Component {
                   </Segment>
                 </Form>
                 <Message>
-                  New to us? <a href='#'>Sign Up</a>
+                  New to us? <a href='/signup'>Sign Up</a>
                 </Message>
                 <h6>OR</h6>
                 <h6>Login with</h6>
