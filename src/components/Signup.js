@@ -46,35 +46,41 @@ class Signup extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <h4>Sign up</h4>
+        {!this.props.isFetching ? (
           <div>
-            <h6>First Name</h6>
-            <input name="firstName" />
+            <form onSubmit={this.handleSubmit}>
+              <h4>Sign up</h4>
+              <div>
+                <h6>First Name</h6>
+                <input name="firstName" />
+              </div>
+              <div>
+                <h6>Last Name</h6>
+                <input name="lastName" />
+              </div>
+              <div>
+                <h6>Email</h6>
+                <input name="email" />
+              </div>
+              <div>
+                <h6>Password</h6>
+                <input name="password" />
+              </div>
+              <button type="submit">Sign up</button>
+            </form>
+            <h6>OR</h6>
+            <h6>Sign up with</h6>
+            <button onClick={this.googleSignUp}>Google</button>
           </div>
-          <div>
-            <h6>Last Name</h6>
-            <input name="lastName" />
-          </div>
-          <div>
-            <h6>Email</h6>
-            <input name="email" />
-          </div>
-          <div>
-            <h6>Password</h6>
-            <input name="password" />
-          </div>
-          <button type="submit">Sign up</button>
-        </form>
-        <h6>OR</h6>
-        <h6>Sign up with</h6>
-        <button onClick={this.googleSignUp}>Google</button>
+        ) : (
+          <div>Fetching</div>
+        )}
       </div>
     )
   }
 }
 
 
-const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 
 export default connect(mapStateToProps)(Signup)

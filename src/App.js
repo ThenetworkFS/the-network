@@ -12,20 +12,22 @@ import { fire, db } from './fire'
 
 class App extends Component {
 
-
   componentDidMount() {
+    if (localStorage.getItem('googleLogin') === '1') {
+      this.props.startFetch()
+    }
     fire.auth().onAuthStateChanged(user => {
       if (user) {
+        localStorage.removeItem('googleLogin');
+        db.collection('users')
+        .doc(user.email)
+        .onSnapshot(user => {
+          this.props.getUser(user.data())
+        })
         this.props.stopFetch()
-        return db.collection('users')
-          .doc(user.email)
-          .onSnapshot(user => {
-            this.props.getUser(user.data())
-          })
       }
     })
     fire.auth().getRedirectResult()
-    .then(() => this.props.startFetch())
     .then(result => {
       if (result.credential) {
         const firstName = result.user.displayName.split(' ')[0]
