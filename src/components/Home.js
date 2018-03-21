@@ -41,7 +41,13 @@ class Home extends React.Component {
     const parseLinkExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
     const regex = new RegExp(parseLinkExpression);
     const linkInContent = content.match(regex);
-    return linkInContent[0];
+    let link;
+    if (linkInContent) {
+      link = linkInContent[0];
+    } else {
+      link = '';
+    }
+    return link;
   }
 
 
@@ -91,38 +97,43 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h1>Home</h1>
-        <form onSubmit={this.handleSubmit} >
-          <input type="text" name="content" />
-          <button type="submit">Submit</button>
-        </form>
-        {this.state.posts.map((post, index) => {
-          return (
-            <div key={index}>
-              <button onClick={(event) => this.handleUserClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</button>
-              {post.link ? (
-                <div>
-                  {this.formatPostWithLink(post)}
-                  <MicrolinkCard
-                    round
-                    url={post.link}
-                    target='_blank'
-                  />
+        {!this.props.isFetching ? (
+          <div>
+          <h1>Home</h1>
+            <form onSubmit={this.handleSubmit} >
+              <input type="text" name="content" />
+              <button type="submit">Submit</button>
+            </form>
+            {this.state.posts.map((post, index) => {
+              return (
+                <div key={index}>
+                <button onClick={(event) => this.handleUserClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</button>
+                  {post.link ? (
+                    <div>
+                      {this.formatPostWithLink(post)}
+                      <MicrolinkCard
+                        round
+                        url={post.link}
+                        target='_blank'
+                      />
+                    </div>
+                  ) : (
+                    <span>{post.content}</span>
+                  )}
+                  <br></br>
                 </div>
-              ) : (
-                  <span>{post.content}</span>
-                )}
-              <br></br>
-            </div>
-          )
-        })}
+              )
+            })}
+          </div>
+        ) : (
+          <div>Fetching</div>
+        )}
       </div>
     )
   }
 }
 
-
-const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 
 
 const mapDispatchToProps = {

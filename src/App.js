@@ -5,7 +5,7 @@ import Routes from './Routes'
 import { Router } from 'react-router-dom'
 import history from './history'
 import { Navbar } from './components'
-import { getUser, selectUser } from './store'
+import { getUser, selectUser, startFetch, stopFetch } from './store'
 import { connect } from 'react-redux'
 import { fire, db } from './fire'
 const uuidv1 = require('uuid/v1')
@@ -13,18 +13,22 @@ const uuidv1 = require('uuid/v1')
 
 class App extends Component {
 
-
   componentDidMount() {
+    if (localStorage.getItem('googleLogin') === '1') {
+      this.props.startFetch()
+    }
     fire.auth().onAuthStateChanged(user => {
       if (user) {
-        return db.collection('users')
-          .doc(user.email)
-          .onSnapshot(user => {
-            this.props.getUser(user.data())
-            if (this.props.selectedUser.email === this.props.loggedInUser.email) {
-              this.props.selectUser(user.data())
-            }
-          })
+        localStorage.removeItem('googleLogin');
+        db.collection('users')
+        .doc(user.email)
+        .onSnapshot(user => {
+          this.props.getUser(user.data())
+          if (this.props.selectedUser.email === this.props.loggedInUser.email) {
+            this.props.selectUser(user.data())
+          }
+          this.props.stopFetch()
+        })
       }
     })
     fire.auth().getRedirectResult()
@@ -46,6 +50,16 @@ class App extends Component {
       })
   }
 
+  componentWillReceiveProps(nextProps) {
+    // only go to /home when we get the user from Firestore
+    if(
+      Object.keys(this.props.loggedInUser).length === 0 &&
+      this.props.loggedInUser.constructor === Object &&
+      nextProps.loggedInUser.email
+    ){
+      history.push('/home')
+    }
+  }
 
   render() {
     return (
@@ -64,7 +78,10 @@ const mapStateToProps = ({ user: { loggedInUser, selectedUser } }) => ({ loggedI
 
 
 const mapDispatchToProps = {
-  getUser, selectUser
+  getUser,
+  selectUser,
+  startFetch,
+  stopFetch,
 }
 
 
