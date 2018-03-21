@@ -6,7 +6,7 @@ import { Signup, Login, Home, UserProfile, AllUsers, EditProfile } from './compo
 const Routes = () => {
     return (
         <Switch>
-            <Route exact path="/home" component={Home} />
+            <Route exact path="/home/:category" component={Home} />
             <Route exact path="/" component={Login} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/profile/:id" component={UserProfile} />

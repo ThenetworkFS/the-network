@@ -71,8 +71,10 @@ class Home extends React.Component {
     event.preventDefault();
     const content = event.target.content.value;
     const link = this.parseLinkInContent(content);
+    const category= this.props.match.params.category
     db.collection("posts").add({
       user: this.props.loggedInUser,
+      category,
       content,
       link,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -96,16 +98,23 @@ class Home extends React.Component {
 
 
   render() {
+    const category= this.props.match.params.category
     return (
       <div>
         {!this.props.isFetching ? (
           <div>
-          <h1>Home</h1>
+          <nav>
+          <Link to="/home/news"> news </Link>
+          <Link to="/home/meetup"> meetup </Link>
+          <Link to="/home/projects"> projects </Link>
+          <Link to="/home/jobs"> jobs </Link>
+          <Link to="/home/faq"> FAQ </Link>
+          </nav>
             <form onSubmit={this.handleSubmit} >
               <input type="text" name="content" />
               <button type="submit">Submit</button>
             </form>
-            {this.state.posts.map((post, index) => {
+            {this.state.posts.filter(post => post.category === category).map((post, index) => {
               return (
                 <PostCard post={post}/>
               )
@@ -138,6 +147,8 @@ class Home extends React.Component {
     )
   }
 }
+
+//news, meetup, jobs, projects, faq
 
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 
