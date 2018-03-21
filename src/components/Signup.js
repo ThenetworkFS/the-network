@@ -1,9 +1,11 @@
+import { startFetch, stopFetch } from '../store'
 import { fire, db } from '../fire'
 import React from 'react'
 import firebase from 'firebase'
 import history from '../history'
 import { connect } from 'react-redux'
-import { startFetch, stopFetch } from '../store'
+const uuidv1 = require('uuid/v1')
+
 
 
 class Signup extends React.Component {
@@ -17,10 +19,12 @@ class Signup extends React.Component {
     const password = event.target.password.value
     const firstName = event.target.firstName.value
     const lastName = event.target.lastName.value
+    const id = uuidv1()
     const user = {
       email,
       firstName,
       lastName,
+      id
     }
     this.props.startFetch()
     fire.auth().createUserWithEmailAndPassword(email, password)
@@ -70,5 +74,6 @@ const mapDispatchToProps = {
   startFetch,
   stopFetch,
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup)

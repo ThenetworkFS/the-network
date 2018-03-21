@@ -5,9 +5,10 @@ import Routes from './Routes'
 import { Router } from 'react-router-dom'
 import history from './history'
 import { Navbar } from './components'
-import { getUser, startFetch, stopFetch } from './store'
+import { getUser, selectUser, startFetch, stopFetch } from './store'
 import { connect } from 'react-redux'
 import { fire, db } from './fire'
+const uuidv1 = require('uuid/v1')
 
 
 class App extends Component {
@@ -23,25 +24,30 @@ class App extends Component {
         .doc(user.email)
         .onSnapshot(user => {
           this.props.getUser(user.data())
+          if (this.props.selectedUser.email === this.props.loggedInUser.email) {
+            this.props.selectUser(user.data())
+          }
           this.props.stopFetch()
         })
       }
     })
     fire.auth().getRedirectResult()
-    .then(result => {
-      if (result.credential) {
-        const firstName = result.user.displayName.split(' ')[0]
-        const lastName = result.user.displayName.split(' ')[1]
-        const email = result.user.email
-        db.collection('users')
-        .doc(result.user.email)
-        .set({
-          firstName,
-          lastName,
-          email
-        })          
-      }
-    })
+      .then(result => {
+        if (result.credential) {
+          const firstName = result.user.displayName.split(' ')[0]
+          const lastName = result.user.displayName.split(' ')[1]
+          const email = result.user.email
+          const id = uuidv1()
+          db.collection('users')
+            .doc(result.user.email)
+            .set({
+              firstName,
+              lastName,
+              email,
+              id
+            })
+        }
+      })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -68,10 +74,12 @@ class App extends Component {
 }
 
 
-const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+const mapStateToProps = ({ user: { loggedInUser, selectedUser } }) => ({ loggedInUser, selectedUser })
+
 
 const mapDispatchToProps = {
   getUser,
+  selectUser,
   startFetch,
   stopFetch,
 }
