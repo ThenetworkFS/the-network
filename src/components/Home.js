@@ -77,36 +77,42 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h1>Home</h1>
-        <form onSubmit={this.handleSubmit} >
-          <input type="text" name="content" />
-          <button type="submit">Submit</button>
-        </form>
-        {this.state.posts.map((post, index) => {
-          return (
-            <div key={index}>
-              <h1>{post.user.firstName} {post.user.lastName}</h1>
-              {post.link ? (
-                <div>
-                  {this.formatPostWithLink(post)}
-                  <MicrolinkCard
-                    round
-                    url={post.link}
-                    target='_blank'
-                  />
+        {!this.props.isFetching ? (
+          <div>
+          <h1>Home</h1>
+            <form onSubmit={this.handleSubmit} >
+              <input type="text" name="content" />
+              <button type="submit">Submit</button>
+            </form>
+            {this.state.posts.map((post, index) => {
+              return (
+                <div key={index}>
+                  <h1>{post.user.firstName} {post.user.lastName}</h1>
+                  {post.link ? (
+                    <div>
+                      {this.formatPostWithLink(post)}
+                      <MicrolinkCard
+                        round
+                        url={post.link}
+                        target='_blank'
+                      />
+                    </div>
+                  ) : (
+                    <span>{post.content}</span>
+                  )}
+                  <br></br>
                 </div>
-              ) : (
-                <span>{post.content}</span>
-              )}
-              <br></br>
-            </div>
-          )
-        })}
+              )
+            })}
+          </div>
+        ) : (
+          <div>Fetching</div>
+        )}
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 
 export default connect(mapStateToProps)(Home)

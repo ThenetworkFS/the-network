@@ -5,7 +5,7 @@ import Routes from './Routes'
 import { Router } from 'react-router-dom'
 import history from './history'
 import { Navbar } from './components'
-import { getUser } from './store'
+import { getUser, startFetch, stopFetch } from './store'
 import { connect } from 'react-redux'
 import { fire, db } from './fire'
 
@@ -16,6 +16,7 @@ class App extends Component {
   componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
+        this.props.stopFetch()
         return db.collection('users')
           .doc(user.email)
           .onSnapshot(user => {
@@ -24,8 +25,10 @@ class App extends Component {
       }
     })
     fire.auth().getRedirectResult()
+    .then(() => this.props.startFetch())
     .then(result => {
       if (result.credential) {
+        this.props.stopFetch();
         db.collection('users').doc(result.user.email).set({ email: result.user.email })          
       }
     })
@@ -48,7 +51,9 @@ class App extends Component {
 const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
 
 const mapDispatchToProps = {
-  getUser
+  getUser,
+  startFetch,
+  stopFetch,
 }
 
 
