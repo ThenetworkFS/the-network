@@ -1,12 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { fire, db } from '../fire'
+// import { Link } from 'react-router-dom'
+import { db } from '../fire'
 import firebase from 'firebase'
-import history from '../history'
+// import history from '../history'
 import { connect } from 'react-redux'
 import MicrolinkCard from 'react-microlink'
 import Spinner from './Spinner'
-import { selectUser } from '../store'
+// import { selectUser } from '../store'
+import PostCard from './PostCard'
 
 
 class Home extends React.Component {
@@ -17,7 +18,6 @@ class Home extends React.Component {
       posts: [],
       link: '',
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 
@@ -52,19 +52,19 @@ class Home extends React.Component {
   }
 
 
-  formatPostWithLink = (post) => {
-    const linkIndex = post.content.indexOf(post.link)
-    const linkLength = post.link.length
-    const contentFirstPart = post.content.slice(0, linkIndex);
-    const contentSecondPart = post.content.slice(linkIndex + linkLength);
-    return (
-      <span>
-        {contentFirstPart}
-        <a href={post.link} target="_blank">{post.link}</a>
-        {contentSecondPart}
-      </span>
-    )
-  }
+  // formatPostWithLink = (post) => {
+  //   const linkIndex = post.content.indexOf(post.link)
+  //   const linkLength = post.link.length
+  //   const contentFirstPart = post.content.slice(0, linkIndex);
+  //   const contentSecondPart = post.content.slice(linkIndex + linkLength);
+  //   return (
+  //     <span>
+  //       {contentFirstPart}
+  //       <a href={post.link} target="_blank">{post.link}</a>
+  //       {contentSecondPart}
+  //     </span>
+  //   )
+  // }
 
 
   handleSubmit = (event) => {
@@ -83,16 +83,16 @@ class Home extends React.Component {
   }
 
 
-  handleUserClick(event, user) {
-    event.preventDefault()
-    return db.collection('users')
-      .doc(user.email)
-      .get()
-      .then(user => {
-        this.props.selectUser(user.data())
-        history.push(`/profile/${user.data().id}`)
-      })
-  }
+  // handleUserClick = (event, user) => {
+  //   event.preventDefault()
+  //   return db.collection('users')
+  //     .doc(user.email)
+  //     .get()
+  //     .then(user => {
+  //       this.props.selectUser(user.data())
+  //       history.push(`/profile/${user.data().id}`)
+  //     })
+  // }
 
 
   render() {
@@ -106,6 +106,11 @@ class Home extends React.Component {
               <button type="submit">Submit</button>
             </form>
             {this.state.posts.map((post, index) => {
+              return (
+                <PostCard post={post}/>
+              )
+            })}
+            {/* {this.state.posts.map((post, index) => {
               return (
                 <div key={index}>
                 <button onClick={(event) => this.handleUserClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</button>
@@ -124,7 +129,7 @@ class Home extends React.Component {
                   <br></br>
                 </div>
               )
-            })}
+            })} */}
           </div>
         ) : (
           <Spinner />
@@ -137,9 +142,9 @@ class Home extends React.Component {
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 
 
-const mapDispatchToProps = {
-  selectUser
-}
+// const mapDispatchToProps = {
+//   selectUser
+// }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps)(Home)
