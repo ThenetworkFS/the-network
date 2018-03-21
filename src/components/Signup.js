@@ -10,20 +10,6 @@ class Signup extends React.Component {
     super(props)
   }
 
-
-  componentDidMount() {
-    fire.auth().getRedirectResult()
-      .then(result => {
-        if (result.user) {
-          const firstName = result.user.displayName.split(' ')[0]
-          const lastName = result.user.displayName.split(' ')[1]
-          const email = result.user.email
-          db.collection('users').doc(email).set({ firstName, lastName, email })
-        }
-      })
-  }
-
-
   componentWillReceiveProps(nextProps){
     if(nextProps.loggedInUser.email){
       history.push('/home')

@@ -28,12 +28,19 @@ class App extends Component {
     .then(() => this.props.startFetch())
     .then(result => {
       if (result.credential) {
-        this.props.stopFetch();
-        db.collection('users').doc(result.user.email).set({ email: result.user.email })          
+        const firstName = result.user.displayName.split(' ')[0]
+        const lastName = result.user.displayName.split(' ')[1]
+        const email = result.user.email
+        db.collection('users')
+        .doc(result.user.email)
+        .set({
+          firstName,
+          lastName,
+          email
+        })          
       }
     })
   }
-
 
   render() {
     return (
