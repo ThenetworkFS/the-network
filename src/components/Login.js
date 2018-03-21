@@ -99,9 +99,12 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
+
+
 const mapDispatchToProps = {
   startFetch,
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
 

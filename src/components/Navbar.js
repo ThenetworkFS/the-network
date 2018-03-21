@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { removeUser } from '../store'
+import { removeUser, selectUser } from '../store'
 import { fire, db } from '../fire'
 import history from '../history'
 import { connect } from 'react-redux'
@@ -37,7 +37,12 @@ class Navbar extends Component {
                   <Icon name='users' />
                 </Menu.Item>
 
-                <Menu.Item name='profile' active={activeItem === 'profile'} onClick={this.handleItemClick}>
+                <Menu.Item name={`profile/${user.id}`} active={activeItem === `profile/${user.id}`}
+                  onClick={(event, name) => {
+                    this.handleItemClick(event, name)
+                    this.props.selectUser(user)
+                  }
+                  }>
                   <Icon name='user' />
                 </Menu.Item>
                 <button onClick={this.props.removeUser}>Sign out</button>
@@ -52,13 +57,16 @@ class Navbar extends Component {
 }
 
 
-const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
 
 const mapDispatchToProps = (dispatch) => ({
   removeUser: () => {
     fire.auth().signOut()
     dispatch(removeUser())
     history.push('/')
+  },
+  selectUser: (user) => {
+    dispatch(selectUser(user))
   }
 })
 

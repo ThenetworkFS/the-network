@@ -1,3 +1,4 @@
+import { startFetch, stopFetch } from '../store'
 import { fire, db } from '../fire'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -12,6 +13,9 @@ import {
   Segment
 } from 'semantic-ui-react'
 import Spinner from './Spinner'
+const uuidv1 = require('uuid/v1')
+
+
 
 class Signup extends React.Component {
   constructor(props) {
@@ -24,10 +28,12 @@ class Signup extends React.Component {
     const password = event.target.password.value
     const firstName = event.target.firstName.value
     const lastName = event.target.lastName.value
+    const id = uuidv1()
     const user = {
       email,
       firstName,
       lastName,
+      id
     }
     this.props.startFetch()
     fire.auth().createUserWithEmailAndPassword(email, password)
@@ -143,5 +149,6 @@ const mapDispatchToProps = {
   startFetch,
   stopFetch,
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup)
