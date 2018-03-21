@@ -4,14 +4,10 @@ import history from '../history'
 import { connect } from 'react-redux'
 import { db } from '../fire'
 import { selectUser } from '../store'
-import { Button, Card, Image } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
 
 
 class PostCard extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   formatPostWithLink = (post) => {
     const linkIndex = post.content.indexOf(post.link)
     const linkLength = post.link.length

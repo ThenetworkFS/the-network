@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { removeUser, selectUser } from '../store'
-import { fire, db } from '../fire'
+import { fire } from '../fire'
 import history from '../history'
 import { connect } from 'react-redux'
 import { Icon, Menu } from 'semantic-ui-react'

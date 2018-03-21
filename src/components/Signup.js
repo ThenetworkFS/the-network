@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { startFetch, stopFetch } from '../store'
 import { 
   Button,
-  Icon,
   Form,
   Grid,
   Header,
@@ -17,10 +16,6 @@ const uuidv1 = require('uuid/v1')
 
 
 class Signup extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   handleSubmit = (event) => {
     event.preventDefault()
     const email = event.target.email.value

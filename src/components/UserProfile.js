@@ -1,16 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { fire, db } from '../fire'
 import { connect } from 'react-redux'
 import { getUser } from '../store'
 
 
 class UserProfile extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-
   renderProjects = (projects) => {
     return projects.map(project => {
       return (

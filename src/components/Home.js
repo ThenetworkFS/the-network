@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Spinner from './Spinner'
 import PostCard from './PostCard'
-import { Icon, Menu, Form, TextArea } from 'semantic-ui-react'
+import { Menu, Form, TextArea } from 'semantic-ui-react'
 
 
 class Home extends React.Component {
@@ -36,7 +36,7 @@ class Home extends React.Component {
 
 
   parseLinkInContent = (content) => {
-    const parseLinkExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
+    const parseLinkExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/gi;
     const regex = new RegExp(parseLinkExpression);
     const linkInContent = content.match(regex);
     let link;

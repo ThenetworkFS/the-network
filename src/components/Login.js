@@ -11,15 +11,11 @@ import {
   Header,
   Image,
   Segment,
-  Loader,
 } from 'semantic-ui-react'
 import Spinner from './Spinner'
 
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   signInAnonymously = (event) => {
     event.preventDefault()
