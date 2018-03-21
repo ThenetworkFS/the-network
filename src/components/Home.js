@@ -4,6 +4,7 @@ import { fire, db } from '../fire'
 import firebase from 'firebase'
 import history from '../history'
 import { connect } from 'react-redux'
+import MicrolinkCard from 'react-microlink'
 
 
 class Home extends React.Component {
@@ -11,7 +12,8 @@ class Home extends React.Component {
     super(props)
 
     this.state = {
-      posts: []
+      posts: [],
+      link: '',
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -34,17 +36,41 @@ class Home extends React.Component {
       })
   }
 
+  parseLinkInContent = (content) => {
+    const parseLinkExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
+    const regex = new RegExp(parseLinkExpression);
+    const linkInContent = content.match(regex);
+    return linkInContent[0];
+  }
+
+  formatPostWithLink = (post) => {
+    const linkIndex = post.content.indexOf(post.link)
+    const linkLength = post.link.length
+    const contentFirstPart = post.content.slice(0, linkIndex);
+    const contentSecondPart = post.content.slice(linkIndex + linkLength);
+    return (
+      <span>
+        {contentFirstPart}
+        <a href={post.link} target="_blank">{post.link}</a>
+        {contentSecondPart}
+      </span>
+    )
+  }
+
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const content = event.target.content.value;
+    const link = this.parseLinkInContent(content);
     db.collection("posts").add({
       user: this.props.loggedInUser,
-      content: event.target.content.value,
+      content,
+      link,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })
-      .catch(function (error) {
-        console.error("Error adding document: ", error);
-      })
+    .catch(function (error) {
+      console.error("Error adding document: ", error);
+    })
   }
 
 
@@ -54,16 +80,24 @@ class Home extends React.Component {
         <h1>Home</h1>
         <form onSubmit={this.handleSubmit} >
           <input type="text" name="content" />
-          <button
-            type="submit">
-            Submit
-          </button>
+          <button type="submit">Submit</button>
         </form>
         {this.state.posts.map((post, index) => {
           return (
             <div key={index}>
-              <h1> {post.user.firstName} {post.user.lastName} </h1>
-              <h2> {post.content} </h2>
+              <h1>{post.user.firstName} {post.user.lastName}</h1>
+              {post.link ? (
+                <div>
+                  {this.formatPostWithLink(post)}
+                  <MicrolinkCard
+                    round
+                    url={post.link}
+                    target='_blank'
+                  />
+                </div>
+              ) : (
+                <span>{post.content}</span>
+              )}
               <br></br>
             </div>
           )
@@ -72,7 +106,6 @@ class Home extends React.Component {
     )
   }
 }
-
 
 const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
 
