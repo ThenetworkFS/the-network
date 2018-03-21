@@ -13,14 +13,6 @@ class Signup extends React.Component {
     super(props)
   }
 
-
-  componentWillReceiveProps(nextProps){
-    if(nextProps.loggedInUser.email){
-      history.push('/home')
-    }
-  }
-
-
   handleSubmit = (event) => {
     event.preventDefault()
     const email = event.target.email.value
@@ -34,12 +26,6 @@ class Signup extends React.Component {
       lastName,
       id
     }
-    return fire.auth().createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        db.collection('users').doc(email).set(user)
-          .then(() => history.push('/home'))
-          .catch(err => console.error(err))
-      })
     this.props.startFetch()
     fire.auth().createUserWithEmailAndPassword(email, password)
     .then(() => {
