@@ -6,6 +6,7 @@ import { withRouter } from 'react-router'
 import queryString from 'query-string';
 import { Button } from 'semantic-ui-react'
 import AdvancedSearch from './AdvancedSearch';
+import { Card, Icon, Image } from 'semantic-ui-react'
 
 class SearchResults extends React.Component {
   constructor(props) {
@@ -56,7 +57,16 @@ console.log('PARAMS-query', params)
        <h1>Search Results</h1>
        {this.state.usersResults.map((user) => {
           return (
-            <h2>{user.firstName}</h2>
+            <div>
+              <Card>
+                {/* <Image src='./download.jpg' /> */}
+                <Card.Content>
+                  <Card.Header>{user.firstName} {user.lastName}</Card.Header>
+                  <Card.Meta>{user.cohort} {user.cohortNum}</Card.Meta>
+                  <Card.Description>{user.firstName} lives in {user.city} and works at {user.company}.</Card.Description>
+                </Card.Content>
+            </Card>
+          </div>
           )
         })
        }
