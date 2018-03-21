@@ -11,17 +11,17 @@ class Signup extends React.Component {
   }
 
 
-  componentDidMount() {
-    fire.auth().getRedirectResult()
-      .then(result => {
-        if (result.user) {
-          const firstName = result.user.displayName.split(' ')[0]
-          const lastName = result.user.displayName.split(' ')[1]
-          const email = result.user.email
-          db.collection('users').doc(email).set({ firstName, lastName, email })
-        }
-      })
-  }
+  // componentDidMount() {
+  //   fire.auth().getRedirectResult()
+  //     .then(result => {
+  //       if (result.user) {
+  //         const firstName = result.user.displayName.split(' ')[0]
+  //         const lastName = result.user.displayName.split(' ')[1]
+  //         const email = result.user.email
+  //         db.collection('users').doc(email).set({ firstName, lastName, email })
+  //       }
+  //     })
+  // }
 
 
   componentWillReceiveProps(nextProps){
