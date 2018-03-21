@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import ImagePicker from './ImagePicker'
 import history from '../history'
 import { getUser } from '../store'
+import PlacesAutocomplete from 'react-places-autocomplete'
+import SimpleForm from './SimpleForm'
 const uuidv1 = require('uuid/v1')
 
 
@@ -172,6 +174,8 @@ class EditProfile extends React.Component {
               value={user.country}
             />
           </h6>
+          <h6>Works at</h6>
+          <SimpleForm name="job"/>
           <h6>
             Is interested in:{' '}
             <input
