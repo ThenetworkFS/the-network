@@ -4,18 +4,30 @@ body {
   font-family: sans-serif;
 }
 
-/* body > div,
-body > div > div,
-body > div > div > div.login-form {
-  height: 100%;
-} */
 .login-form-container,
 .login-form {
   height: 100vh;
 }
 
-/* .ui.stacked.segment:after
-.ui.stacked.segments:after {
-  background: none!important;
-  border-top: none !important;
-} */
+.login-form {
+  width: 80vw;
+  margin: 0 auto;
+}
+
+.login-form-button,
+.login-form-prompt,
+.google-login-button span {
+  font-weight: 200 !important;
+}
+
+.google-login-button span {
+  margin-right: 10px;
+}
+
+.google-login-icon {
+  margin-right: 0px !important;
+  position: relative;
+  top: -2px;
+}
+
+/* #4386fc */
