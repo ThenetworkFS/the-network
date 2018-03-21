@@ -5,6 +5,7 @@ import firebase from 'firebase'
 import history from '../history'
 import { connect } from 'react-redux'
 import MicrolinkCard from 'react-microlink'
+import Spinner from './Spinner'
 
 
 class Home extends React.Component {
@@ -106,7 +107,7 @@ class Home extends React.Component {
             })}
           </div>
         ) : (
-          <div>Fetching</div>
+          <Spinner />
         )}
       </div>
     )

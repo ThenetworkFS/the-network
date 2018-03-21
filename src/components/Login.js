@@ -10,8 +10,10 @@ import {
   Grid,
   Header,
   Image,
-  Segment
+  Segment,
+  Loader,
 } from 'semantic-ui-react'
+import Spinner from './Spinner'
 
 
 class Login extends React.Component {
@@ -59,7 +61,7 @@ class Login extends React.Component {
                     <Form.Input
                       name="email"
                       fluid
-                      icon="email outline"
+                      icon="mail outline"
                       iconPosition="left"
                       placeholder="E-mail address"
                       type="email"
@@ -89,7 +91,7 @@ class Login extends React.Component {
             </Grid>
           </div>
         ) : (
-          <div>Fetching</div>
+          <Spinner />
         )}
       </div>
     )

@@ -11,7 +11,7 @@ import {
   Image,
   Segment
 } from 'semantic-ui-react'
-
+import Spinner from './Spinner'
 
 class Signup extends React.Component {
   constructor(props) {
@@ -124,13 +124,13 @@ class Signup extends React.Component {
                   </Segment>
                 </Form>
                 <h5 className="login-form-prompt">
-                  Already have an account? <a href="/signin">Sign In</a>
+                  Already have an account? <a href="/">Sign In</a>
                 </h5>
               </Grid.Column>
             </Grid>
           </div>
         ) : (
-          <div>Fetching</div>
+          <Spinner />
         )}
       </div>
     )
