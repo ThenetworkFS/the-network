@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { removeUser, selectUser } from '../store'
 import { fire, db } from '../fire'
 import history from '../history'

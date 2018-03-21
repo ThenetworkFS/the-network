@@ -31,6 +31,31 @@ body {
   top: -2px;
 }
 
+.homepage-container {
+  width: 100vw;
+  height: 100vh;
+  max-width: 370px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.feed-menu-container,
+.feed-menu,
+.feed-newpost-textarea,
+.postcard-container {
+  margin-bottom: 12px;
+}
+
+/* .postcard-container > div {
+  width: 100% !important;
+} */
+
+.formatted-post-with-link {
+  float: left;
+  max-width: 100%;
+  word-wrap: break-word;
+}
 
 
 /*!

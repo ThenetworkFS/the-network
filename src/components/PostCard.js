@@ -4,6 +4,8 @@ import history from '../history'
 import { connect } from 'react-redux'
 import { db } from '../fire'
 import { selectUser } from '../store'
+import { Button, Card, Image } from 'semantic-ui-react'
+
 
 class PostCard extends Component {
   constructor(props) {
@@ -16,11 +18,11 @@ class PostCard extends Component {
     const contentFirstPart = post.content.slice(0, linkIndex);
     const contentSecondPart = post.content.slice(linkIndex + linkLength);
     return (
-      <span>
-        {contentFirstPart}
+      <div className="formatted-post-with-link">
+        <span>{contentFirstPart}</span>
         <a href={post.link} target="_blank">{post.link}</a>
-        {contentSecondPart}
-      </span>
+        <span>{contentSecondPart}</span>
+      </div>
     )
   }
 
@@ -38,20 +40,34 @@ class PostCard extends Component {
   render() {
     const { post } = this.props;
     return (
-      <div>
-        <a onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
-        {post.link ? (
-          <div>
-            {this.formatPostWithLink(post)}
-            <MicrolinkCard
-              round
-              url={post.link}
-              target='_blank'
-            />
-          </div>
-        ) : (
-          <span>{post.content}</span>
-        )}
+      <div className="postcard-container">
+        <Card>
+          <Card.Content>
+            <Image floated='left' size='mini' src='https://react.semantic-ui.com/assets/images/avatar/large/steve.jpg' />
+            <Card.Header>
+              <a onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
+            </Card.Header>
+            <Card.Meta>
+              FS - 1801
+            </Card.Meta>
+            {post.link ? (
+              <div>
+                <Card.Description>
+                  {this.formatPostWithLink(post)}
+                </Card.Description>
+                <MicrolinkCard
+                  round
+                  url={post.link}
+                  target='_blank'
+                />
+              </div>
+            ) : (
+              <Card.Description>
+                {post.content}
+              </Card.Description>
+            )}
+          </Card.Content>
+        </Card>
       </div>
     )
   }
