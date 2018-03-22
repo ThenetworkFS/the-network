@@ -37,7 +37,10 @@ class UserProfile extends React.Component {
         <h6>Slack: {user.slack}</h6>
         <h6>Github: {user.github}</h6>
         <h6>Linkedin: {user.linkedin}</h6>
-        <h6>Works at: {user.workInfo}</h6>
+        { user.workInfo ?
+        <h6>Works at: {user.workInfo.address}</h6>
+        : null
+        }
         {user.projects ?
           <h5>Projects: {user.projects.length && this.renderProjects(user.projects)}</h5>
           : null

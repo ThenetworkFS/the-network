@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Spinner from './Spinner'
 import PostCard from './PostCard'
+import MapContainer from './MapContainer'
+
 import {
   Menu,
   Form,
@@ -90,6 +92,8 @@ class Home extends React.Component{
 
   render() {
     const category= this.props.match.params.category
+
+    
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
@@ -117,6 +121,8 @@ class Home extends React.Component{
                 </Menu.Item>
               </Menu>
             </nav>
+              { category === 'jobs' ?
+                <MapContainer /> : null }
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
               <TextArea id="new-post-textarea" placeholder='Post something' name="content" style={{ minHeight: 100 }} />
               <Button disabled={this.state.isPostSubmitted} className="feed-newpost-submit-button" floated="right" color="blue">Post</Button>

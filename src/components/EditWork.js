@@ -16,7 +16,7 @@ class EditWork extends React.Component {
     this.onChange = (address) => this.setState({ address })
   }
 
-  // I NEED THIS LATER
+
   // handleFormSubmit = (event) => {
   //   event.preventDefault()
 
@@ -38,13 +38,22 @@ class EditWork extends React.Component {
   handleWorkSubmit = (event) => {
     event.preventDefault()
     this.setState({addIsClicked: false, editIsClicked: false})
-    const user= this.props.loggedInUser
-    const updated = { workInfo: this.state.address }
-    db
+    const user = this.props.loggedInUser
+
+    geocodeByAddress(this.state.address)
+    .then(results => getLatLng(results[0]))
+    .then(result => {
+      const updated = { workInfo: {
+        address: this.state.address,
+        coordinates: result
+      }}
+      db
       .collection('users')
       .doc(user.email)
       .update(updated)
       .catch(err => console.error(err))
+    })
+    .catch(error => console.error('Error', error))
   }
 
 
@@ -84,7 +93,7 @@ class EditWork extends React.Component {
         <h6>Works at</h6>
         {user.workInfo && !this.state.editIsClicked ?
           <div>
-            <h6>{user.workInfo}</h6>
+          <h6>{user.workInfo.address}</h6>
             <button onClick={this.editIsClicked}>Edit</button>
             <button onClick={this.onDeleteClick}>Remove</button>
           </div>
@@ -93,7 +102,7 @@ class EditWork extends React.Component {
         }
         {user.workInfo ? null : <button onClick={this.addIsClicked}>Add Work</button>}
         {this.state.addIsClicked || this.state.editIsClicked ?
-          
+
           <form onSubmit={this.handleWorkSubmit}>
           <PlacesAutocomplete inputProps={inputProps} />
           <button type="submit">Submit</button>

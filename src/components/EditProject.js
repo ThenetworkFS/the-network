@@ -26,7 +26,6 @@ class EditProject extends React.Component {
   }
 
 
-
   handleProjectSubmit = (event, id) => {
     event.preventDefault()
     this.setState({
