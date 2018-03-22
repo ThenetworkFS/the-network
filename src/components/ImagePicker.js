@@ -1,19 +1,26 @@
 import React from 'react'
 import { db } from '../fire'
 import { connect } from 'react-redux'
-import firebase from 'firebase'
+import { storage } from '../fire'
 import Dropzone from 'react-dropzone'
 
 
 class ImagePicker extends React.Component {
   onDrop = (acceptedFiles, rejectedFiles) => {
     const user = this.props.loggedInUser;
-    const storageRef = firebase.storage().ref();
+    const storageRef = storage.ref();
     const imagesRef = storageRef.child(`userImages/${user.email}/${acceptedFiles[0].name}`);
     imagesRef.put(acceptedFiles[0])
-      .then(() => {
-        db.collection('users').doc(user.email).update({ image: `userImages/${user.email}/${acceptedFiles[0].name}` })
-      });
+    .then(() => {
+      return storage.ref()
+      .child(`userImages/${user.email}/${acceptedFiles[0].name}`)
+      .getDownloadURL()
+      .then(url => {
+        return db.collection('users')
+        .doc(user.email)
+        .update({ image: url })
+      })
+    });
   }
 
 
