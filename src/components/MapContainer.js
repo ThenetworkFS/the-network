@@ -48,21 +48,16 @@ export class MapContainer extends React.Component {
             lng: -74.006
           }}
         >
-          {users.map((user, index) => {
+          {users.map(user => {
             return (
-              <div key={index}>
-                {user.workInfo ? (
+            user.workInfo ?
                   <Marker
-                    onClick={this.onMarkerClick}
-                    position={{
-                      lat: user.workInfo.coordinates.lat,
-                      lng: user.workInfo.coordinates.lng
-                    }}
-                    name={"Current location"}
+                    name={"Job"}
+                    key={user.id}
+                    position={user.workInfo.coordinates}
                   />
-                ) : null}
-              </div>
-            );
+                  : null
+            )
           })}
         </Map>
       </div>
