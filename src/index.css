@@ -47,11 +47,11 @@ body {
   margin-bottom: 12px;
 }
 
-/* .postcard-container > div {
+.postcard-container .postcard {
   width: 100% !important;
-} */
+}
 
-.formatted-post-with-link {
+.formatted-post {
   float: left;
   max-width: 100%;
   word-wrap: break-word;
