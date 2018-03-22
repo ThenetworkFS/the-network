@@ -27,13 +27,13 @@ class Home extends React.Component{
     let currentComponent = this
     //THIS IS LISTENING FOR CHANGES IN DB AND ADDING TO STATE
     //ordering by most recent on first render, but not when adding new
-    db.collection("posts").orderBy("timestamp", "desc")
+    db.collection("posts").orderBy("timestamp")
       .onSnapshot(function (querySnapshot) {
         querySnapshot.docChanges.forEach((change) => {
           if (change.type === "added") {
             const newPost = {...change.doc.data(), id: change.doc.id}
             currentComponent.setState({
-              posts: currentComponent.state.posts.concat(newPost),
+              posts: [newPost].concat(currentComponent.state.posts),
               isPostSubmitted: false,
             });
           }
