@@ -1,27 +1,29 @@
 import React, { Component } from 'react'
-import { db } from '../fire'
+import { Link } from 'react-router-dom'
+import { fire, db } from '../fire'
 import { connect } from 'react-redux'
+import history from '../history'
 import { Search, Grid, Header } from 'semantic-ui-react'
 import _ from 'lodash'
+import { Input } from 'semantic-ui-react'
+import {AdvancedSearch} from './index.js'
+import { Card, Icon, Image } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 
-
-class AllUsers extends Component {
+class AllUsers extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       users: [],
-      results: [],
-      isLoading: false,
-      value: ''
+      searchVal: '',
+      advancedIsClicked: false
     }
+    this.handleInputChange = this.handleInputChange.bind(this)
   }
-
 
   componentWillMount() {
-    this.resetComponent()
   }
-
 
   componentDidMount() {
     let currentComponent = this
@@ -37,47 +39,79 @@ class AllUsers extends Component {
       })
   }
 
-
-  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
-
-
-  handleResultSelect = (e, { result }) => this.setState({ value: result.title })
-
-
-  handleSearchChange = (e, { value }) => {
-    this.setState({ isLoading: true, value })
-    if (value.length < 1) return this.resetComponent()
-    const re = new RegExp(_.escapeRegExp(value), 'i')
-    const isMatch = result => re.test(result.title)
-
+  handleInputChange(event){
+    event.preventDefault()
     this.setState({
-      isLoading: false,
-      results: _.filter(this.state.users, isMatch),
+      searchVal: event.target.value
+    })
+  }
+
+  handleAdvancedClick=(event)=> {
+    event.preventDefault(event)
+    this.setState({
+      advancedIsClicked: true
     })
   }
 
 
+  // resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
+
+
+
+
+
   render() {
+    const filteredUsers = this.state.users.filter((user) => {
+      return user.firstName.includes(this.state.searchVal) ||
+             user.lastName.includes(this.state.searchVal)
+    })
+
     const { isLoading, value, results } = this.state
     return (
-      <Grid>
-        <Grid.Column width={8}>
-          <Search
-            loading={isLoading}
-            onResultSelect={this.handleResultSelect}
-            onSearchChange={this.handleSearchChange}
-            results={results}
-            value={value}
-            {...this.props}
-          />
-        </Grid.Column>
-        <Grid.Column width={8}>
-          <Header>State</Header>
-          <pre>{JSON.stringify(this.state, null, 2)}</pre>
-          <Header>Options</Header>
-          <pre>{JSON.stringify(this.state.users, null, 2)}</pre>
-        </Grid.Column>
-      </Grid>
+      <div>
+      <h1>Search Users: </h1>
+        <Input
+          onChange={this.handleInputChange}
+          icon={{ name: 'search', circular: true, link: true }}
+          placeholder='Search...'
+        />
+        <Button
+          onClick={this.handleAdvancedClick}
+          >Advanced Search
+        </Button>
+      {this.state.advancedIsClicked && <AdvancedSearch />}
+
+        {this.state.searchVal
+          ? filteredUsers.map((user => {
+            return (
+              <div>
+                <Card>
+                {/* <Image src='./download.jpg' /> */}
+                <Card.Content>
+                  <Card.Header>{user.firstName} {user.lastName}</Card.Header>
+                  <Card.Meta>{user.cohort} {user.cohortNum}</Card.Meta>
+                </Card.Content>
+            </Card>
+              </div>
+              )
+            })
+          )
+          : this.state.users.map((user => {
+            return (
+              <div>
+                <Card>
+                {/* <Image src='./download.jpg' /> */}
+                <Card.Content>
+                  <Card.Header>{user.firstName} {user.lastName}</Card.Header>
+                  <Card.Meta>{user.cohort} {user.cohortNum}</Card.Meta>
+                </Card.Content>
+            </Card>
+            </div>
+              )
+            })
+          )
+        }
+      </div>
     )
   }
 }
