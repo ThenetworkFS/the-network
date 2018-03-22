@@ -14,7 +14,14 @@ const uuidv1 = require('uuid/v1')
 class App extends Component {
 
   componentDidMount() {
-    if (localStorage.getItem('googleLogin') === '1') {
+
+    const firebaseUserKey = Object.keys(window.localStorage)
+    .filter(it => it.startsWith('firebase:authUser'))[0];
+    
+    if (
+      localStorage.getItem('googleLogin') === '1' ||
+      firebaseUserKey
+    ) {
       this.props.startFetch()
     }
     fire.auth().onAuthStateChanged(user => {
@@ -57,7 +64,6 @@ class App extends Component {
       this.props.loggedInUser.constructor === Object &&
       nextProps.loggedInUser.email
     ){
-      console.log('GOING TO HOME')
       history.push('/home/news')
     }
   }

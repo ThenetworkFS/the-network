@@ -77,6 +77,16 @@ body {
   background: rgba(33, 132, 209, .05) !important;
 }
 
+.user-profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
+}
+
+.anonymous {
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
 /*!
  * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
  * Copyright 2015 Daniel Cardoso <@DanielCardoso>
