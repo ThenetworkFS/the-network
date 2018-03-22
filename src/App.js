@@ -59,7 +59,6 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     // only go to /home when we get the user from Firestore
-    // this.props.startFetch()
     if(
       Object.keys(this.props.loggedInUser).length === 0 &&
       this.props.loggedInUser.constructor === Object &&
