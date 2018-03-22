@@ -69,6 +69,7 @@ class PostCard extends Component {
 
   onAddCommentClick = (event) => {
     event.preventDefault()
+    this.clearTextarea();
     db.collection('posts')
     .doc(this.props.post.id)
     .collection('comments')
@@ -79,6 +80,10 @@ class PostCard extends Component {
       content: this.state.newComment,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })
+  }
+
+  clearTextarea = () => {
+    document.getElementById("new-comment-textarea").value = "";
   }
 
   handleCommentChange = (e, { value }) => this.setState({ newComment: value })
@@ -122,11 +127,11 @@ class PostCard extends Component {
               onClick={this.onViewCommentsClick}
               >Hide Comments
             </Button>
-            <Form
+            <Form className="new-comment-textarea"
               onSubmit={this.onAddCommentClick}
               >
-              <Form.Field
-                control={TextArea}
+              <TextArea
+                id="new-comment-textarea"
                 label='Comment'
                 placeholder='Add Comment...'
                 onChange={this.handleCommentChange}
