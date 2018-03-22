@@ -80,29 +80,31 @@ class Home extends React.Component {
 
   render() {
     const category= this.props.match.params.category
+    console.log('category', category)
+    
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
           <div className="feed-menu-container">
             <nav className="feed-menu">
               <Menu>
-                <Menu.Item className="feed-menu-item" name='home/news'>
+                <Menu.Item className="feed-menu-item" name='news' active={category === 'news'}>
                   <Link to="/home/news">news</Link>
                 </Menu.Item>
 
-                <Menu.Item className="feed-menu-item" name='home/meetup'>
+                <Menu.Item className="feed-menu-item" name='meetup' active={category === 'meetup'}>
                   <Link to="/home/meetup">meetup</Link>
                 </Menu.Item>
 
-                <Menu.Item className="feed-menu-item" name='home/projects'>
+                <Menu.Item className="feed-menu-item" name='projects' active={category === 'projects'}>
                   <Link to="/home/projects">projects</Link>
                 </Menu.Item>
 
-                <Menu.Item className="feed-menu-item" name='home/jobs'>
+                <Menu.Item className="feed-menu-item" name='jobs' active={category === 'jobs'}>
                   <Link to="/home/jobs">jobs</Link>
                 </Menu.Item>
 
-                <Menu.Item className="feed-menu-item" name='home/faq'>
+                <Menu.Item className="feed-menu-item" name='faq' active={category === 'faq'}>
                   <Link to="/home/faq">faq</Link>
                 </Menu.Item>
               </Menu>
