@@ -17,8 +17,6 @@ class App extends Component {
 
     const firebaseUserKey = Object.keys(window.localStorage)
     .filter(it => it.startsWith('firebase:authUser'))[0];
-
-    console.log('USER', firebaseUserKey);
     
     if (
       localStorage.getItem('googleLogin') === '1' ||
