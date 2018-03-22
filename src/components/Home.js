@@ -5,7 +5,12 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Spinner from './Spinner'
 import PostCard from './PostCard'
-import { Menu, Form, TextArea } from 'semantic-ui-react'
+import { 
+  Menu,
+  Form,
+  TextArea,
+  Button,
+} from 'semantic-ui-react'
 
 
 class Home extends React.Component {
@@ -104,7 +109,7 @@ class Home extends React.Component {
             </nav>
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
               <TextArea placeholder='Post something' name="content" style={{ minHeight: 100 }} />
-              <button type="submit">Post</button>
+              <Button className="feed-newpost-submit-button" floated="right" color="blue">Post</Button>
             </Form>
             {this.renderPostCards(category)}
           </div>

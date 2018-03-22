@@ -47,6 +47,15 @@ body {
   margin-bottom: 12px;
 }
 
+.feed-menu {
+  margin-top: 12px;
+}
+
+.feed-newpost-submit-button {
+  margin-top: 6px !important;
+  margin-bottom: 20px !important;
+}
+
 .postcard-container .postcard {
   width: 100% !important;
 }
