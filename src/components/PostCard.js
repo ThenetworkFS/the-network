@@ -3,6 +3,7 @@ import MicrolinkCard from 'react-microlink'
 import history from '../history'
 import { connect } from 'react-redux'
 import { db } from '../fire'
+import firebase from 'firebase'
 import { selectUser } from '../store'
 import { Card, Image, Button, Form, Input, TextArea} from 'semantic-ui-react'
 
@@ -16,6 +17,23 @@ class PostCard extends Component {
       comments: [],
       newComment: ''
     }
+  }
+
+  componentDidMount() {
+    let currentComponent = this
+    db.collection("posts")
+      .doc(this.props.post.id)
+      .collection('comments')
+      .orderBy("timestamp", "desc")
+      .onSnapshot(function (querySnapshot) {
+        querySnapshot.docChanges.forEach((change) => {
+          if (change.type === "added") {
+            currentComponent.setState({
+              comments: currentComponent.state.comments.concat(change.doc.data())
+            });
+          }
+        });
+      })
   }
 
   formatPostWithLink = (post) => {
@@ -44,33 +62,28 @@ class PostCard extends Component {
   }
   onViewCommentsClick = (event) => {
     event.preventDefault()
-    let currentThis = this
     this.setState({
       viewComments: !this.state.viewComments,
-    })
-    db.collection('posts').doc(this.props.post.id).collection('comments').get().then((doc)=>{
-      doc.forEach((comment)=>{
-        this.setState({
-          comments: currentThis.state.comments.concat(comment.data())
-        })
-      })
     })
   }
 
   onAddCommentClick = (event) => {
     event.preventDefault()
-    db.collection('posts').doc(this.props.post.id).collection('comments').add({
+    db.collection('posts')
+    .doc(this.props.post.id)
+    .collection('comments')
+    .add({
       userEmail: this.props.loggedInUser.email,
       firstName: this.props.loggedInUser.firstName,
       lastName: this.props.loggedInUser.lastName,
-      content: this.state.newComment
+      content: this.state.newComment,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })
   }
 
   handleCommentChange = (e, { value }) => this.setState({ newComment: value })
 
   render() {
-    console.log('STATE', this.state)
     const { post } = this.props;
     return (
       <div className="postcard-container">
@@ -122,6 +135,14 @@ class PostCard extends Component {
                 type="submit"
                 >Add Comment
               </Button>
+              {this.state.comments && this.state.comments.map((comment) => {
+                return (
+                <div>
+                  <h1>{comment.firstName} {comment.lastName} </h1>
+                  <h2>{comment.content}</h2>
+                </div>
+                )
+              })}
             </Form>
           </div>
           :

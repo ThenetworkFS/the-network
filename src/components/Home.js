@@ -90,7 +90,6 @@ class Home extends React.Component{
 
   render() {
     const category= this.props.match.params.category
-console.log(this.state)
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
