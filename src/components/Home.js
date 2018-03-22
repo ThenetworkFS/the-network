@@ -59,7 +59,8 @@ class Home extends React.Component {
     this.setState({ isPostSubmitted: true })
     const content = event.target.content.value;
     const link = this.parseLinkInContent(content);
-    const category= this.props.match.params.category
+    const category = this.props.match.params.category;
+    this.clearTextarea();
     db.collection("posts").add({
       user: this.props.loggedInUser,
       category,
@@ -80,9 +81,12 @@ class Home extends React.Component {
     })
   }
 
+  clearTextarea = () => { 
+    document.getElementById("new-post-textarea").value = "";
+  }
+
   render() {
     const category= this.props.match.params.category
-    console.log('category', category)
     
     return (
       <div className="homepage-container">
@@ -112,7 +116,7 @@ class Home extends React.Component {
               </Menu>
             </nav>
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
-              <TextArea placeholder='Post something' name="content" style={{ minHeight: 100 }} />
+              <TextArea id="new-post-textarea" placeholder='Post something' name="content" style={{ minHeight: 100 }} />
               <Button disabled={this.state.isPostSubmitted} className="feed-newpost-submit-button" floated="right" color="blue">Post</Button>
             </Form>
             {this.renderPostCards(category)}
