@@ -54,16 +54,19 @@ class AllUsers extends React.Component {
   }
 
 
+  // resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
+
+
+
+
 
   render() {
-
-    console.log('All users STATE: ', this.state)
-
     const filteredUsers = this.state.users.filter((user) => {
       return user.firstName.includes(this.state.searchVal) ||
              user.lastName.includes(this.state.searchVal)
     })
 
+    const { isLoading, value, results } = this.state
     return (
       <div>
       <h1>Search Users: </h1>
@@ -108,12 +111,13 @@ class AllUsers extends React.Component {
             })
           )
         }
-
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
+
+const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
 
 export default connect(mapStateToProps)(AllUsers)
