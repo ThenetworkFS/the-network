@@ -14,7 +14,7 @@ class PostCard extends Component {
     const contentFirstPart = post.content.slice(0, linkIndex);
     const contentSecondPart = post.content.slice(linkIndex + linkLength);
     return (
-      <div className="formatted-post-with-link">
+      <div className="formatted-post">
         <span>{contentFirstPart}</span>
         <a href={post.link} target="_blank">{post.link}</a>
         <span>{contentSecondPart}</span>
@@ -37,7 +37,7 @@ class PostCard extends Component {
     const { post } = this.props;
     return (
       <div className="postcard-container">
-        <Card>
+        <Card className="postcard">
           <Card.Content>
             <Image floated='left' size='mini' src='https://react.semantic-ui.com/assets/images/avatar/large/steve.jpg' />
             <Card.Header>
@@ -59,7 +59,9 @@ class PostCard extends Component {
               </div>
             ) : (
               <Card.Description>
-                {post.content}
+                <div className="formatted-post">
+                  {post.content}
+                </div>
               </Card.Description>
             )}
           </Card.Content>
