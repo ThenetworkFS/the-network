@@ -20,6 +20,7 @@ class Home extends React.Component {
     this.state = {
       posts: [],
       link: '',
+      isPostSubmitted: false,
     }
   }
 
@@ -32,13 +33,13 @@ class Home extends React.Component {
         querySnapshot.docChanges.forEach((change) => {
           if (change.type === "added") {
             currentComponent.setState({
-              posts: currentComponent.state.posts.concat(change.doc.data())
+              posts: currentComponent.state.posts.concat(change.doc.data()),
+              isPostSubmitted: false,
             });
           }
         });
       })
   }
-
 
   parseLinkInContent = (content) => {
     const parseLinkExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/gi;
@@ -55,6 +56,7 @@ class Home extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({ isPostSubmitted: true })
     const content = event.target.content.value;
     const link = this.parseLinkInContent(content);
     const category= this.props.match.params.category
@@ -111,7 +113,7 @@ class Home extends React.Component {
             </nav>
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
               <TextArea placeholder='Post something' name="content" style={{ minHeight: 100 }} />
-              <Button className="feed-newpost-submit-button" floated="right" color="blue">Post</Button>
+              <Button disabled={this.state.isPostSubmitted} className="feed-newpost-submit-button" floated="right" color="blue">Post</Button>
             </Form>
             {this.renderPostCards(category)}
           </div>
