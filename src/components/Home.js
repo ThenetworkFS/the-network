@@ -5,7 +5,12 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Spinner from './Spinner'
 import PostCard from './PostCard'
-import { Menu, Form, TextArea } from 'semantic-ui-react'
+import { 
+  Menu,
+  Form,
+  TextArea,
+  Button,
+} from 'semantic-ui-react'
 
 class Home extends React.Component{
   constructor(props) {
@@ -14,6 +19,7 @@ class Home extends React.Component{
     this.state = {
       posts: [],
       link: '',
+      isPostSubmitted: false,
     }
   }
 
@@ -26,13 +32,13 @@ class Home extends React.Component{
         querySnapshot.docChanges.forEach((change) => {
           if (change.type === "added") {
             currentComponent.setState({
-              posts: currentComponent.state.posts.concat(change.doc.data())
+              posts: currentComponent.state.posts.concat(change.doc.data()),
+              isPostSubmitted: false,
             });
           }
         });
       })
   }
-
 
   parseLinkInContent = (content) => {
     const parseLinkExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/gi;
@@ -49,9 +55,11 @@ class Home extends React.Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({ isPostSubmitted: true })
     const content = event.target.content.value;
     const link = this.parseLinkInContent(content);
-    const category= this.props.match.params.category
+    const category = this.props.match.params.category;
+    this.clearTextarea();
     db.collection("posts").add({
       user: this.props.loggedInUser,
       category,
@@ -72,38 +80,43 @@ class Home extends React.Component{
     })
   }
 
+  clearTextarea = () => { 
+    document.getElementById("new-post-textarea").value = "";
+  }
+
   render() {
     const category= this.props.match.params.category
+    
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
           <div className="feed-menu-container">
             <nav className="feed-menu">
               <Menu>
-                <Menu.Item className="feed-menu-item" name='home/news'>
+                <Menu.Item className="feed-menu-item" name='news' active={category === 'news'}>
                   <Link to="/home/news">news</Link>
                 </Menu.Item>
 
-                <Menu.Item className="feed-menu-item" name='home/meetup'>
+                <Menu.Item className="feed-menu-item" name='meetup' active={category === 'meetup'}>
                   <Link to="/home/meetup">meetup</Link>
                 </Menu.Item>
 
-                <Menu.Item className="feed-menu-item" name='home/projects'>
+                <Menu.Item className="feed-menu-item" name='projects' active={category === 'projects'}>
                   <Link to="/home/projects">projects</Link>
                 </Menu.Item>
 
-                <Menu.Item className="feed-menu-item" name='home/jobs'>
+                <Menu.Item className="feed-menu-item" name='jobs' active={category === 'jobs'}>
                   <Link to="/home/jobs">jobs</Link>
                 </Menu.Item>
 
-                <Menu.Item className="feed-menu-item" name='home/faq'>
+                <Menu.Item className="feed-menu-item" name='faq' active={category === 'faq'}>
                   <Link to="/home/faq">faq</Link>
                 </Menu.Item>
               </Menu>
             </nav>
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
-              <TextArea placeholder='Post something' name="content" style={{ minHeight: 100 }} />
-              <button type="submit">Post</button>
+              <TextArea id="new-post-textarea" placeholder='Post something' name="content" style={{ minHeight: 100 }} />
+              <Button disabled={this.state.isPostSubmitted} className="feed-newpost-submit-button" floated="right" color="blue">Post</Button>
             </Form>
             {this.renderPostCards(category)}
           </div>

@@ -16,7 +16,11 @@ const uuidv1 = require('uuid/v1')
 
 
 class Signup extends React.Component {
-  handleSubmit = (event) => {
+  constructor(props) {
+    super(props)
+  }
+  signInAnonymously = (event) => {
+    console.log('SUBMITTING')
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
