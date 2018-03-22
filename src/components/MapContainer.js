@@ -13,27 +13,33 @@ export class MapContainer extends React.Component {
     super(props);
 
     this.state = {
-      users: []
+      users: [],
+      isFinished: false
     };
   }
 
-  componentDidMount() {
+
+
+  componentDidMount(){
     let currentComponent = this;
-    db.collection("users").onSnapshot(function(querySnapshot) {
-      querySnapshot.docChanges.forEach(change => {
-        if (change.type === "added") {
+    db.collection("users").get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
           currentComponent.setState({
-            users: currentComponent.state.users.concat(change.doc.data())
+            users: currentComponent.state.users.concat(doc.data())
           });
-        }
       });
-    });
-  }
+      currentComponent.setState({isFinished: true})
+  });
+    }
+
 
   render() {
     const users = this.state.users;
-
+    console.log('users', this.state)
     return (
+      <div>
+      { this.state.isFinished ?
       <div>
         <Map
           google={this.props.google}
@@ -48,22 +54,26 @@ export class MapContainer extends React.Component {
             lng: -74.006
           }}
         >
-          {users.map(user => {
+          { users.map((user, index) => {
             return (
             user.workInfo ?
                   <Marker
                     name={"Job"}
-                    key={user.id}
-                    position={user.workInfo.coordinates}
+                    key={index}
+                    position= {user.workInfo.coordinates}
                   />
                   : null
             )
           })}
         </Map>
       </div>
+        : null }
+        </div>
     );
   }
 }
+
+
 
 export default GoogleApiWrapper({
   apiKey: "AIzaSyDbroKDMDh0wHknE4B2wZk41pvvHAd1CSc"
