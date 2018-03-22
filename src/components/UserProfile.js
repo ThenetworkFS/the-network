@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getUser } from '../store'
 
+const ANONYMOUS_USER_IMAGE_URL = "https://firebasestorage.googleapis.com/v0/b/thenetwork-8d967.appspot.com/o/userImages%2Fanon_user.svg?alt=media&token=feef4a3d-7e4b-4ca9-8624-572882cda7fd"
 
 class UserProfile extends React.Component {
+  componentDidMount() {
+  }
+
   renderProjects = (projects) => {
     return projects.map(project => {
       return (
@@ -16,12 +20,12 @@ class UserProfile extends React.Component {
     })
   }
 
-
   render() {
     const user = this.props.selectedUser;
     const loggedInUser = this.props.loggedInUser;
     return (
       <div>
+        <img alt="user" src={user.image ? user.image : ANONYMOUS_USER_IMAGE_URL} className={!user.image ? "user-profile-image anonymous" : "user-profile-image"} />
         <h1>{user.firstName} {user.lastName}</h1>
         {user.email === loggedInUser.email ?
           <Link to={`/profile/${loggedInUser.id}/edit`}>Edit Profile</Link>

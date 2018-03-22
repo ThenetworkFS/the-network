@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import Spinner from './Spinner'
 import PostCard from './PostCard'
 import MapContainer from './MapContainer'
+
 import {
   Menu,
   Form,
@@ -28,12 +29,13 @@ class Home extends React.Component{
     let currentComponent = this
     //THIS IS LISTENING FOR CHANGES IN DB AND ADDING TO STATE
     //ordering by most recent on first render, but not when adding new
-    db.collection("posts").orderBy("timestamp", "desc")
+    db.collection("posts").orderBy("timestamp")
       .onSnapshot(function (querySnapshot) {
         querySnapshot.docChanges.forEach((change) => {
           if (change.type === "added") {
+            const newPost = {...change.doc.data(), id: change.doc.id}
             currentComponent.setState({
-              posts: currentComponent.state.posts.concat(change.doc.data()),
+              posts: [newPost].concat(currentComponent.state.posts),
               isPostSubmitted: false,
             });
           }
@@ -67,6 +69,9 @@ class Home extends React.Component{
       content,
       link,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    }).then((doc)=>{
+      console.log('doc after submit', doc.id)
+      db.collection("posts").doc(doc.id).update({id: doc.id})
     })
     .catch(function (error) {
       console.error("Error adding document: ", error);
@@ -88,6 +93,7 @@ class Home extends React.Component{
   render() {
     const category= this.props.match.params.category
 
+    
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
@@ -110,8 +116,8 @@ class Home extends React.Component{
                   <Link to="/home/jobs">jobs</Link>
                 </Menu.Item>
 
-                <Menu.Item className="feed-menu-item" name='faq' active={category === 'faq'}>
-                  <Link to="/home/faq">faq</Link>
+                <Menu.Item className="feed-menu-item" name='forum' active={category === 'forum'}>
+                  <Link to="/home/forum">forum</Link>
                 </Menu.Item>
               </Menu>
             </nav>
