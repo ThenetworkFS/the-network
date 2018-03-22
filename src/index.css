@@ -57,6 +57,12 @@ body {
   word-wrap: break-word;
 }
 
+.feed-menu-item {
+  min-width: 82px;
+  display: flex;
+  justify-content: center;
+}
+
 
 /*!
  * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
