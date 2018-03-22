@@ -1,4 +1,4 @@
-import { withRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import React from 'react'
 import { Signup, Login, Home, UserProfile, AllUsers, EditProfile } from './components'
 

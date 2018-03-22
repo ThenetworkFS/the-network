@@ -1,16 +1,11 @@
 import React from 'react'
-import { fire, db } from '../fire'
+import { db } from '../fire'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import Dropzone from 'react-dropzone'
 
 
 class ImagePicker extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-
   onDrop = (acceptedFiles, rejectedFiles) => {
     const user = this.props.loggedInUser;
     const storageRef = firebase.storage().ref();

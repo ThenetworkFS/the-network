@@ -1,9 +1,16 @@
-import { startFetch, stopFetch } from '../store'
 import { fire, db } from '../fire'
 import React from 'react'
-import firebase from 'firebase'
-import history from '../history'
 import { connect } from 'react-redux'
+import { startFetch, stopFetch } from '../store'
+import { 
+  Button,
+  Form,
+  Grid,
+  Header,
+  Image,
+  Segment
+} from 'semantic-ui-react'
+import Spinner from './Spinner'
 const uuidv1 = require('uuid/v1')
 
 
@@ -12,8 +19,8 @@ class Signup extends React.Component {
   constructor(props) {
     super(props)
   }
-
-  handleSubmit = (event) => {
+  signInAnonymously = (event) => {
+    console.log('SUBMITTING')
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
@@ -40,28 +47,74 @@ class Signup extends React.Component {
     return (
       <div>
         {!this.props.isFetching ? (
-          <form onSubmit={this.handleSubmit}>
-            <h4>Sign up</h4>
-            <div>
-              <h6>First Name</h6>
-              <input name="firstName" />
-            </div>
-            <div>
-              <h6>Last Name</h6>
-              <input name="lastName" />
-            </div>
-            <div>
-              <h6>Email</h6>
-              <input name="email" />
-            </div>
-            <div>
-              <h6>Password</h6>
-              <input name="password" />
-            </div>
-            <button type="submit">Sign up</button>
-          </form>
+          <div className="login-form">
+            <Grid
+              textAlign="center"
+              style={{ height: "100%" }}
+              verticalAlign="middle"
+            >
+              <Grid.Column style={{ maxWidth: 450 }}>
+                <Header as="h2" color="black" textAlign="center">
+                  <Image src='https://yt3.ggpht.com/a-/AJLlDp1nApHN8lojbFAL50lLxFOgBqCqtvcO1Ebl0Q=s900-mo-c-c0xffffffff-rj-k-no' />
+                  {' '}The Network
+                </Header>
+                <Form onSubmit={this.signInAnonymously} size="large">
+                  <Segment>
+                    <Form.Input
+                      name="firstName"
+                      fluid
+                      icon="user outline"
+                      iconPosition="left"
+                      placeholder="First Name"
+                      type="text"
+                      required
+                    />
+                    <Form.Input
+                      name="lastName"
+                      fluid
+                      icon="user outline"
+                      iconPosition="left"
+                      placeholder="Last Name"
+                      type="text"
+                      required
+                    />
+                    <Form.Input
+                      name="email"
+                      fluid
+                      icon="mail outline"
+                      iconPosition="left"
+                      placeholder="E-mail address"
+                      type="email"
+                      required
+                    />
+                    <Form.Input
+                      fluid
+                      name="password"
+                      icon="lock"
+                      iconPosition="left"
+                      placeholder="Password"
+                      type="password"
+                      required
+                    />
+                    <Button 
+                      className="login-form-button"
+                      color="teal"
+                      fluid
+                      size="large"
+                      type="submit"
+                    >
+                      Signup
+                    </Button>
+                  </Segment>
+                </Form>
+                <h5 className="login-form-prompt">
+                  Already have an account? <a href="/">Sign In</a>
+                </h5>
+              </Grid.Column>
+            </Grid>
+          </div>
         ) : (
-          <div>Fetching</div>
+          <Spinner />
         )}
       </div>
     )

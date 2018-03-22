@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { fire, db } from '../fire'
+import { db } from '../fire'
 import { connect } from 'react-redux'
-import history from '../history'
 import { Search, Grid, Header } from 'semantic-ui-react'
 import _ from 'lodash'
 
 
-class AllUsers extends React.Component {
+class AllUsers extends Component {
   constructor(props) {
     super(props)
 

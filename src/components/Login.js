@@ -1,16 +1,21 @@
-import { fire, db } from '../fire'
+import { fire } from '../fire'
 import React from 'react'
 import { startFetch } from '../store'
 import { connect } from 'react-redux'
-import history from '../history'
 import firebase from 'firebase'
-import { Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { 
+  Button,
+  Icon,
+  Form,
+  Grid,
+  Header,
+  Image,
+  Segment,
+} from 'semantic-ui-react'
+import Spinner from './Spinner'
 
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   signInAnonymously = (event) => {
     event.preventDefault()
@@ -34,69 +39,60 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="login-form-container">
         {!this.props.isFetching ? (
-          <div className='login-form'>
-            {/*
-              Heads up! The styles below are necessary for the correct render of this example.
-              You can do same with CSS, the main idea is that all the elements up to the `Grid`
-              below must have a height of 100%.
-            */}
-            <style>{`
-              body > div,
-              body > div > div,
-              body > div > div > div.login-form {
-                height: 100%;
-              }
-            `}</style>
+          <div className="login-form">
             <Grid
-              textAlign='center'
-              style={{ height: '100%' }}
-              verticalAlign='middle'
+              textAlign="center"
+              style={{ height: "100%" }}
+              verticalAlign="middle"
             >
               <Grid.Column style={{ maxWidth: 450 }}>
-                <Header as='h2' color='teal' textAlign='center'>
+                <Header as="h2" color="black" textAlign="center">
                   <Image src='https://yt3.ggpht.com/a-/AJLlDp1nApHN8lojbFAL50lLxFOgBqCqtvcO1Ebl0Q=s900-mo-c-c0xffffffff-rj-k-no' />
-                  {' '}Log-in to your account
+                  {' '}The Network
                 </Header>
-                <Form onSubmit={this.signInAnonymously} size='large'>
-                  <Segment stacked>
+                <Form onSubmit={this.signInAnonymously} size="large">
+                  <Segment>
                     <Form.Input
                       name="email"
                       fluid
-                      icon='user'
-                      iconPosition='left'
-                      placeholder='E-mail address'
+                      icon="mail outline"
+                      iconPosition="left"
+                      placeholder="E-mail address"
+                      type="email"
+                      required
                     />
                     <Form.Input
                       fluid
                       name="password"
-                      icon='lock'
-                      iconPosition='left'
-                      placeholder='Password'
-                      type='password'
+                      icon="lock"
+                      iconPosition="left"
+                      placeholder="Password"
+                      type="password"
+                      required
                     />
-      
-                    <Button color='teal' fluid size='large' type='submit'>Login</Button>
+                    <Button className="login-form-button" color="teal" fluid size="large" type="submit">Login</Button>
                   </Segment>
                 </Form>
-                <Message>
-                  New to us? <a href='/signup'>Sign Up</a>
-                </Message>
-                <h6>OR</h6>
-                <h6>Login with</h6>
-                <Icon name='large google icon' class='large google icon' onClick={this.googleLogin} />
+                <h5 className="login-form-prompt">
+                  Don't have an account? <a href="/signup">Sign Up Now</a>
+                </h5>
+                <h4>OR</h4>
+                <Button className="google-login-button"color="blue" size="small" onClick={this.googleLogin}>
+                  <span>Login with</span>
+                  <Icon name="google" className="large google icon google-login-icon" />
+                </Button>
               </Grid.Column>
             </Grid>
           </div>
         ) : (
-          <div>Fetching</div>
+          <Spinner />
         )}
       </div>
     )
   }
 }
-
 
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 

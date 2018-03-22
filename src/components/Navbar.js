@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { removeUser, selectUser } from '../store'
-import { fire, db } from '../fire'
+import { fire } from '../fire'
 import history from '../history'
 import { connect } from 'react-redux'
 import { Icon, Menu } from 'semantic-ui-react'
@@ -25,9 +24,8 @@ class Navbar extends Component {
     const user = this.props.loggedInUser
     return (
       <div>
-        <nav>
           {user && user.email ? (
-            <div>
+            <nav>
               <Menu icon>
                 <Menu.Item name='The Network' />
                 <Menu.Item name='home/news' active={activeItem === 'home/news'} onClick={this.handleItemClick}>
@@ -46,18 +44,12 @@ class Navbar extends Component {
                   }>
                   <Icon name='user' />
                 </Menu.Item>
-                <button onClick={this.props.removeUser}>
-                  Sign out
-                </button>
+                <button onClick={this.props.removeUser}>Sign out</button>
               </Menu>
-            </div>
+            </nav>
           ) : (
-              <div>
-                <Link to="/">Login</Link>
-                <Link to="/signup">Signup</Link>
-              </div>
-            )}
-        </nav>
+            null
+          )}
       </div>
     )
   }

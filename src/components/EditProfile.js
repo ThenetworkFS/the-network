@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { fire, db } from '../fire'
+import { db } from '../fire'
 import { connect } from 'react-redux'
 import ImagePicker from './ImagePicker'
 import history from '../history'
