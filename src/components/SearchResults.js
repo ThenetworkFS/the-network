@@ -24,16 +24,27 @@ class SearchResults extends React.Component {
     let currentComponent = this
 
     const params = queryString.parseUrl(this.props.location.search)
-    const search = params.query.industry
-    // console.log('HERE:', search.length)
 
-    db.collection("users")
-    // .where("industry", "==", `${params.query.industry}`)
-    // .where("cohortNum", "==", "")
-    // .where("city", "==", "")
-    // .where("company", "==", "")
-    .where("industry", "==", `${params.query.industry}`) //works with Tech!!!!
-    .get()
+    let ref = db.collection("users")
+    let query = ref
+
+    if (params.query.cohortNum !== "") {
+      query = query.where("cohortNum", "==", params.query.cohortNum)
+   }
+    if (params.query.cohort !== "") {
+       query = query.where("cohort", "==", params.query.cohort)
+    }
+    if (params.query.city !== "") {
+       query = query.where("city", "==", params.query.city)
+    }
+    if (params.query.company !== "") {
+       query = query.where("company", "==", params.query.company)
+    }
+    if (params.query.industry !== "") {
+      query = query.where("industry", "==", params.query.industry)
+   }
+
+    query.get()
     .then(function(users){
       users.forEach((user)=>{
         currentComponent.setState({
@@ -44,11 +55,6 @@ class SearchResults extends React.Component {
   }
 
   render() {
-console.log('PROPS', this.props)
-console.log('STATE ON SEARCH RES: ', this.state)
-const params = queryString.parse(this.props.location.search)
-console.log('PARAMS-query', params)
-
     return (
       <div>
         <Link to='/advancedSearch'>

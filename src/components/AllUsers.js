@@ -8,6 +8,7 @@ import _ from 'lodash'
 import { Input } from 'semantic-ui-react'
 import {AdvancedSearch} from './index.js'
 import { Card, Icon, Image } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 
 class AllUsers extends React.Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class AllUsers extends React.Component {
 
     this.state = {
       users: [],
-      searchVal: ''
+      searchVal: '',
+      advancedIsClicked: false
     }
     this.handleInputChange = this.handleInputChange.bind(this)
   }
@@ -44,6 +46,13 @@ class AllUsers extends React.Component {
     })
   }
 
+  handleAdvancedClick=(event)=> {
+    event.preventDefault(event)
+    this.setState({
+      advancedIsClicked: true
+    })
+  }
+
 
 
   render() {
@@ -63,7 +72,12 @@ class AllUsers extends React.Component {
           icon={{ name: 'search', circular: true, link: true }}
           placeholder='Search...'
         />
-        <AdvancedSearch />
+        <Button
+          onClick={this.handleAdvancedClick}
+          >Advanced Search
+        </Button>
+      {this.state.advancedIsClicked && <AdvancedSearch />}
+
         {this.state.searchVal
           ? filteredUsers.map((user => {
             return (

@@ -38,15 +38,8 @@ export default class AdvancedSearch extends React.Component {
 
   submitHandler(event){
     event.preventDefault()
-    history.push(`/search?
-      cohort=${this.state.cohortValue}
-      &cohortNum=${this.state.cohortNumValue}
-      &city=${this.state.city}
-      &company=${this.state.company}
-      &industry=${this.state.industry}
-      `)
+    history.push(`/search?cohort=${this.state.cohortValue}&cohortNum=${this.state.cohortNumValue}&city=${this.state.city}&company=${this.state.company}&industry=${this.state.industry}`)
 
-    console.log('STATE on submit ', this.state)
   }
 
   handleCohortChange = (e, { value }) => this.setState({ cohortValue: value })
@@ -62,7 +55,7 @@ export default class AdvancedSearch extends React.Component {
 
   render() {
 
-    console.log('STATE: ', this.state)
+
     const options = [
       { key: 'GH', text: 'GH', value: 'GH' },
       { key: 'FS', text: 'FS', value: 'FS' },
@@ -71,7 +64,6 @@ export default class AdvancedSearch extends React.Component {
 
     return (
       <div>
-        <h1> Advanced Search: </h1>
         <Form
           onSubmit={this.submitHandler}>
 
@@ -79,29 +71,29 @@ export default class AdvancedSearch extends React.Component {
               width='1'
               onChange={this.handleCohortChange}
               control={Select}
-              label='cohort'
+              label='Cohort'
               options={options}
               placeholder='Cohort' />
             <Form.Input
-              label='number'
+              label='Number'
               placeholder='Number'
               onChange={this.handleCohortNumChange}
               width='1'
             />
             <Form.Input
-              label='city'
+              label='City'
               placeholder='City'
               onChange={this.handleCityChange}
               width='1'
             />
             <Form.Input
-              label='company'
+              label='Company'
               placeholder='Company'
               onChange={this.handleCompanyChange}
               width='1'
             />
             <Form.Input
-              label='industry'
+              label='Industry'
               placeholder='Industry'
               onChange={this.handleIndustryChange}
               width='1'
