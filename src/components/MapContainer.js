@@ -5,8 +5,10 @@ import firebase from "firebase";
 
 const style = {
   width: "100%",
-  height: "100%"
+  height: "100%",
+  position: "relative"
 };
+
 
 export class MapContainer extends React.Component {
   constructor(props) {
@@ -14,11 +16,13 @@ export class MapContainer extends React.Component {
 
     this.state = {
       users: [],
-      isFinished: false
+      isFinished: false,
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
     };
+    this.onMouseoverMarker= this.onMouseoverMarker.bind(this)
   }
-
-
 
   componentDidMount(){
     let currentComponent = this;
@@ -32,7 +36,15 @@ export class MapContainer extends React.Component {
       currentComponent.setState({isFinished: true})
   });
     }
-
+  
+     
+    onMouseoverMarker(props, marker, e){
+      this.setState({
+        selectedPlace: props,
+        activeMarker: marker,
+        showingInfoWindow: true
+      });
+    }
 
   render() {
     const users = this.state.users;
@@ -42,29 +54,34 @@ export class MapContainer extends React.Component {
       { this.state.isFinished ?
       <div>
         <Map
+        
           google={this.props.google}
           zoom={14}
           style={style}
           initialCenter={{
-            lat: 40.7128,
-            lng: -74.006
-          }}
-          mapcenter={{
-            lat: 40.7128,
-            lng: -74.006
+            lat: 40.7549,
+            lng: -73.9840
           }}
         >
-          { users.map((user, index) => {
-            return (
-            user.workInfo ?
-                  <Marker
-                    name={"Job"}
-                    key={index}
-                    position= {user.workInfo.coordinates}
-                  />
-                  : null
-            )
-          })}
+        { users.map((user, index) => {
+          return (
+          user.workInfo ?
+                <Marker
+                  name={user.workInfo.address}
+                  key={index}
+                  position= {user.workInfo.coordinates}
+                  onMouseover={this.onMouseoverMarker}
+                />
+                : null
+          )
+        })}
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}>
+            <div>
+              <h1>{this.state.selectedPlace.name}</h1>
+            </div>
+        </InfoWindow>
         </Map>
       </div>
         : null }
