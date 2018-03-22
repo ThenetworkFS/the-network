@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../fire'
-import history from '../history'
 import { withRouter } from 'react-router'
 import queryString from 'query-string';
 import { Button } from 'semantic-ui-react'
