@@ -80,24 +80,24 @@ class Home extends React.Component {
         {!this.props.isFetching ? (
           <div className="feed-menu-container">
             <nav className="feed-menu">
-              <Menu icon>
-                <Menu.Item name='home/news'>
+              <Menu>
+                <Menu.Item className="feed-menu-item" name='home/news'>
                   <Link to="/home/news">news</Link>
                 </Menu.Item>
 
-                <Menu.Item name='home/meetup'>
+                <Menu.Item className="feed-menu-item" name='home/meetup'>
                   <Link to="/home/meetup">meetup</Link>
                 </Menu.Item>
 
-                <Menu.Item name='home/projects'>
+                <Menu.Item className="feed-menu-item" name='home/projects'>
                   <Link to="/home/projects">projects</Link>
                 </Menu.Item>
 
-                <Menu.Item name='home/jobs'>
+                <Menu.Item className="feed-menu-item" name='home/jobs'>
                   <Link to="/home/jobs">jobs</Link>
                 </Menu.Item>
 
-                <Menu.Item name='home/faq'>
+                <Menu.Item className="feed-menu-item" name='home/faq'>
                   <Link to="/home/faq">faq</Link>
                 </Menu.Item>
               </Menu>
