@@ -2,7 +2,7 @@ import { fire, db } from '../fire'
 import React from 'react'
 import { connect } from 'react-redux'
 import { startFetch, stopFetch } from '../store'
-import { 
+import {
   Button,
   Form,
   Grid,
@@ -96,7 +96,7 @@ class Signup extends React.Component {
                       type="password"
                       required
                     />
-                    <Button 
+                    <Button
                       className="login-form-button"
                       color="teal"
                       fluid

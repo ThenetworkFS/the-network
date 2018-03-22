@@ -12,8 +12,7 @@ import {
   Button,
 } from 'semantic-ui-react'
 
-
-class Home extends React.Component {
+class Home extends React.Component{
   constructor(props) {
     super(props)
 
