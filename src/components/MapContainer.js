@@ -4,8 +4,8 @@ import { db } from "../fire";
 
 
 const style = {
-  width: "100%",
-  height: "100%",
+  width: "30%",
+  height: "70%",
   position: "relative"
 };
 
@@ -22,6 +22,7 @@ export class MapContainer extends React.Component {
       selectedPlace: {},
     };
     this.onMouseoverMarker= this.onMouseoverMarker.bind(this)
+    this.onMouseoutMarker= this.onMouseoutMarker.bind(this)
   }
 
 
@@ -46,6 +47,15 @@ export class MapContainer extends React.Component {
       });
     }
 
+
+    onMouseoutMarker(e){
+      this.setState({
+        selectedPlace: {},
+        activeMarker: {},
+        showingInfoWindow: false
+      });
+    }
+    
     
   render() {
     const users = this.state.users;
@@ -66,13 +76,14 @@ export class MapContainer extends React.Component {
         >
         { users.map((user, index) => {
           return (
-          user.workInfo ?
+          user.workInfo && user.firstName !== 'Beth' ?
                 <Marker
                   name={user.workInfo.address}
                   title={`${user.firstName} ${user.lastName}`}
                   key={index}
                   position= {user.workInfo.coordinates}
                   onMouseover={this.onMouseoverMarker}
+                  onMouseout={this.onMouseoutMarker}
                 />
                 : null
           )
@@ -81,8 +92,8 @@ export class MapContainer extends React.Component {
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}>
             <div>
-              <h1>{this.state.selectedPlace.title}</h1>
-              <h1>{this.state.selectedPlace.name}</h1>
+              <h4>{this.state.selectedPlace.title}</h4>
+              <h4>{this.state.selectedPlace.name}</h4>
             </div>
         </InfoWindow>
         </Map>
