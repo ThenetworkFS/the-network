@@ -79,7 +79,8 @@ class Home extends React.Component{
   }
 
   renderPostCards = (category) => {
-    return this.state.posts.filter(post => post.category === category).map((post, index) => {
+    return this.state.posts.filter(post => post.category === category)
+    .map((post, index) => {
       return (
         <PostCard key={index} post={post}/>
       )
@@ -93,7 +94,7 @@ class Home extends React.Component{
   render() {
     const category= this.props.match.params.category
 
-    
+
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
@@ -123,7 +124,12 @@ class Home extends React.Component{
             </nav>
             { category === 'meetup' ? <Link to="/calendar">Calendar</Link> : null }
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
-              <TextArea id="new-post-textarea" placeholder='Post something' name="content" style={{ minHeight: 100 }} />
+              <TextArea
+                required
+                id="new-post-textarea"
+                placeholder='Post something'
+                name="content"
+                style={{ minHeight: 100 }} />
               <Button disabled={this.state.isPostSubmitted} className="feed-newpost-submit-button" floated="right" color="blue">Post</Button>
             </Form>
             {this.renderPostCards(category)}

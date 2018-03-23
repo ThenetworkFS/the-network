@@ -3,9 +3,11 @@ import { db } from '../fire'
 import { connect } from 'react-redux'
 import ImagePicker from './ImagePicker'
 import history from '../history'
-import { getUser } from '../store' 
-import EditWork from './EditWork'
+import { getUser } from '../store'
 import EditProject from './EditProject'
+import { Card, Form, Input, Button } from 'semantic-ui-react'
+import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
 
 class EditProfile extends React.Component {
@@ -13,6 +15,8 @@ class EditProfile extends React.Component {
     super(props)
     this.state = {
       loggedInUser: props.loggedInUser,
+      isProfileSaved: false,
+      address: '',
     }
   }
 
@@ -25,24 +29,54 @@ class EditProfile extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.loggedInUser.email) {
+      if(this.props.loggedInUser.workInfo){
+        this.setState(() => ({
+          address: this.props.loggedInUser.workInfo.address,
+        }))
+      }
+    }
+  }
 
   handleProfileSubmit = (event) => {
     event.preventDefault()
-    const user = this.props.loggedInUser
+    this.setState({ isProfileSaved: true })
+    if (this.state.address.length) {
+      this.getGeoCodeByAddress()
+      .then(result => {
+        const userWorkInfo = {
+          workInfo: {
+            address: this.state.address,
+            coordinates: result
+          }
+        }
+        this.updateUser(userWorkInfo)
+      })
+    } else {
+      this.updateUser(this.state.loggedInUser)
+    }
+  }
+
+  getGeoCodeByAddress = () => {
+    return geocodeByAddress(this.state.address)
+    .then(results => getLatLng(results[0]))
+  }
+
+  updateUser = (userAttributes) => {
     db
       .collection('users')
-      .doc(user.email)
-      .update(this.state.loggedInUser)
+      .doc(this.state.loggedInUser.email)
+      .update(userAttributes)
       .then(() => {
-        history.push(`/profile/${user.id}`)
+        history.push(`/profile/${this.state.loggedInUser.id}`)
       })
       .catch(err => console.error(err))
   }
 
 
-  handleChange = event => {
+  onInputChange = event => {
     event.preventDefault()
-    console.log(event.target.name, event.target.value)
     this.setState({
       loggedInUser: {
         ...this.state.loggedInUser,
@@ -51,86 +85,117 @@ class EditProfile extends React.Component {
     })
   }
 
-
-  noop = () => { }
-
+  onWorkAddressChange = (address) => {
+    this.setState({
+      address,
+      loggedInUser: {
+        ...this.state.loggedInUser,
+        workInfo: {...this.state.workInfo, address}
+      }
+    })
+  }
 
   render() {
     const user = this.state.loggedInUser
+    const inputProps = {
+      value: this.state.address,
+      onChange: this.onWorkAddressChange,
+    }
+
     return (
-      <div>
-        <form
-          onSubmit={this.handleProfileSubmit}
-          onChange={this.handleChange}
-        >
-          <h6>
-            <input
-              onChange={this.noop}
-              name="firstName"
-              value={user.firstName}
-            />{' '}
-            <input
-              onChange={this.noop}
-              name="lastName"
-              value={user.lastName}
-            />
-          </h6>
+      <div className="user-profile-container">
+        <Card className="user-profile">
+          <div></div>
+          <img
+            alt="user"
+            src={user.image ? user.image : ANONYMOUS_USER_IMAGE_URL}
+            className={!user.image ? "user-profile-image anonymous" : "user-profile-image"}
+          />
           <ImagePicker />
-          <h6>
-            Lives in{' '}
-            <input
-              onChange={this.noop}
-              name="city"
-              placeholder="City"
-              value={user.city}
-            />,{' '}
-            <input
-              onChange={this.noop}
-              name="state"
-              placeholder="State"
-              value={user.state}
-            />{' '}
-            <input
-              onChange={this.noop}
-              name="country"
-              placeholder="Country"
-              value={user.country}
-            />
-          </h6>
-            Is interested in:{' '}
-            <input
-              onChange={this.noop}
-              name="interests"
-              value={user.interests}
-            />
-          <h6>
-            Slack:{' '}
-            <input
-              onChange={this.noop}
-              name="slack"
-              value={user.slack}
-            />
-          </h6>
-          <h6>
-            Github:{' '}
-            <input
-              onChange={this.noop}
-              name="github"
-              value={user.github}
-            />
-          </h6>
-          <h6>
-            Linkedin:{' '}
-            <input
-              onChange={this.noop}
-              name="linkedin"
-              value={user.linkedin}
-            />
-          </h6>
-          <button type="submit">Save Profile</button>
-        </form>
-        <EditWork />
-        <EditProject />
+          <Form onSubmit={this.handleProfileSubmit}>
+            <div className="user-profile-username edit-profile">
+              <Form.Field>
+                <label className="label">First name</label>
+                <Input
+                  type='text'
+                  onChange={this.onInputChange}
+                  name="firstName"
+                  value={user.firstName}
+                />
+                <label className="label">Last name</label>
+                <Input
+                  type="text"
+                  onChange={this.onInputChange}
+                  name="lastName"
+                  value={user.lastName}
+                />
+              </Form.Field>
+            </div>
+            <div>
+              <Form.Field>
+                <label className="label">City</label>
+                <Input
+                  type='text'
+                  onChange={this.onInputChange}
+                  name="city"
+                  value={user.city}
+                />
+                <label className="label">State</label>
+                <Input
+                  type="text"
+                  onChange={this.onInputChange}
+                  name="state"
+                  value={user.state}
+                />
+                <label className="label">Country</label>
+                <Input
+                  type="text"
+                  onChange={this.onInputChange}
+                  name="country"
+                  value={user.country}
+                />
+                <label className="label">Your interests</label>
+                <Input
+                  type="text"
+                  onChange={this.onInputChange}
+                  name="interests"
+                  value={user.interests}
+                />
+                <label className="label">Slack</label>
+                <Input
+                  type="text"
+                  onChange={this.onInputChange}
+                  name="slack"
+                  value={user.slack}
+                />
+                <label className="label">Github</label>
+                <Input
+                  type="text"
+                  onChange={this.onInputChange}
+                  name="github"
+                  value={user.github}
+                />
+                <label className="label">LinkedIn</label>
+                <Input
+                  type="text"
+                  onChange={this.onInputChange}
+                  name="linkedin"
+                  value={user.linkedin}
+                />
+              </Form.Field>
+              <label className="label">Work address</label>
+              <PlacesAutocomplete inputProps={inputProps} />
+            </div>
+            <Button
+              disabled={this.state.isProfileSaved}
+              className="user-profile-save-button"
+              color="blue"
+            >
+              Save Profile
+            </Button>
+          </Form>
+          <EditProject />
+        </Card>
       </div>
     )
   }
@@ -138,7 +203,6 @@ class EditProfile extends React.Component {
 
 
 const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
-
 
 const mapDispatchToProps = {
   getUser

@@ -3,7 +3,7 @@ import React from 'react'
 import { startFetch } from '../store'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
-import { 
+import {
   Button,
   Icon,
   Form,
@@ -16,6 +16,13 @@ import Spinner from './Spinner'
 
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      invalidLogin: false
+    }
+  }
 
   signInAnonymously = (event) => {
     event.preventDefault()
@@ -23,7 +30,12 @@ class Login extends React.Component {
     const password = event.target.password.value
     fire.auth()
     .signInWithEmailAndPassword(email, password)
-    .catch(err => console.error(err))
+    .catch(err => {
+      console.log(err.code)
+      this.setState({
+        invalidLogin: true
+      })
+      console.error(err)})
   }
 
   googleLogin = (event) => {
@@ -36,8 +48,15 @@ class Login extends React.Component {
       localStorage.removeItem('googleLogin');
     })
   }
+  setInvalidToFalse = (event) => {
+    event.preventDefault()
+    this.setState({
+      invalidLogin: false
+    })
+  }
 
   render() {
+    console.log(this.state)
     return (
       <div className="login-form-container">
         {!this.props.isFetching ? (
@@ -53,8 +72,10 @@ class Login extends React.Component {
                   {' '}The Network
                 </Header>
                 <Form onSubmit={this.signInAnonymously} size="large">
+                {this.state.invalidLogin && <h5>Invalid User or Password</h5>}
                   <Segment>
                     <Form.Input
+                      onChange={this.setInvalidToFalse}
                       name="email"
                       fluid
                       icon="mail outline"
@@ -64,6 +85,7 @@ class Login extends React.Component {
                       required
                     />
                     <Form.Input
+                      onChange={this.setInvalidToFalse}
                       fluid
                       name="password"
                       icon="lock"

@@ -1,0 +1,1 @@
+export const ANONYMOUS_USER_IMAGE_URL = "https://firebasestorage.googleapis.com/v0/b/thenetwork-8d967.appspot.com/o/userImages%2Fanon_user.svg?alt=media&token=feef4a3d-7e4b-4ca9-8624-572882cda7fd";

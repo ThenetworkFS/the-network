@@ -1,11 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../fire'
 import { withRouter } from 'react-router'
 import queryString from 'query-string';
 import { Button } from 'semantic-ui-react'
-import AdvancedSearch from './AdvancedSearch';
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { selectUser } from '../store'
 import history from '../history'

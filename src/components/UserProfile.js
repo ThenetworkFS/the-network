@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getUser } from '../store'
-
-const ANONYMOUS_USER_IMAGE_URL = "https://firebasestorage.googleapis.com/v0/b/thenetwork-8d967.appspot.com/o/userImages%2Fanon_user.svg?alt=media&token=feef4a3d-7e4b-4ca9-8624-572882cda7fd"
+import { Header, Card, Icon } from 'semantic-ui-react'
+import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 
 class UserProfile extends React.Component {
   componentDidMount() {
@@ -24,27 +24,86 @@ class UserProfile extends React.Component {
     const user = this.props.selectedUser;
     const loggedInUser = this.props.loggedInUser;
     return (
-      <div>
-        <img alt="user" src={user.image ? user.image : ANONYMOUS_USER_IMAGE_URL} className={!user.image ? "user-profile-image anonymous" : "user-profile-image"} />
-        <h1>{user.firstName} {user.lastName}</h1>
-        {user.email === loggedInUser.email ?
-          <Link to={`/profile/${loggedInUser.id}/edit`}>Edit Profile</Link>
-          : null
-        }
-        <h6>Lives in {user.city}, {user.state} {user.country}</h6>
-        <h6>Is interested in: {user.interests}</h6>
-        <h6>Email: {user.email}</h6>
-        <h6>Slack: {user.slack}</h6>
-        <h6>Github: {user.github}</h6>
-        <h6>Linkedin: {user.linkedin}</h6>
-        { user.workInfo ?
-        <h6>Works at: {user.workInfo.address}</h6>
-        : null
-        }
-        {user.projects ?
-          <h5>Projects: {user.projects.length && this.renderProjects(user.projects)}</h5>
-          : null
-        }
+      <div className="user-profile-container">
+        <Card className="user-profile">
+          <div></div>
+          <img
+            alt="user"
+            src={user.image ? user.image : ANONYMOUS_USER_IMAGE_URL}
+            className={!user.image ? "user-profile-image anonymous" : "user-profile-image"}
+          />
+          <Header className="user-profile-username" as="h2">{user.firstName} {user.lastName}</Header>
+          {user.email === loggedInUser.email ? (
+            <Link
+              className="user-profile-edit-link"
+              to={`/profile/${loggedInUser.id}/edit`}
+            >
+              edit profile
+            </Link>
+          ) : (
+            null
+          )}
+          {user.workInfo.address ? (
+            <Header className="user-profile-details" as="h4">Works at: {user.workInfo.address}</Header>
+          ) : (
+            null
+          )}
+          {user.city ? (
+            <Header className="user-profile-details" as="h4">Lives in {user.city}, {user.state} {user.country}</Header>
+          ) : (
+            null
+          )}
+          {user.interests ? (
+            <Header className="user-profile-details" as="h4">Is interested in: {user.interests}</Header>
+          ) : (
+            null
+          )}
+          {user.email ? (
+            <Header className="user-profile-details" as="h4">
+              <div>
+                <Icon className="user-profile-icon" name="mail outline" size="large"/>
+                <a className="user-profile-header" href={`mailto:${user.email}`}>{user.email}</a>
+              </div>
+            </Header>
+          ) : (
+            null
+          )}
+          {user.slack ? (
+            <Header className="user-profile-details" as="h4">
+              <div>
+                <Icon className="user-profile-icon" name="slack" size="large"/>
+                <a className="user-profile-header" href={user.slack}>{user.slack}</a>
+              </div>
+            </Header>
+          ) : (
+            null
+          )}
+          {user.github ? (
+            <Header className="user-profile-details" as="h4">
+              <div>
+                <Icon className="user-profile-icon" name="github" size="large"/>
+                <a className="user-profile-header" href={user.github} target="_blank">{user.github}</a>
+              </div>
+            </Header>
+          ) : (
+            null
+          )}
+          {user.linkedin ? (
+            <Header className="user-profile-details" as="h4">
+              <div>
+                <Icon className="user-profile-icon" name="linkedin" size="large"/>
+                <a className="user-profile-header" href={user.linkedin} target="_blank">{user.linkedin}</a>
+              </div>
+            </Header>
+          ) : (
+            null
+          )}
+          {user.projects ? (
+            <h5>Projects: {user.projects.length && this.renderProjects(user.projects)}</h5>
+          ) : (
+            null
+          )}
+        </Card>
       </div>
     )
   }
