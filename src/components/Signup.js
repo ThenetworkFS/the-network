@@ -26,7 +26,8 @@ class Signup extends React.Component {
       email,
       firstName,
       lastName,
-      id
+      id,
+      workInfo: {}
     }
     this.props.startFetch()
     fire.auth().createUserWithEmailAndPassword(email, password)
