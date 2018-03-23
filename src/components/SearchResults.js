@@ -6,6 +6,8 @@ import queryString from 'query-string';
 import { Button } from 'semantic-ui-react'
 import AdvancedSearch from './AdvancedSearch';
 import { Card, Icon, Image } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { selectUser } from '../store'
 
 class SearchResults extends React.Component {
   constructor(props) {
@@ -53,6 +55,17 @@ class SearchResults extends React.Component {
     })
   }
 
+  onUserNameClick = (event, user) => {
+    event.preventDefault()
+    return db.collection('users')
+      .doc(user.email)
+      .get()
+      .then(user => {
+        this.props.selectUser(user.data())
+        history.push(`/profile/${user.data().id}`)
+      })
+  }
+
   render() {
     return (
       <div>
@@ -66,7 +79,9 @@ class SearchResults extends React.Component {
               <Card>
                 {/* <Image src='./download.jpg' /> */}
                 <Card.Content>
-                  <Card.Header>{user.firstName} {user.lastName}</Card.Header>
+                  <Card.Header>
+                  <a onClick={(event) => this.onUserNameClick(event, user)}>{user.firstName} {user.lastName}</a>
+                  </Card.Header>
                   <Card.Meta>{user.cohort} {user.cohortNum}</Card.Meta>
                   <Card.Description>{user.firstName} lives in {user.city} and works at {user.company}.</Card.Description>
                 </Card.Content>
@@ -84,4 +99,10 @@ class SearchResults extends React.Component {
 
 // export default connect(mapStateToProps)(AdvancedSearch)
 
-export default withRouter(SearchResults)
+const mapDispatchToProps = {
+  selectUser
+}
+
+// const connected =
+
+export default withRouter(connect(null, mapDispatchToProps)(SearchResults))
