@@ -21,8 +21,6 @@ export class MapContainer extends React.Component {
       activeMarker: {},
       selectedPlace: {},
     };
-    this.onMouseoverMarker = this.onMouseoverMarker.bind(this)
-    this.onMouseoutMarker = this.onMouseoutMarker.bind(this)
   }
 
 
@@ -39,7 +37,7 @@ export class MapContainer extends React.Component {
   }
 
 
-  onMouseoverMarker(props, marker, e) {
+  onMouseoverMarker = (props, marker, e) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -48,7 +46,7 @@ export class MapContainer extends React.Component {
   }
 
 
-  onMouseoutMarker(e) {
+  onMouseoutMarker = (e) => {
     this.setState({
       selectedPlace: {},
       activeMarker: {},
@@ -75,7 +73,7 @@ export class MapContainer extends React.Component {
             >
               {users.map((user, index) => {
                 return (
-                  user.workInfo && user.firstName !== 'Beth' ?
+                  user.workInfo && user.workInfo.coordinates ?
                     <Marker
                       name={user.workInfo.address}
                       title={`${user.firstName} ${user.lastName}`}

@@ -121,8 +121,7 @@ class Home extends React.Component{
                 </Menu.Item>
               </Menu>
             </nav>
-              { category === 'jobs' ?
-                <MapContainer /> : null }
+            { category === 'meetup' ? <Link to="/calendar">Calendar</Link> : null }
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
               <TextArea id="new-post-textarea" placeholder='Post something' name="content" style={{ minHeight: 100 }} />
               <Button disabled={this.state.isPostSubmitted} className="feed-newpost-submit-button" floated="right" color="blue">Post</Button>

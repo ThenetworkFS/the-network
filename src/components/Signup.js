@@ -19,6 +19,8 @@ class Signup extends React.Component {
   constructor(props) {
     super(props)
   }
+
+
   signInAnonymously = (event) => {
     console.log('SUBMITTING')
     event.preventDefault()
@@ -43,6 +45,7 @@ class Signup extends React.Component {
     })
   }
 
+  
   render() {
     return (
       <div>

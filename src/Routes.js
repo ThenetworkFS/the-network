@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router-dom'
 import React from 'react'
-import { Signup, Login, Home, UserProfile, AllUsers, SearchResults, AdvancedSearch, EditProfile } from './components'
+import { Signup, Login, Home, UserProfile, AllUsers, SearchResults, AdvancedSearch, EditProfile, MapContainer, Calendar } from './components'
 
 
 const Routes = () => {
@@ -14,6 +14,8 @@ const Routes = () => {
             <Route exact path="/allUsers" component={AllUsers} />
             <Route exact path="/search" component={SearchResults} />
             <Route exact path="/advancedSearch" component={AdvancedSearch} />
+            <Route exact path="/map" component={MapContainer} />
+            <Route exact path="/calendar" component={Calendar} />
         </Switch>
     )
 }
