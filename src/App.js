@@ -17,7 +17,7 @@ class App extends Component {
 
     const firebaseUserKey = Object.keys(window.localStorage)
     .filter(it => it.startsWith('firebase:authUser'))[0];
-    
+
     if (
       localStorage.getItem('googleLogin') === '1' ||
       firebaseUserKey
@@ -64,7 +64,7 @@ class App extends Component {
       this.props.loggedInUser.constructor === Object &&
       nextProps.loggedInUser.email
     ){
-      history.push('/home/news')
+      history.push('/HomepageLayout')
     }
   }
 

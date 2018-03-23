@@ -2,13 +2,11 @@ import React from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import { db } from "../fire";
 
-
 const style = {
   width: "30%",
   height: "70%",
   position: "relative"
 };
-
 
 export class MapContainer extends React.Component {
   constructor(props) {
@@ -19,25 +17,26 @@ export class MapContainer extends React.Component {
       isFinished: false,
       showingInfoWindow: false,
       activeMarker: {},
-      selectedPlace: {},
+      selectedPlace: {}
     };
-    this.onMouseoverMarker = this.onMouseoverMarker.bind(this)
-    this.onMouseoutMarker = this.onMouseoutMarker.bind(this)
+    this.onMouseoverMarker = this.onMouseoverMarker.bind(this);
+    this.onMouseoutMarker = this.onMouseoutMarker.bind(this);
   }
-
 
   componentDidMount() {
     let currentComponent = this;
-    db.collection("users").get().then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        currentComponent.setState({
-          users: currentComponent.state.users.concat(doc.data())
+    db
+      .collection("users")
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          currentComponent.setState({
+            users: currentComponent.state.users.concat(doc.data())
+          });
         });
+        currentComponent.setState({ isFinished: true });
       });
-      currentComponent.setState({ isFinished: true })
-    });
   }
-
 
   onMouseoverMarker(props, marker, e) {
     this.setState({
@@ -47,7 +46,6 @@ export class MapContainer extends React.Component {
     });
   }
 
-
   onMouseoutMarker(e) {
     this.setState({
       selectedPlace: {},
@@ -56,40 +54,37 @@ export class MapContainer extends React.Component {
     });
   }
 
-
   render() {
     const users = this.state.users;
     return (
       <div>
-        {this.state.isFinished ?
+        {this.state.isFinished ? (
           <div>
             <Map
-
               google={this.props.google}
               zoom={14}
               style={style}
               initialCenter={{
                 lat: 40.7549,
-                lng: -73.9840
+                lng: -73.984
               }}
             >
               {users.map((user, index) => {
-                return (
-                  user.workInfo && user.firstName !== 'Beth' ?
-                    <Marker
-                      name={user.workInfo.address}
-                      title={`${user.firstName} ${user.lastName}`}
-                      key={index}
-                      position={user.workInfo.coordinates}
-                      onMouseover={this.onMouseoverMarker}
-                      onMouseout={this.onMouseoutMarker}
-                    />
-                    : null
-                )
+                return user.workInfo && user.firstName !== "Beth" ? (
+                  <Marker
+                    name={user.workInfo.address}
+                    title={`${user.firstName} ${user.lastName}`}
+                    key={index}
+                    position={user.workInfo.coordinates}
+                    onMouseover={this.onMouseoverMarker}
+                    onMouseout={this.onMouseoutMarker}
+                  />
+                ) : null;
               })}
               <InfoWindow
                 marker={this.state.activeMarker}
-                visible={this.state.showingInfoWindow}>
+                visible={this.state.showingInfoWindow}
+              >
                 <div>
                   <h4>{this.state.selectedPlace.title}</h4>
                   <h4>{this.state.selectedPlace.name}</h4>
@@ -97,13 +92,11 @@ export class MapContainer extends React.Component {
               </InfoWindow>
             </Map>
           </div>
-          : null}
+        ) : null}
       </div>
     );
   }
 }
-
-
 
 export default GoogleApiWrapper({
   apiKey: "AIzaSyDbroKDMDh0wHknE4B2wZk41pvvHAd1CSc"

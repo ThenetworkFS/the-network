@@ -27,7 +27,8 @@ class Navbar extends Component {
           {user && user.email ? (
             <nav>
               <Menu icon>
-                <Menu.Item name='The Network' />
+                <Menu.Item name='The Network' active={activeItem === 'HomepageLayout'} onClick={this.handleItemClick}>
+                </Menu.Item>
                 <Menu.Item name='home/news' active={activeItem === 'home/news'} onClick={this.handleItemClick}>
                   <Icon name='browser' />
                 </Menu.Item>
