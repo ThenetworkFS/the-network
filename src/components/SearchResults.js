@@ -8,6 +8,7 @@ import AdvancedSearch from './AdvancedSearch';
 import { Card, Icon, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { selectUser } from '../store'
+import history from '../history'
 
 class SearchResults extends React.Component {
   constructor(props) {

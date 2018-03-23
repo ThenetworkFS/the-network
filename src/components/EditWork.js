@@ -17,15 +17,6 @@ class EditWork extends React.Component {
   }
 
 
-  // handleFormSubmit = (event) => {
-  //   event.preventDefault()
-
-  //   geocodeByAddress(this.state.address)
-  //     .then(results => getLatLng(results[0]))
-  //     .then(latLng => console.log('Success', latLng))
-  //     .catch(error => console.error('Error', error))
-  // }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.loggedInUser !== this.state.loggedInUser) {
       this.setState(() => ({
