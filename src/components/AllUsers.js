@@ -1,14 +1,11 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { fire, db } from '../fire'
+import React from 'react'
+import { db } from '../fire'
 import { connect } from 'react-redux'
 import history from '../history'
 import { selectUser } from '../store'
-import { Search, Grid, Header } from 'semantic-ui-react'
-import _ from 'lodash'
 import { Input } from 'semantic-ui-react'
 import {AdvancedSearch} from './index.js'
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 import { Button } from 'semantic-ui-react'
 
 class AllUsers extends React.Component {
@@ -78,7 +75,7 @@ class AllUsers extends React.Component {
              user.lastName.includes(this.state.searchVal)
     })
 
-    const { isLoading, value, results } = this.state
+    // const { isLoading, value, results } = this.state
     return (
       <div>
       <h1>Search Users: </h1>

@@ -34,7 +34,7 @@ class UserProfile extends React.Component {
           />
           <Header className="user-profile-username" as="h2">{user.firstName} {user.lastName}</Header>
           {user.email === loggedInUser.email ? (
-            <Link 
+            <Link
               className="user-profile-edit-link"
               to={`/profile/${loggedInUser.id}/edit`}
             >
@@ -43,7 +43,7 @@ class UserProfile extends React.Component {
           ) : (
             null
           )}
-          {user.workInfo.address ? (
+          {user.workInfo ? (
             <Header className="user-profile-details" as="h4">Works at: {user.workInfo.address}</Header>
           ) : (
             null

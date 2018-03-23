@@ -1,10 +1,7 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { fire, db } from '../fire'
-import { connect } from 'react-redux'
+import React from 'react'
+import { db } from '../fire'
 import history from '../history'
-import { Search, Grid, Header } from 'semantic-ui-react'
-import { Button, Checkbox, Form, Input, Radio, Select, TextArea } from 'semantic-ui-react'
+import { Button, Form, Select, } from 'semantic-ui-react'
 
 export default class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -102,7 +99,14 @@ export default class AdvancedSearch extends React.Component {
 
 
           <Button
-          type='submit'>Submit</Button>
+            disabled={this.state.cohortValue+
+            this.state.cohortNumValue+
+            this.state.city+
+            this.state.company+
+            this.state.industry===''}
+            type='submit'
+            >Submit
+          </Button>
 
       </Form>
       </div>
