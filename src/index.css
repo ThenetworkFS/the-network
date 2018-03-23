@@ -55,7 +55,8 @@ body {
 .feed-menu-container,
 .feed-menu,
 .feed-newpost-textarea,
-.postcard-container {
+.postcard-container,
+.searchcard-container {
   margin-bottom: 12px;
 }
 
@@ -131,12 +132,46 @@ body {
   margin-top: 20px !important;
 }
 
-.label {
-  text-align: left;
-}
-
+.label,
 .edit-profile {
   text-align: left; 
+}
+
+.all-users-search-container {
+  width: 290px;
+  margin: 0 auto;
+}
+
+.all-users-searchbar {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.all-users-search-options {
+  cursor: pointer;
+  display: block;
+  text-align: right;
+}
+
+.all-users-results {
+  margin-top: 20px;
+}
+
+.searchcard-image {
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 50%;
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.searchcard-content-container,
+.searchcard-content {
+  position: relative;
+  top: 5px;
+}
+
+.searchcard-anonymous {
+  padding-top: 10px;
 }
 
 /*!

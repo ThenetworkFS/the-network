@@ -1,143 +1,90 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { fire, db } from '../fire'
+import { db } from '../fire'
 import { connect } from 'react-redux'
-import history from '../history'
 import { selectUser } from '../store'
-import { Search, Grid, Header } from 'semantic-ui-react'
-import _ from 'lodash'
-import { Input } from 'semantic-ui-react'
-import {AdvancedSearch} from './index.js'
-import { Card, Icon, Image } from 'semantic-ui-react'
-import { Button } from 'semantic-ui-react'
+import { AdvancedSearch, SearchCard } from './'
+import { Button, Input } from 'semantic-ui-react'
 
-class AllUsers extends React.Component {
+class AllUsers extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      users: [],
+      allUsers: [],
       searchVal: '',
-      advancedIsClicked: false
+      advancedSearchIsClicked: false
     }
-    this.handleInputChange = this.handleInputChange.bind(this)
-  }
-
-  componentWillMount() {
   }
 
   componentDidMount() {
     let currentComponent = this
     db.collection("users")
-      .onSnapshot(function (querySnapshot) {
-        querySnapshot.docChanges.forEach((change) => {
-          if (change.type === "added") {
-            currentComponent.setState({
-              users: currentComponent.state.users.concat(change.doc.data())
-            });
-          }
-        });
-      })
-  }
-
-  onUserNameClick = (event, user) => {
-    event.preventDefault()
-    return db.collection('users')
-      .doc(user.email)
-      .get()
-      .then(user => {
-        this.props.selectUser(user.data())
-        history.push(`/profile/${user.data().id}`)
-      })
-  }
-
-  handleInputChange(event){
-    event.preventDefault()
-    this.setState({
-      searchVal: event.target.value
+    .onSnapshot(function (querySnapshot) {
+      querySnapshot.docChanges.forEach((change) => {
+        if (change.type === "added") {
+          currentComponent.setState({
+            allUsers: currentComponent.state.allUsers.concat(change.doc.data())
+          });
+        }
+      });
     })
   }
 
-  handleAdvancedClick=(event)=> {
+  handleInputChange = (event) => {
+    event.preventDefault()
+    this.setState({
+      searchVal: event.target.value.toLowerCase()
+    })
+  }
+
+  toggleAdvancedSearch = (event) => {
     event.preventDefault(event)
     this.setState({
-      advancedIsClicked: true
+      advancedSearchIsClicked: !this.state.advancedSearchIsClicked
     })
   }
 
+  filterUsersOnSearch = () => {
+    const searchValue = this.state.searchVal;
+    return this.state.allUsers.filter((user) => {
+      return user.firstName.toLowerCase().includes(searchValue) ||
+             user.lastName.toLowerCase().includes(searchValue)
+    })
+  }
 
-  // resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
-
-
-
-
+  renderSearchCards = (users) => {
+    return users.map(user => <SearchCard user={user}/>)
+  }
 
   render() {
-    const filteredUsers = this.state.users.filter((user) => {
-      return user.firstName.includes(this.state.searchVal) ||
-             user.lastName.includes(this.state.searchVal)
-    })
-
-    const { isLoading, value, results } = this.state
+    const filteredUsers = this.filterUsersOnSearch()
+    const { allUsers, advancedSearchIsClicked, searchVal } = this.state
     return (
       <div>
-      <h1>Search Users: </h1>
-        <Input
-          onChange={this.handleInputChange}
-          icon={{ name: 'search', circular: true, link: true }}
-          placeholder='Search...'
-        />
-        <Button
-          onClick={this.handleAdvancedClick}
-          >Advanced Search
-        </Button>
-      {this.state.advancedIsClicked && <AdvancedSearch />}
-
-        {this.state.searchVal
-          ? filteredUsers.map((user => {
-            return (
-              <div>
-                <Card>
-                {/* <Image src='./download.jpg' /> */}
-                <Card.Content>
-                  <Card.Header>
-                    <a onClick={(event) => this.onUserNameClick(event, user)}>{user.firstName} {user.lastName}</a>
-                  </Card.Header>
-                  <Card.Meta>{user.cohort} {user.cohortNum}</Card.Meta>
-                </Card.Content>
-            </Card>
-              </div>
-              )
-            })
-          )
-          : this.state.users.map((user => {
-            return (
-              <div>
-                <Card>
-                {/* <Image src='./download.jpg' /> */}
-                <Card.Content>
-                  <Card.Header>
-                    <a onClick={(event) => this.onUserNameClick(event, user)}>
-                    {user.firstName} {user.lastName}</a>
-                </Card.Header>
-                  <Card.Meta>{user.cohort} {user.cohortNum}</Card.Meta>
-                </Card.Content>
-            </Card>
-            </div>
-              )
-            })
-          )
-        }
+        <div className="all-users-search-container">
+          <Input
+            onChange={this.handleInputChange}
+            icon={{ name: "search", circular: true, link: true }}
+            placeholder="Search..."
+            className="all-users-searchbar"
+          />
+          <a className="all-users-search-options" onClick={this.toggleAdvancedSearch}>{advancedSearchIsClicked ? "close" : "more search options"}</a>
+          {advancedSearchIsClicked && <AdvancedSearch />}
+          <div className="all-users-results">
+            {searchVal ? (
+              this.renderSearchCards(filteredUsers)
+            ) : (
+              this.renderSearchCards(allUsers)
+            )}
+          </div>
+        </div>
       </div>
     )
   }
 }
 
-
-const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
-
 const mapDispatchToProps = {
   selectUser
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllUsers)
+export default connect(null, mapDispatchToProps)(AllUsers)
