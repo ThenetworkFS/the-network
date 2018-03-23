@@ -79,7 +79,8 @@ class Home extends React.Component{
   }
 
   renderPostCards = (category) => {
-    return this.state.posts.filter(post => post.category === category).map((post, index) => {
+    return this.state.posts.filter(post => post.category === category)
+    .map((post, index) => {
       return (
         <PostCard key={index} post={post}/>
       )
@@ -93,7 +94,7 @@ class Home extends React.Component{
   render() {
     const category= this.props.match.params.category
 
-    
+
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (

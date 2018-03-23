@@ -6,6 +6,7 @@ import { db } from '../fire'
 import firebase from 'firebase'
 import { selectUser } from '../store'
 import { Card, Image, Button, Form, Input, TextArea} from 'semantic-ui-react'
+import { withRouter } from 'react-router'
 
 
 class PostCard extends Component {
@@ -15,25 +16,17 @@ class PostCard extends Component {
     this.state = {
       viewComments: false,
       comments: [],
-      newComment: ''
+      newComment: '',
+      loadingComments: true
     }
   }
-
-  componentDidMount() {
-    let currentComponent = this
-    db.collection("posts")
-      .doc(this.props.post.id)
-      .collection('comments')
-      .orderBy("timestamp", "desc")
-      .onSnapshot(function (querySnapshot) {
-        querySnapshot.docChanges.forEach((change) => {
-          if (change.type === "added") {
-            currentComponent.setState({
-              comments: currentComponent.state.comments.concat(change.doc.data())
-            });
-          }
-        });
+  componentWillReceiveProps(nextProps){
+    if(nextProps.match.params.category !== this.props.match.params.category){
+      this.setState({
+        viewComments:false,
+        comments:[]
       })
+    }
   }
 
   formatPostWithLink = (post) => {
@@ -60,10 +53,37 @@ class PostCard extends Component {
         history.push(`/profile/${user.data().id}`)
       })
   }
+
   onViewCommentsClick = (event) => {
     event.preventDefault()
     this.setState({
-      viewComments: !this.state.viewComments,
+      loadingComments: true
+    })
+
+    let currentComponent = this
+    db.collection("posts")
+      .doc(this.props.post.id)
+      .collection('comments')
+      .orderBy("timestamp", "desc")
+      .get().then((comments) => {
+        let commentsArr = []
+        comments.forEach((comment)=> {
+          commentsArr.push(comment.data())
+        })
+        currentComponent.setState({
+          comments: commentsArr
+        });
+          })
+    this.setState({
+      viewComments: true,
+      loadingComments: false,
+    })
+  }
+  onHideCommentsClick =(event) => {
+    event.preventDefault()
+    this.setState({
+      viewComments: false,
+      loadingComments: true
     })
   }
 
@@ -79,6 +99,15 @@ class PostCard extends Component {
       lastName: this.props.loggedInUser.lastName,
       content: this.state.newComment,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+
+    this.setState({
+      comments: [{
+        userEmail: this.props.loggedInUser.email,
+        firstName: this.props.loggedInUser.firstName,
+        lastName: this.props.loggedInUser.lastName,
+        content: this.state.newComment
+      }].concat(this.state.comments)
     })
   }
 
@@ -120,11 +149,16 @@ class PostCard extends Component {
               </Card.Description>
             )}
           </Card.Content>
+
           {this.state.viewComments
           ?
           <div>
+          {this.state.loadingComments
+            ? <h1>loading</h1>
+            :
+          <div>
             <Button
-              onClick={this.onViewCommentsClick}
+              onClick={this.onHideCommentsClick}
               >Hide Comments
             </Button>
             <Form className="new-comment-textarea"
@@ -140,7 +174,7 @@ class PostCard extends Component {
                 type="submit"
                 >Add Comment
               </Button>
-              {this.state.comments && this.state.comments.map((comment) => {
+                {this.state.comments && this.state.comments.map((comment) => {
                 return (
                 <div>
                   <h1>{comment.firstName} {comment.lastName} </h1>
@@ -150,6 +184,8 @@ class PostCard extends Component {
               })}
             </Form>
           </div>
+            }
+            </div>
           :
           <Button
             onClick={this.onViewCommentsClick}
@@ -167,4 +203,4 @@ const mapDispatchToProps = {
   selectUser
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostCard)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostCard))
