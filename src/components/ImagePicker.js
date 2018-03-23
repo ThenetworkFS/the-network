@@ -27,11 +27,11 @@ class ImagePicker extends React.Component {
   render() {
     let dropzoneRef;
     return (
-      <div>
-        <Dropzone ref={(node) => { dropzoneRef = node; }} onDrop={this.onDrop}>
+      <div className="image-picker-container">
+        <Dropzone className="hide" ref={(node) => { dropzoneRef = node; }} onDrop={this.onDrop}>
           <p>Drop files here.</p>
         </Dropzone>
-        <button type="button" onClick={() => { dropzoneRef.open() }}>Open File Dialog</button>
+        <a onClick={() => { dropzoneRef.open() }}>change your picture</a>
       </div>
     )
   }
