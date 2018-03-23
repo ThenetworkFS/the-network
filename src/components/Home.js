@@ -125,7 +125,12 @@ class Home extends React.Component{
               { category === 'jobs' ?
                 <MapContainer /> : null }
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
-              <TextArea id="new-post-textarea" placeholder='Post something' name="content" style={{ minHeight: 100 }} />
+              <TextArea
+                required
+                id="new-post-textarea"
+                placeholder='Post something'
+                name="content"
+                style={{ minHeight: 100 }} />
               <Button disabled={this.state.isPostSubmitted} className="feed-newpost-submit-button" floated="right" color="blue">Post</Button>
             </Form>
             {this.renderPostCards(category)}

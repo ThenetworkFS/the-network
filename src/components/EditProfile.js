@@ -3,7 +3,7 @@ import { db } from '../fire'
 import { connect } from 'react-redux'
 import ImagePicker from './ImagePicker'
 import history from '../history'
-import { getUser } from '../store' 
+import { getUser } from '../store'
 import EditProject from './EditProject'
 import { Card, Form, Input, Button } from 'semantic-ui-react'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
@@ -30,10 +30,12 @@ class EditProfile extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.loggedInUser.email) {    
-      this.setState(() => ({
-        address: this.props.loggedInUser.workInfo.address,
-      }))
+    if (this.props.loggedInUser.email) {
+      if(this.props.loggedInUser.workInfo){
+        this.setState(() => ({
+          address: this.props.loggedInUser.workInfo.address,
+        }))
+      }
     }
   }
 
@@ -43,7 +45,7 @@ class EditProfile extends React.Component {
     if (this.state.address.length) {
       this.getGeoCodeByAddress()
       .then(result => {
-        const userWorkInfo = { 
+        const userWorkInfo = {
           workInfo: {
             address: this.state.address,
             coordinates: result
@@ -99,7 +101,7 @@ class EditProfile extends React.Component {
       value: this.state.address,
       onChange: this.onWorkAddressChange,
     }
-    
+
     return (
       <div className="user-profile-container">
         <Card className="user-profile">
@@ -184,7 +186,7 @@ class EditProfile extends React.Component {
               <label className="label">Work address</label>
               <PlacesAutocomplete inputProps={inputProps} />
             </div>
-            <Button 
+            <Button
               disabled={this.state.isProfileSaved}
               className="user-profile-save-button"
               color="blue"

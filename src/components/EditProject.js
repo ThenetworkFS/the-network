@@ -1,5 +1,5 @@
 import React from 'react'
-import { fire, db } from '../fire'
+import { db } from '../fire'
 import { connect } from 'react-redux'
 import { getUser } from '../store'
 const uuidv1 = require('uuid/v1')
