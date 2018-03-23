@@ -15,7 +15,6 @@ export default class AdvancedSearch extends React.Component {
       company: '',
       industry: ''
     }
-    this.submitHandler = this.submitHandler.bind(this)
 
   }
   componentDidMount() {
@@ -33,7 +32,7 @@ export default class AdvancedSearch extends React.Component {
       })
   }
 
-  submitHandler(event){
+  submitHandler = (event) => {
     event.preventDefault()
     history.push(`/search?cohort=${this.state.cohortValue}&cohortNum=${this.state.cohortNumValue}&city=${this.state.city}&company=${this.state.company}&industry=${this.state.industry}`)
 

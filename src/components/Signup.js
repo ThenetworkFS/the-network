@@ -14,7 +14,11 @@ import Spinner from './Spinner'
 const uuidv1 = require('uuid/v1')
 
 class Signup extends React.Component {
+  constructor(props) {
+    super(props)
+  }
 
+  
   signInAnonymously = (event) => {
     event.preventDefault()
     const email = event.target.email.value
@@ -46,6 +50,7 @@ class Signup extends React.Component {
     })
   }
 
+  
   render() {
     return (
       <div>

@@ -122,8 +122,7 @@ class Home extends React.Component{
                 </Menu.Item>
               </Menu>
             </nav>
-              { category === 'jobs' ?
-                <MapContainer /> : null }
+            { category === 'meetup' ? <Link to="/calendar">Calendar</Link> : null }
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
               <TextArea
                 required

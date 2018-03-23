@@ -73,6 +73,9 @@ class AllUsers extends React.Component {
     return (
       <div>
       <h1>Search Users: </h1>
+      <div>
+      <Link to="/map">See where alumni work</Link>
+      </div>
         <Input
           onChange={this.handleInputChange}
           icon={{ name: 'search', circular: true, link: true }}
