@@ -64,20 +64,12 @@ class AllUsers extends React.Component {
     })
   }
 
-
-  // resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
-
-
-
-
-
   render() {
     const filteredUsers = this.state.users.filter((user) => {
       return user.firstName.includes(this.state.searchVal) ||
              user.lastName.includes(this.state.searchVal)
     })
 
-    // const { isLoading, value, results } = this.state
     return (
       <div>
       <h1>Search Users: </h1>
@@ -93,9 +85,9 @@ class AllUsers extends React.Component {
       {this.state.advancedIsClicked && <AdvancedSearch />}
 
         {this.state.searchVal
-          ? filteredUsers.map((user => {
+          ? filteredUsers.map(((user, index) => {
             return (
-              <div>
+              <div key={index}>
                 <Card>
                 {/* <Image src='./download.jpg' /> */}
                 <Card.Content>
@@ -109,9 +101,9 @@ class AllUsers extends React.Component {
               )
             })
           )
-          : this.state.users.map((user => {
+          : this.state.users.map(((user, index) => {
             return (
-              <div>
+              <div key={index}>
                 <Card>
                 {/* <Image src='./download.jpg' /> */}
                 <Card.Content>
