@@ -1,7 +1,7 @@
 import React from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import { db } from "../fire";
-import firebase from "firebase";
+
 
 const style = {
   width: "100%",
@@ -24,11 +24,11 @@ export class MapContainer extends React.Component {
     this.onMouseoverMarker= this.onMouseoverMarker.bind(this)
   }
 
+
   componentDidMount(){
     let currentComponent = this;
     db.collection("users").get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
           currentComponent.setState({
             users: currentComponent.state.users.concat(doc.data())
           });
@@ -46,6 +46,7 @@ export class MapContainer extends React.Component {
       });
     }
 
+    
   render() {
     const users = this.state.users;
     console.log('users', this.state)
