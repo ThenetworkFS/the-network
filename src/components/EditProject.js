@@ -112,11 +112,14 @@ class EditProject extends React.Component {
             <form onSubmit={this.addProject}>
               <h6>
                 Title:{' '}
-                <input onChange={this.noop} name="title" />
+                <input
+                  required
+                  onChange={this.noop} name="title" />
               </h6>
               <h6>
                 Description:{' '}
                 <input
+                  required
                   onChange={this.noop}
                   name="description"
                 />
