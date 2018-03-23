@@ -43,37 +43,66 @@ class UserProfile extends React.Component {
           ) : (
             null
           )}
-          <Header className="user-profile-details" as="h4">Works at: {user.workInfo}</Header>
-          <Header className="user-profile-details" as="h4">Lives in {user.city}, {user.state} {user.country}</Header>
-          <Header className="user-profile-details" as="h4">Is interested in: {user.interests}</Header>
-          <Header className="user-profile-details" as="h4">
-            <div>
-              <Icon className="user-profile-icon" name="mail outline" size="large"/>
-              <a className="user-profile-header" href={`mailto:${user.email}`}>{user.email}</a>
-            </div>
-          </Header>
-          <Header className="user-profile-details" as="h4">
-            <div>
-              <Icon className="user-profile-icon" name="slack" size="large"/>
-              <a className="user-profile-header" href={user.slack}>{user.slack}</a>
-            </div>
-          </Header>
-          <Header className="user-profile-details" as="h4">
-            <div>
-              <Icon className="user-profile-icon" name="github" size="large"/>
-              <a className="user-profile-header" href={user.github} target="_blank">{user.github}</a>
-            </div>
-          </Header>
-          <Header className="user-profile-details" as="h4">
-            <div>
-              <Icon className="user-profile-icon" name="linkedin" size="large"/>
-              <a className="user-profile-header" href={user.linkedin} target="_blank">{user.linkedin}</a>
-            </div>
-          </Header>
-          {user.projects ?
+          {user.workInfo.address ? (
+            <Header className="user-profile-details" as="h4">Works at: {user.workInfo.address}</Header>
+          ) : (
+            null
+          )}
+          {user.city ? (
+            <Header className="user-profile-details" as="h4">Lives in {user.city}, {user.state} {user.country}</Header>
+          ) : (
+            null
+          )}
+          {user.interests ? (
+            <Header className="user-profile-details" as="h4">Is interested in: {user.interests}</Header>
+          ) : (
+            null
+          )}
+          {user.email ? (
+            <Header className="user-profile-details" as="h4">
+              <div>
+                <Icon className="user-profile-icon" name="mail outline" size="large"/>
+                <a className="user-profile-header" href={`mailto:${user.email}`}>{user.email}</a>
+              </div>
+            </Header>
+          ) : (
+            null
+          )}
+          {user.slack ? (
+            <Header className="user-profile-details" as="h4">
+              <div>
+                <Icon className="user-profile-icon" name="slack" size="large"/>
+                <a className="user-profile-header" href={user.slack}>{user.slack}</a>
+              </div>
+            </Header>
+          ) : (
+            null
+          )}
+          {user.github ? (
+            <Header className="user-profile-details" as="h4">
+              <div>
+                <Icon className="user-profile-icon" name="github" size="large"/>
+                <a className="user-profile-header" href={user.github} target="_blank">{user.github}</a>
+              </div>
+            </Header>
+          ) : (
+            null
+          )}
+          {user.linkedin ? (
+            <Header className="user-profile-details" as="h4">
+              <div>
+                <Icon className="user-profile-icon" name="linkedin" size="large"/>
+                <a className="user-profile-header" href={user.linkedin} target="_blank">{user.linkedin}</a>
+              </div>
+            </Header>
+          ) : (
+            null
+          )}
+          {user.projects ? (
             <h5>Projects: {user.projects.length && this.renderProjects(user.projects)}</h5>
-            : null
-          }
+          ) : (
+            null
+          )}
         </Card>
       </div>
     )
