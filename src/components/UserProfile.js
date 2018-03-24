@@ -34,7 +34,7 @@ class UserProfile extends React.Component {
           />
           <Header className="user-profile-username" as="h2">{user.firstName} {user.lastName}</Header>
           {user.email === loggedInUser.email ? (
-            <Link 
+            <Link
               className="user-profile-edit-link"
               to={`/profile/${loggedInUser.id}/edit`}
             >

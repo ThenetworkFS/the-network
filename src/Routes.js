@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router-dom'
 import React from 'react'
-import { Signup, Login, Home, UserProfile, AllUsers, SearchResults, AdvancedSearch, EditProfile } from './components'
+import { Signup, Login, Home, UserProfile, AllUsers, EditProfile, MapContainer, Calendar } from './components'
 
 
 const Routes = () => {
@@ -12,7 +12,8 @@ const Routes = () => {
       <Route exact path="/profile/:id" component={UserProfile} />
       <Route exact path="/profile/:id/edit" component={EditProfile} />
       <Route path="/users" component={AllUsers} />
-      {/* <Route path="/search" component={AllUsers} /> */}
+      <Route exact path="/map" component={MapContainer} />
+      <Route exact path="/calendar" component={Calendar} />
     </Switch>
   )
 }

@@ -26,3 +26,8 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.rbc-btn-group:last-child {
+  transform: translateX(3000px)
+}

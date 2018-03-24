@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { db } from '../fire'
 import firebase from 'firebase'
 import { selectUser } from '../store'
-import { Card, Image, Button, Form, Input, TextArea} from 'semantic-ui-react'
+import { Card, Image, Button, Form, TextArea} from 'semantic-ui-react'
 import { withRouter } from 'react-router'
 
 
@@ -165,6 +165,7 @@ class PostCard extends Component {
               onSubmit={this.onAddCommentClick}
               >
               <TextArea
+                required
                 id="new-comment-textarea"
                 label='Comment'
                 placeholder='Add Comment...'
@@ -174,9 +175,9 @@ class PostCard extends Component {
                 type="submit"
                 >Add Comment
               </Button>
-                {this.state.comments && this.state.comments.map((comment) => {
+                {this.state.comments && this.state.comments.map((comment, index) => {
                 return (
-                <div>
+                <div key={index}>
                   <h1>{comment.firstName} {comment.lastName} </h1>
                   <h2>{comment.content}</h2>
                 </div>

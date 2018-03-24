@@ -13,14 +13,13 @@ import {
 import Spinner from './Spinner'
 const uuidv1 = require('uuid/v1')
 
-
-
 class Signup extends React.Component {
   constructor(props) {
     super(props)
   }
+
+  
   signInAnonymously = (event) => {
-    console.log('SUBMITTING')
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
@@ -31,7 +30,8 @@ class Signup extends React.Component {
       email,
       firstName,
       lastName,
-      id
+      id,
+      workInfo: {}
     }
     this.props.startFetch()
     fire.auth().createUserWithEmailAndPassword(email, password)
@@ -39,10 +39,18 @@ class Signup extends React.Component {
       db.collection('users')
       .doc(email)
       .set(user)
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error(err)})
+    })
+  }
+  onPassChange = (event) => {
+    event.preventDefault()
+    this.setState({
+      password: event.target.value
     })
   }
 
+  
   render() {
     return (
       <div>
@@ -95,6 +103,7 @@ class Signup extends React.Component {
                       placeholder="Password"
                       type="password"
                       required
+                      minLength="6"
                     />
                     <Button
                       className="login-form-button"
@@ -121,12 +130,10 @@ class Signup extends React.Component {
   }
 }
 
-
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 const mapDispatchToProps = {
   startFetch,
   stopFetch,
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup)
