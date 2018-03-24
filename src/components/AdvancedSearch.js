@@ -1,115 +1,54 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { fire, db } from '../fire'
-import { connect } from 'react-redux'
-import history from '../history'
-import { Search, Grid, Header } from 'semantic-ui-react'
-import { Button, Checkbox, Form, Input, Radio, Select, TextArea } from 'semantic-ui-react'
+import React from 'react'
+import { Button, Form, Select } from 'semantic-ui-react'
 
-export default class AdvancedSearch extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      users: [],
-      cohortValue: '',
-      cohortNumValue: '',
-      city: '',
-      company: '',
-      industry: ''
-    }
-    this.submitHandler = this.submitHandler.bind(this)
-
-  }
-  componentDidMount() {
-    let currentComponent = this
-
-    db.collection("users")
-      .onSnapshot(function (querySnapshot) {
-        querySnapshot.docChanges.forEach((change) => {
-          if (change.type === "added") {
-            currentComponent.setState({
-              users: currentComponent.state.users.concat(change.doc.data())
-            });
-          }
-        });
-      })
-  }
-
-  submitHandler(event){
-    event.preventDefault()
-    history.push(`/search?cohort=${this.state.cohortValue}&cohortNum=${this.state.cohortNumValue}&city=${this.state.city}&company=${this.state.company}&industry=${this.state.industry}`)
-
-  }
-
-  handleCohortChange = (e, { value }) => this.setState({ cohortValue: value })
-
-  handleCohortNumChange = (e, { value }) => this.setState({ cohortNumValue: value })
-
-  handleCityChange = (e, { value }) => this.setState({ city: value })
-
-  handleCompanyChange = (e, { value }) => this.setState({ company: value })
-
-  handleIndustryChange = (e, { value }) => this.setState({ industry: value })
-
-
-  render() {
-
-
-    const options = [
-      { key: 'GH', text: 'GH', value: 'GH' },
-      { key: 'FS', text: 'FS', value: 'FS' },
-    ]
-
-
-    return (
-      <div>
-        <Form
-          onSubmit={this.submitHandler}>
-
-            <Form.Field
-              width='1'
-              onChange={this.handleCohortChange}
-              control={Select}
-              label='Cohort'
-              options={options}
-              placeholder='Cohort' />
-            <Form.Input
-              label='Number'
-              placeholder='Number'
-              onChange={this.handleCohortNumChange}
-              width='1'
-            />
-            <Form.Input
-              label='City'
-              placeholder='City'
-              onChange={this.handleCityChange}
-              width='1'
-            />
-            <Form.Input
-              label='Company'
-              placeholder='Company'
-              onChange={this.handleCompanyChange}
-              width='1'
-            />
-            <Form.Input
-              label='Industry'
-              placeholder='Industry'
-              onChange={this.handleIndustryChange}
-              width='1'
-            />
-
-
-
-          <Button
-          type='submit'>Submit</Button>
-
+const AdvancedSearch = (props) => {
+  const options = [
+    { key: 'GH', text: 'GH', value: 'GH' },
+    { key: 'FS', text: 'FS', value: 'FS' },
+  ]
+  return (
+    <div className="advanced-search-container">
+      <Form onSubmit={props.onSubmit}>
+        <div className="cohort-search-container">
+          <Form.Field
+            onChange={props.onInputChange}
+            control={Select}
+            label='Cohort'
+            options={options}
+            placeholder='Cohort'
+            className='cohort'
+            name="cohort"
+          />
+          <Form.Input
+            label='Number'
+            placeholder='Number'
+            onChange={props.onInputChange}
+            className='cohort-id'
+            name="cohortId"
+          />
+        </div>
+        <Form.Input
+          label='City'
+          placeholder='City'
+          onChange={props.onInputChange}
+          name="city"
+        />
+        <Form.Input
+          label='Company'
+          placeholder='Company'
+          onChange={props.onInputChange}
+          name="company"
+        />
+        <Button
+          type='submit'
+          floated='right'
+          color='blue'
+        >
+          Search
+        </Button>
       </Form>
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
-// const mapStateToProps = (state) => ({ loggedInUser: state.user.loggedInUser })
-
-// export default connect(mapStateToProps)(AdvancedSearch)
+export default AdvancedSearch

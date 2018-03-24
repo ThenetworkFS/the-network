@@ -140,6 +140,7 @@ body {
 .all-users-search-container {
   width: 290px;
   margin: 0 auto;
+  margin-top: 12px;
 }
 
 .all-users-searchbar {
@@ -157,6 +158,11 @@ body {
   margin-top: 20px;
 }
 
+.advanced-search-container {
+  margin-bottom: 70px;
+  margin-top: 12px;
+}
+
 .searchcard-image {
   border: 1px solid rgba(0, 0, 0, .2);
   border-radius: 50%;
@@ -172,6 +178,15 @@ body {
 
 .searchcard-anonymous {
   padding-top: 10px;
+}
+
+.cohort-search-container > div {
+  display: inline-block;
+}
+
+.cohort-search-container > .cohort-id {
+  float: right;
+  width: 85px !important;
 }
 
 /*!
