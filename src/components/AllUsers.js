@@ -138,7 +138,7 @@ class AllUsers extends Component {
   }
 
   renderSearchCards = (users) => {
-    return users.map(user => <SearchCard user={user}/>)
+    return users.map(user => <SearchCard key={user.id} user={user}/>)
   }
 
   render() {
