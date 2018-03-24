@@ -32,7 +32,7 @@ class Navbar extends Component {
                   <Icon name='browser' />
                 </Menu.Item>
 
-                <Menu.Item name='allUsers' active={activeItem === 'allUsers'} onClick={this.handleItemClick}>
+                <Menu.Item name='users' active={activeItem === 'users'} onClick={this.handleItemClick}>
                   <Icon name='users' />
                 </Menu.Item>
 
