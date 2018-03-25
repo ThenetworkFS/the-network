@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Form, Button, TextArea, Card } from 'semantic-ui-react'
+import { Form, Button, TextArea, Card, Image } from 'semantic-ui-react'
 import { db } from '../fire'
 import firebase from 'firebase'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Spinner } from './'
+import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 
 class CommentCard extends Component {
   constructor(props) {
@@ -79,13 +80,18 @@ class CommentCard extends Component {
   }
 
   renderComments = () => {
+    const { post } = this.props
     return this.state.comments.map((comment, index) => {
       return (
         <Card className="comment-card">
           <Card.Content key={index}>
+            <Image className={post.user.image ? "" : "postcard-anonymous anonymous"} floated='left' size='mini' src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL} />
             <Card.Header>
-              <a onClick={(event) => this.props.onUserNameClick(event, this.props.post.user)}>{comment.firstName} {comment.lastName}</a>
+              <a onClick={(event) => this.props.onUserNameClick(event, post.user)}>{comment.firstName} {comment.lastName}</a>
             </Card.Header>
+            <Card.Meta>
+              FS - 1801
+            </Card.Meta>
             <Card.Description>{comment.content}</Card.Description>
           </Card.Content>
         </Card>
