@@ -59,13 +59,15 @@ class EditProfile extends React.Component {
     } else if (this.state.isWorkAdressEdited && this.state.isUserDetailsEdited) {
       this.getGeoCodeByAddress()
       .then(result => {
-        this.setState({
-          loggedInUser: {
-            ...this.state.loggedInUser,
-            workInfo: {...this.state.workInfo, coordinates: result}
-          }
-        })
-        this.updateUser(this.state.loggedInUser)
+        this.setState(
+          {
+            loggedInUser: {
+              ...this.state.loggedInUser,
+              workInfo: {...this.state.workInfo, coordinates: result}
+            }
+          },
+          this.updateUser(this.state.loggedInUser)
+        )
       })
     } else {
       this.updateUser(this.state.loggedInUser)
