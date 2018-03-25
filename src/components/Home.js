@@ -3,10 +3,7 @@ import { db } from '../fire'
 import firebase from 'firebase'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Spinner from './Spinner'
-import PostCard from './PostCard'
-import MapContainer from './MapContainer'
-
+import { Spinner, PostCard } from './'
 import {
   Menu,
   Form,
@@ -130,12 +127,19 @@ class Home extends React.Component{
                 placeholder='Post something'
                 name="content"
                 style={{ minHeight: 100 }} />
-              <Button disabled={this.state.isPostSubmitted} className="feed-newpost-submit-button" floated="right" color="blue">Post</Button>
+              <Button
+                disabled={this.state.isPostSubmitted}
+                className="feed-newpost-submit-button"
+                floated="right"
+                color="blue"
+              >
+                Post
+              </Button>
             </Form>
             {this.renderPostCards(category)}
           </div>
         ) : (
-          <Spinner />
+          <Spinner size={"L"}/>
         )}
       </div>
     )

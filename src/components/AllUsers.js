@@ -138,7 +138,7 @@ class AllUsers extends Component {
   }
 
   renderSearchCards = (users) => {
-    return users.map(user => <SearchCard user={user}/>)
+    return users.map(user => <SearchCard key={user.id} user={user}/>)
   }
 
   render() {
@@ -157,7 +157,12 @@ class AllUsers extends Component {
             className="all-users-searchbar"
             name="searchVal"
           />
-          <a className="all-users-search-options" onClick={this.toggleAdvancedSearch}>{advancedSearchIsClicked ? "close" : "more search options"}</a>
+          <a
+            className="all-users-search-options"
+            onClick={this.toggleAdvancedSearch}
+          >
+            {advancedSearchIsClicked ? "close" : "more search options"}
+          </a>
           {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.submitHandler}/>}
           <div className="all-users-results">
             {searchVal ? (
