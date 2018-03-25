@@ -99,6 +99,10 @@ body {
   text-align: right;
 }
 
+.comment-card-textarea-container textarea {
+  margin-top: 8px !important;
+}
+
 .formatted-post {
   float: left;
   max-width: 100%;
