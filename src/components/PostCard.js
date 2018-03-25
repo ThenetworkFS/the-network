@@ -4,8 +4,9 @@ import history from '../history'
 import { connect } from 'react-redux'
 import { db } from '../fire'
 import { selectUser } from '../store'
-import { Card, Image, Button } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
 import { CommentCard } from './'
+import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 
 
 class PostCard extends Component {
@@ -40,7 +41,7 @@ class PostCard extends Component {
       <div className="postcard-container">
         <Card className="postcard">
           <Card.Content>
-            <Image floated='left' size='mini' src='https://react.semantic-ui.com/assets/images/avatar/large/steve.jpg' />
+            <Image className={post.user.image ? "" : "postcard-anonymous anonymous"} floated='left' size='mini' src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL} />
             <Card.Header>
               <a onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
             </Card.Header>
@@ -66,7 +67,7 @@ class PostCard extends Component {
               </Card.Description>
             )}
           </Card.Content>
-          <CommentCard post={post}/>
+          <CommentCard post={post} onUserNameClick={this.onUserNameClick}/>
         </Card>
       </div>
     )

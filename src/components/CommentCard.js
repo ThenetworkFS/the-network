@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Form, Button, TextArea } from 'semantic-ui-react'
+import { Form, Button, TextArea, Card } from 'semantic-ui-react'
 import { db } from '../fire'
 import firebase from 'firebase'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { Spinner } from './'
 
 class CommentCard extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class CommentCard extends Component {
       viewComments: false,
       comments: [],
       newComment: '',
-      loadingComments: true
+      loadingComments: false
     }
   }
 
@@ -51,45 +52,43 @@ class CommentCard extends Component {
     })
   }
 
-  onHideCommentsClick = event => {
+  toggleComments = event => {
     event.preventDefault()
     this.setState({
-      viewComments: false,
-      loadingComments: true
+      loadingComments: !this.state.loadingComments,
+      viewComments: !this.state.viewComments,
     })
-  }
-
-  onViewCommentsClick = event => {
-    event.preventDefault()
-    this.setState({
-      loadingComments: true,
-      viewComments: true,
-    })
-    let currentComponent = this
-    db.collection("posts")
-    .doc(this.props.post.id)
-    .collection('comments')
-    .orderBy("timestamp", "desc")
-    .get()
-    .then(comments => {
-      let commentsArr = []
-      comments.forEach((comment)=> {
-        commentsArr.push(comment.data())
+    if (!this.state.viewComments) {
+      let currentComponent = this
+      db.collection("posts")
+      .doc(this.props.post.id)
+      .collection('comments')
+      .orderBy("timestamp", "desc")
+      .get()
+      .then(comments => {
+        let commentsArr = []
+        comments.forEach((comment)=> {
+          commentsArr.push(comment.data())
+        })
+        currentComponent.setState({
+          comments: commentsArr,
+          loadingComments: false,
+        })
       })
-      currentComponent.setState({
-        comments: commentsArr,
-        loadingComments: false,
-      })
-    })
+    }
   }
 
   renderComments = () => {
     return this.state.comments.map((comment, index) => {
       return (
-        <div key={index}>
-          <h1>{comment.firstName} {comment.lastName} </h1>
-          <h2>{comment.content}</h2>
-        </div>
+        <Card className="comment-card">
+          <Card.Content key={index}>
+            <Card.Header>
+              <a onClick={(event) => this.props.onUserNameClick(event, this.props.post.user)}>{comment.firstName} {comment.lastName}</a>
+            </Card.Header>
+            <Card.Description>{comment.content}</Card.Description>
+          </Card.Content>
+        </Card>
       )
     })
   }
@@ -100,40 +99,45 @@ class CommentCard extends Component {
 
   render() {
     return (
-      <div>
-      {this.state.viewComments ? (
-        <div>
-          {this.state.loadingComments ? (
-            <h1>loading</h1>
-          ) : (
-            <div>
-              <Button onClick={this.onHideCommentsClick}>
-                Hide Comments
-              </Button>
-              <Form 
-                className="new-comment-textarea"
-                onSubmit={this.onAddCommentClick}
-              >
-                <TextArea
-                  required
-                  id="new-comment-textarea"
-                  label='Comment'
-                  placeholder='Add Comment...'
-                  onChange={this.handleCommentChange}
-                />
-                <Button type="submit">
-                  Add Comment
-                </Button>
-                {this.renderComments()}
-              </Form>
-            </div>
-          )}
-        </div>
-      ) : (
-        <Button onClick={this.onViewCommentsClick}>
-          View Comments
-        </Button>
-      )}
+      <div className="comment-card-container">
+        <a className="comment-card-reveal-link" onClick={this.toggleComments}>
+          {this.state.viewComments ? "hide comments" : "view comments"}
+        </a>
+        {this.state.viewComments ? (
+          <div>
+            {this.state.loadingComments ? (
+              <Spinner size={"S"}/>
+            ) : (
+              <div>
+                <Form 
+                  className="new-comment-textarea"
+                  onSubmit={this.onAddCommentClick}
+                >
+                  <TextArea
+                    required
+                    id="new-comment-textarea"
+                    label='Comment'
+                    placeholder='Comment on this post...'
+                    onChange={this.handleCommentChange}
+                  />
+                  <Button
+                    // disabled={this.state.isPostSubmitted}
+                    className="feed-newpost-submit-button"
+                    floated="right"
+                    color="blue"
+                  >
+                    Comment
+                  </Button>
+                  <div className="comment-card-inner-container">
+                    {this.renderComments()}
+                  </div>
+                </Form>
+              </div>
+            )}
+          </div>
+        ) : (
+          null
+        )}
       </div>
     )
   }
