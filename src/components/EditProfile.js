@@ -55,7 +55,6 @@ class EditProfile extends React.Component {
         this.updateUser(userWorkInfo)
       })
     } else {
-      console.log('STATE', this.state.loggedInUser)
       this.updateUser(this.state.loggedInUser)
     }
   }
