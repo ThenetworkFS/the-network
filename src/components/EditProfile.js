@@ -17,7 +17,9 @@ class EditProfile extends React.Component {
       loggedInUser: props.loggedInUser,
       isProfileSaved: false,
       address: '',
-      isAdressedEdited: false,
+      // isWorkAdressEdited is necessary for googleMap API
+      isWorkAdressEdited: false,
+      isUserDetailsEdited: false,
     }
   }
 
@@ -43,7 +45,7 @@ class EditProfile extends React.Component {
   handleProfileSubmit = (event) => {
     event.preventDefault()
     this.setState({ isProfileSaved: true })
-    if (this.state.isAdressedEdited) {
+    if (this.state.isWorkAdressEdited && !this.state.isUserDetailsEdited) {
       this.getGeoCodeByAddress()
       .then(result => {
         const userWorkInfo = {
@@ -53,6 +55,17 @@ class EditProfile extends React.Component {
           }
         }
         this.updateUser(userWorkInfo)
+      })
+    } else if (this.state.isWorkAdressEdited && this.state.isUserDetailsEdited) {
+      this.getGeoCodeByAddress()
+      .then(result => {
+        this.setState({
+          loggedInUser: {
+            ...this.state.loggedInUser,
+            workInfo: {...this.state.workInfo, coordinates: result}
+          }
+        })
+        this.updateUser(this.state.loggedInUser)
       })
     } else {
       this.updateUser(this.state.loggedInUser)
@@ -79,6 +92,7 @@ class EditProfile extends React.Component {
   onInputChange = event => {
     event.preventDefault()
     this.setState({
+      isUserDetailsEdited: true,
       loggedInUser: {
         ...this.state.loggedInUser,
         [event.target.name]: event.target.value,
@@ -88,7 +102,7 @@ class EditProfile extends React.Component {
 
   onWorkAddressChange = (address) => {
     this.setState({
-      isAdressedEdited: true,
+      isWorkAdressEdited: true,
       address,
       loggedInUser: {
         ...this.state.loggedInUser,
