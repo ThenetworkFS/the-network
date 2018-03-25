@@ -115,6 +115,7 @@ class Calendar extends React.Component {
           ref={ref => this.BigCalendar = ref}
           events={myEventsList}
           style={{ height: "600px", width: "1200px" }}
+          defaultDate={new Date()}
         />
         {
           this.state.addIsClicked ?
