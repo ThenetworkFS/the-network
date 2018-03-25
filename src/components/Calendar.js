@@ -2,6 +2,7 @@ import { fire, db } from '../fire'
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import React from 'react'
+import { connect } from 'react-redux'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 BigCalendar.momentLocalizer(moment);
 
@@ -10,7 +11,8 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isClicked: false,
+      addIsClicked: false,
+      editIsClicked: false,
       isFinished: false,
       events: []
     }
@@ -55,12 +57,17 @@ class Calendar extends React.Component {
 
 
   addIsClicked = () => {
-    this.setState({ isClicked: true })
+    this.setState({ addIsClicked: true })
+  }
+
+  addIsClicked = () => {
+    this.setState({ editIsClicked: true })
   }
 
 
   render() {
     const myEventsList = this.state.events
+    console.log(myEventsList)
     return (
       <div>
         <BigCalendar
@@ -95,10 +102,27 @@ class Calendar extends React.Component {
           :
           <button type="submit" onClick={this.addIsClicked}>Add Event</button>
         }
+        {
+          this.state.editIsClicked ?
+          <div>
+          <form>
+          <input name="title" />
+          <input name="time" />
+          <input name="startdate" />
+          <input name="enddate" />
+          </form>
+          <button>Delete</button>
+          </div>
+          : 
+          <button>Edit Your Events</button>
+        }
       </div>
     )
   }
 }
 
 
-export default Calendar
+const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+
+
+export default connect(mapStateToProps)(Calendar)
