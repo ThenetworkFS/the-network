@@ -17,6 +17,7 @@ class EditProfile extends React.Component {
       loggedInUser: props.loggedInUser,
       isProfileSaved: false,
       address: '',
+      isAdressedEdited: false,
     }
   }
 
@@ -42,7 +43,7 @@ class EditProfile extends React.Component {
   handleProfileSubmit = (event) => {
     event.preventDefault()
     this.setState({ isProfileSaved: true })
-    if (this.state.address.length) {
+    if (this.state.isAdressedEdited) {
       this.getGeoCodeByAddress()
       .then(result => {
         const userWorkInfo = {
@@ -54,6 +55,7 @@ class EditProfile extends React.Component {
         this.updateUser(userWorkInfo)
       })
     } else {
+      console.log('STATE', this.state.loggedInUser)
       this.updateUser(this.state.loggedInUser)
     }
   }
@@ -87,6 +89,7 @@ class EditProfile extends React.Component {
 
   onWorkAddressChange = (address) => {
     this.setState({
+      isAdressedEdited: true,
       address,
       loggedInUser: {
         ...this.state.loggedInUser,
