@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const Spinner = (props) => {
   let isSizeL = props.size === "L"
   return (
@@ -10,5 +11,6 @@ const Spinner = (props) => {
     </div>
   )
 }
+
 
 export default Spinner;

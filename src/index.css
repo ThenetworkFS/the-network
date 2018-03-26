@@ -420,4 +420,45 @@ body {
   .navbar-desktop {
     display: none !important;
   }
+<<<<<<< HEAD
 }
+=======
+
+  .feed-menu-container,
+  .user-profile-container {
+    width: 90vw;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    margin-top: 12px;
+  }
+
+  .feed-menu {
+    max-width: 338px;
+    margin: 0 auto;
+    margin-bottom: 12px;
+  }
+
+  .feed-menu-item {
+    min-width: 0px;
+    max-width: 73px;
+  }
+
+  .searchcard-container {
+    width: 290px;
+  }
+
+  .searchcard {
+    width: 100% !important;
+  }
+
+  .logo {
+    margin-left: 5px !important;
+    margin-right: 11px !important;
+  }
+
+  .signout-button {
+    padding-left: 17px;
+    padding-right: 13px;
+  }
+}
+>>>>>>> master

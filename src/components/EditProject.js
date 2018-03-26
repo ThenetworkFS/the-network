@@ -98,7 +98,6 @@ class EditProject extends React.Component {
   }
 
 
-
   noop = () => { }
 
 

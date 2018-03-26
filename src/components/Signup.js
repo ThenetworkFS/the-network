@@ -14,12 +14,10 @@ import Spinner from './Spinner'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 const uuidv1 = require('uuid/v1')
 
-class Signup extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
-  
+class Signup extends React.Component {
+ 
+
   signInAnonymously = (event) => {
     event.preventDefault()
     const email = event.target.email.value
@@ -37,14 +35,17 @@ class Signup extends React.Component {
     }
     this.props.startFetch()
     fire.auth().createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      db.collection('users')
-      .doc(email)
-      .set(user)
-      .catch(err => {
-        console.error(err)})
-    })
+      .then(() => {
+        db.collection('users')
+          .doc(email)
+          .set(user)
+          .catch(err => {
+            console.error(err)
+          })
+      })
   }
+
+
   onPassChange = (event) => {
     event.preventDefault()
     this.setState({
@@ -52,7 +53,7 @@ class Signup extends React.Component {
     })
   }
 
-  
+
   render() {
     return (
       <div>
@@ -125,17 +126,21 @@ class Signup extends React.Component {
             </Grid>
           </div>
         ) : (
-          <Spinner size={"L"}/>
-        )}
+            <Spinner size={"L"} />
+          )}
       </div>
     )
   }
 }
 
+
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
+
+
 const mapDispatchToProps = {
   startFetch,
   stopFetch,
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup)

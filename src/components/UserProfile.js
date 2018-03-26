@@ -5,9 +5,9 @@ import { getUser } from '../store'
 import { Header, Card, Icon } from 'semantic-ui-react'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 
+
 class UserProfile extends React.Component {
-  componentDidMount() {
-  }
+
 
   renderProjects = (projects) => {
     return projects.map(project => {
@@ -19,6 +19,7 @@ class UserProfile extends React.Component {
       )
     })
   }
+
 
   render() {
     const user = this.props.selectedUser;
@@ -41,27 +42,28 @@ class UserProfile extends React.Component {
               edit profile
             </Link>
           ) : (
-            null
-          )}
-          { user.workInfo && user.workInfo.address ? (
+              null
+            )}
+            <Header className="user-profile-cohort" as="h4">{user.cohort} {user.cohortId}</Header>
+          {user.workInfo && user.workInfo.address ? (
             <Header className="user-profile-details" as="h4">Works at {user.workInfo.address}</Header>
           ) : (
-            null
-          )}
+              null
+            )}
           {user.city ? (
             <Header className="user-profile-details" as="h4">Lives in {user.city}, {user.state} {user.country}</Header>
           ) : (
-            null
-          )}
+              null
+            )}
           {user.interests ? (
             <Header className="user-profile-details" as="h4">Is interested in {user.interests}</Header>
           ) : (
-            null
-          )}
+              null
+            )}
           {user.email ? (
             <Header className="user-profile-details" as="h4">
               <div>
-                <Icon className="user-profile-icon" name="mail outline" size="large"/>
+                <Icon className="user-profile-icon" name="mail outline" size="large" />
                 <a className="user-profile-header" href={`mailto:${user.email}`}>{user.email}</a>
               </div>
             </Header>
@@ -71,28 +73,28 @@ class UserProfile extends React.Component {
           {user.github ? (
             <Header className="user-profile-details" as="h4">
               <div>
-                <Icon className="user-profile-icon" name="github" size="large"/>
+                <Icon className="user-profile-icon" name="github" size="large" />
                 <a className="user-profile-header" href={user.github} target="_blank">{user.github}</a>
               </div>
             </Header>
           ) : (
-            null
-          )}
+              null
+            )}
           {user.linkedin ? (
             <Header className="user-profile-details" as="h4">
               <div>
-                <Icon className="user-profile-icon" name="linkedin" size="large"/>
+                <Icon className="user-profile-icon" name="linkedin" size="large" />
                 <a className="user-profile-header" href={user.linkedin} target="_blank">{user.linkedin}</a>
               </div>
             </Header>
           ) : (
-            null
-          )}
+              null
+            )}
           {user.projects ? (
             <h5>Projects: {user.projects.length && this.renderProjects(user.projects)}</h5>
           ) : (
-            null
-          )}
+              null
+            )}
         </Card>
       </div>
     )
