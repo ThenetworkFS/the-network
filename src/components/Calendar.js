@@ -112,13 +112,14 @@ class Calendar extends React.Component {
     return (
       <div>
         <BigCalendar
+          className="calendar"
           ref={ref => this.BigCalendar = ref}
           events={myEventsList}
           style={{ height: "600px", width: "1200px" }}
           defaultDate={new Date()}
         />
-        {
-          this.state.addIsClicked ?
+        <div>
+          {this.state.addIsClicked ? (
             <form onSubmit={this.handleAddSubmit}>
               <h6>Title</h6>
               <input
@@ -142,11 +143,10 @@ class Calendar extends React.Component {
                 <button>Add</button>
               </div>
             </form>
-            :
-            <button type="submit" onClick={this.addIsClicked}>Add Event</button>
-        }
-        {
-          this.state.editIsClicked ?
+          ) : (
+            <button type="submit" onClick={this.addIsClicked}>Add Event</button>          
+          )}
+          {this.state.editIsClicked ? (
             myEventsList.filter(event => event.userId === this.props.loggedInUser.id).map(calendarEvent => {
               const startArray = calendarEvent.start.split('-')
               const endArray = calendarEvent.end.split('-')
@@ -165,9 +165,10 @@ class Calendar extends React.Component {
                 </div>
               )
             })
-            :
+          ) : (
             <button onClick={this.editIsClicked}>Edit Your Events</button>
-        }
+          )}
+        </div>
       </div>
     )
   }

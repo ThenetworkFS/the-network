@@ -44,7 +44,7 @@ class Navbar extends Component {
                   }>
                   <Icon name='user' />
                 </Menu.Item>
-                <button onClick={this.props.removeUser}>Sign out</button>
+                <a onClick={this.props.removeUser}>sign out</a>
               </Menu>
             </nav>
           ) : (

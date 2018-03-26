@@ -18,6 +18,19 @@ body {
   padding-top: 20px;
 }
 
+.calendar {
+  margin: 0 auto;
+}
+
+.calendar-link {
+  position: relative; 
+  top: 14px;
+}
+
+.calendar-link:hover {
+  text-decoration: underline;
+}
+
 .image-picker-container {
   display: block;
   text-align: center;
