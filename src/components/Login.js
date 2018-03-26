@@ -1,9 +1,9 @@
-import { fire } from '../fire'
+import { fire, db } from '../fire'
 import React from 'react'
 import { startFetch } from '../store'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
-import { 
+import {
   Button,
   Icon,
   Form,
@@ -16,26 +16,50 @@ import Spinner from './Spinner'
 
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      invalidLogin: false
+    }
+  }
+
 
   signInAnonymously = (event) => {
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
     fire.auth()
-    .signInWithEmailAndPassword(email, password)
-    .catch(err => console.error(err))
+      .signInWithEmailAndPassword(email, password)
+      .catch(err => {
+        console.log(err.code)
+        this.setState({
+          invalidLogin: true
+        })
+        console.error(err)
+      })
   }
+
 
   googleLogin = (event) => {
     event.preventDefault()
     const provider = new firebase.auth.GoogleAuthProvider()
     localStorage.setItem('googleLogin', '1');
     fire.auth()
-    .signInWithRedirect(provider)
-    .catch(() => {
-      localStorage.removeItem('googleLogin');
+      .signInWithRedirect(provider)
+      .catch(() => {
+        localStorage.removeItem('googleLogin');
+      })
+  }
+
+
+  setInvalidToFalse = (event) => {
+    event.preventDefault()
+    this.setState({
+      invalidLogin: false
     })
   }
+
 
   render() {
     return (
@@ -53,8 +77,10 @@ class Login extends React.Component {
                   {' '}The Network
                 </Header>
                 <Form onSubmit={this.signInAnonymously} size="large">
+                  {this.state.invalidLogin && <h5>Invalid User or Password</h5>}
                   <Segment>
                     <Form.Input
+                      onChange={this.setInvalidToFalse}
                       name="email"
                       fluid
                       icon="mail outline"
@@ -64,6 +90,7 @@ class Login extends React.Component {
                       required
                     />
                     <Form.Input
+                      onChange={this.setInvalidToFalse}
                       fluid
                       name="password"
                       icon="lock"
@@ -79,7 +106,7 @@ class Login extends React.Component {
                   Don't have an account? <a href="/signup">Sign Up Now</a>
                 </h5>
                 <h4>OR</h4>
-                <Button className="google-login-button"color="blue" size="small" onClick={this.googleLogin}>
+                <Button className="google-login-button" color="blue" size="small" onClick={this.googleLogin}>
                   <span>Login with</span>
                   <Icon name="google" className="large google icon google-login-icon" />
                 </Button>
@@ -87,12 +114,13 @@ class Login extends React.Component {
             </Grid>
           </div>
         ) : (
-          <Spinner />
-        )}
+            <Spinner size={"L"} />
+          )}
       </div>
     )
   }
 }
+
 
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 

@@ -1,0 +1,2 @@
+export const ANONYMOUS_USER_IMAGE_URL = "https://firebasestorage.googleapis.com/v0/b/thenetwork-8d967.appspot.com/o/userImages%2Fanon_user.svg?alt=media&token=14634a83-c73e-4118-857e-d34a88f80e44";
+export const FULLSTACK_LOGO_URL = "https://firebasestorage.googleapis.com/v0/b/thenetwork-8d967.appspot.com/o/fullstack-logo.png?alt=media&token=d7746242-aa3b-4f82-90a5-87cf9b8ae5e0";

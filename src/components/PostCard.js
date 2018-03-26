@@ -3,9 +3,10 @@ import MicrolinkCard from 'react-microlink'
 import history from '../history'
 import { connect } from 'react-redux'
 import { db } from '../fire'
-import firebase from 'firebase'
 import { selectUser } from '../store'
-import { Card, Image, Button, Form, Input, TextArea} from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
+import { CommentCard } from './'
+import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 
 
 class PostCard extends Component {
@@ -13,28 +14,27 @@ class PostCard extends Component {
     super(props)
 
     this.state = {
-      viewComments: false,
-      comments: [],
-      newComment: ''
+      posts: []
     }
   }
 
+
   componentDidMount() {
     let currentComponent = this
-    db.collection("posts")
-      .doc(this.props.post.id)
-      .collection('comments')
-      .orderBy("timestamp", "desc")
+    db.collection("posts").orderBy("timestamp")
       .onSnapshot(function (querySnapshot) {
         querySnapshot.docChanges.forEach((change) => {
           if (change.type === "added") {
+            const newPost = { ...change.doc.data(), id: change.doc.id }
             currentComponent.setState({
-              comments: currentComponent.state.comments.concat(change.doc.data())
+              posts: [newPost].concat(currentComponent.state.posts),
+              isPostSubmitted: false,
             });
           }
         });
       })
   }
+
 
   formatPostWithLink = (post) => {
     const linkIndex = post.content.indexOf(post.link)
@@ -50,6 +50,7 @@ class PostCard extends Component {
     )
   }
 
+
   onUserNameClick = (event, user) => {
     event.preventDefault()
     return db.collection('users')
@@ -60,111 +61,81 @@ class PostCard extends Component {
         history.push(`/profile/${user.data().id}`)
       })
   }
-  onViewCommentsClick = (event) => {
+
+
+  deletePost = (event, id) => {
     event.preventDefault()
-    this.setState({
-      viewComments: !this.state.viewComments,
-    })
+    db
+      .collection('posts')
+      .doc(id)
+      .delete()
+      .catch(err => console.error(err))
+      const filtered= this.state.posts.filter(post => post.id !== id)
+      this.setState({ posts: filtered })
   }
 
-  onAddCommentClick = (event) => {
-    event.preventDefault()
-    this.clearTextarea();
-    db.collection('posts')
-    .doc(this.props.post.id)
-    .collection('comments')
-    .add({
-      userEmail: this.props.loggedInUser.email,
-      firstName: this.props.loggedInUser.firstName,
-      lastName: this.props.loggedInUser.lastName,
-      content: this.state.newComment,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    })
-  }
-
-  clearTextarea = () => {
-    document.getElementById("new-comment-textarea").value = "";
-  }
-
-  handleCommentChange = (e, { value }) => this.setState({ newComment: value })
 
   render() {
-    const { post } = this.props;
+    const { posts } = this.state;
+    const user = this.props.loggedInUser
     return (
-      <div className="postcard-container">
-        <Card className="postcard">
-          <Card.Content>
-            <Image floated='left' size='mini' src='https://react.semantic-ui.com/assets/images/avatar/large/steve.jpg' />
-            <Card.Header>
-              <a onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
-            </Card.Header>
-            <Card.Meta>
-              FS - 1801
-            </Card.Meta>
-            {post.link ? (
-              <div>
-                <Card.Description>
-                  {this.formatPostWithLink(post)}
-                </Card.Description>
-                <MicrolinkCard
-                  round
-                  url={post.link}
-                  target='_blank'
-                />
-              </div>
-            ) : (
-              <Card.Description>
-                <div className="formatted-post">
-                  {post.content}
+      <div>
+        {
+          posts.filter(post => post.category === this.props.category)
+            .map((post, index) => {
+              return (
+                <div className="postcard-container" key={index}>
+                  <Card className="postcard">
+                    <Card.Content>
+                      <Image className={post.user.image ? "" : "postcard-anonymous anonymous"} floated='left' size='mini' src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL} />
+                      <Card.Header>
+                        <a onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
+                      </Card.Header>
+                      <Card.Meta>
+                        FS - 1801
+              </Card.Meta>
+                      {post.link ? (
+                        <div>
+                          <Card.Description>
+                            {this.formatPostWithLink(post)}
+                          </Card.Description>
+                          <MicrolinkCard
+                            round
+                            url={post.link}
+                            target='_blank'
+                          />
+                        </div>
+                      ) : (
+                          <Card.Description>
+                            <div className="formatted-post">
+                              {post.content}
+                            </div>
+                          </Card.Description>
+                        )}
+                    </Card.Content>
+                    {post.user.id === user.id ?
+                      <button onClick={(event) => this.deletePost(event, post.id)}>Delete</button>
+                      : null
+                    }
+                    <CommentCard post={post} onUserNameClick={this.onUserNameClick} />
+                  </Card>
                 </div>
-              </Card.Description>
-            )}
-          </Card.Content>
-          {this.state.viewComments
-          ?
-          <div>
-            <Button
-              onClick={this.onViewCommentsClick}
-              >Hide Comments
-            </Button>
-            <Form className="new-comment-textarea"
-              onSubmit={this.onAddCommentClick}
-              >
-              <TextArea
-                id="new-comment-textarea"
-                label='Comment'
-                placeholder='Add Comment...'
-                onChange={this.handleCommentChange}
-                />
-              <Button
-                type="submit"
-                >Add Comment
-              </Button>
-              {this.state.comments && this.state.comments.map((comment) => {
-                return (
-                <div>
-                  <h1>{comment.firstName} {comment.lastName} </h1>
-                  <h2>{comment.content}</h2>
-                </div>
-                )
-              })}
-            </Form>
-          </div>
-          :
-          <Button
-            onClick={this.onViewCommentsClick}
-            >View Comments
-          </Button>}
-        </Card>
+              )
+            }
+            )
+        }
       </div>
     )
   }
 }
 
+
 const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
 
 const mapDispatchToProps = {
   selectUser
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostCard)

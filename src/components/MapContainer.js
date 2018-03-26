@@ -17,10 +17,9 @@ export class MapContainer extends React.Component {
       isFinished: false,
       showingInfoWindow: false,
       activeMarker: {},
-      selectedPlace: {}
+      selectedPlace: {},
+      zoom: 11
     };
-    this.onMouseoverMarker = this.onMouseoverMarker.bind(this);
-    this.onMouseoutMarker = this.onMouseoutMarker.bind(this);
   }
 
   componentDidMount() {
@@ -36,9 +35,15 @@ export class MapContainer extends React.Component {
         });
         currentComponent.setState({ isFinished: true });
       });
+    setTimeout(() => {
+      this.setState({
+        zoom: 12
+      })
+    }, 2500)
   }
 
-  onMouseoverMarker(props, marker, e) {
+
+  onMouseoverMarker = (props, marker, e) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -46,7 +51,8 @@ export class MapContainer extends React.Component {
     });
   }
 
-  onMouseoutMarker(e) {
+
+  onMouseoutMarker = (e) => {
     this.setState({
       selectedPlace: {},
       activeMarker: {},
@@ -62,7 +68,7 @@ export class MapContainer extends React.Component {
           <div>
             <Map
               google={this.props.google}
-              zoom={14}
+              zoom={this.state.zoom}
               style={style}
               initialCenter={{
                 lat: 40.7549,
@@ -70,16 +76,19 @@ export class MapContainer extends React.Component {
               }}
             >
               {users.map((user, index) => {
-                return user.workInfo && user.firstName !== "Beth" ? (
-                  <Marker
-                    name={user.workInfo.address}
-                    title={`${user.firstName} ${user.lastName}`}
-                    key={index}
-                    position={user.workInfo.coordinates}
-                    onMouseover={this.onMouseoverMarker}
-                    onMouseout={this.onMouseoutMarker}
-                  />
-                ) : null;
+                return (
+                  user.workInfo && user.workInfo.coordinates ?
+                    <Marker
+                      name={user.workInfo.address}
+                      title={`${user.firstName} ${user.lastName}`}
+                      key={index}
+                      position={user.workInfo.coordinates}
+                      onMouseover={this.onMouseoverMarker}
+                      onMouseout={this.onMouseoutMarker}
+
+                    />
+                    : null
+                )
               })}
               <InfoWindow
                 marker={this.state.activeMarker}
@@ -94,7 +103,7 @@ export class MapContainer extends React.Component {
           </div>
         ) : null}
       </div>
-    );
+    )
   }
 }
 

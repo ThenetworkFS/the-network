@@ -9,7 +9,9 @@ import {
   AllUsers,
   SearchResults,
   AdvancedSearch,
-  EditProfile
+  EditProfile,
+  MapContainer,
+  Calendar
 } from "./components";
 
 const Routes = () => {
@@ -21,9 +23,10 @@ const Routes = () => {
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/profile/:id" component={UserProfile} />
       <Route exact path="/profile/:id/edit" component={EditProfile} />
-      <Route exact path="/allUsers" component={AllUsers} />
-      <Route exact path="/search" component={SearchResults} />
       <Route exact path="/advancedSearch" component={AdvancedSearch} />
+      <Route exact path="/map" component={MapContainer} />
+      <Route exact path="/calendar" component={Calendar} />
+      <Route path="/users" component={AllUsers} />
     </Switch>
   );
 };

@@ -16,7 +16,7 @@ class App extends Component {
   componentDidMount() {
 
     const firebaseUserKey = Object.keys(window.localStorage)
-    .filter(it => it.startsWith('firebase:authUser'))[0];
+      .filter(it => it.startsWith('firebase:authUser'))[0];
 
     if (
       localStorage.getItem('googleLogin') === '1' ||
@@ -28,14 +28,14 @@ class App extends Component {
       if (user) {
         localStorage.removeItem('googleLogin');
         db.collection('users')
-        .doc(user.email)
-        .onSnapshot(user => {
-          this.props.getUser(user.data())
-          if (this.props.selectedUser.email === this.props.loggedInUser.email) {
-            this.props.selectUser(user.data())
-          }
-          this.props.stopFetch()
-        })
+          .doc(user.email)
+          .onSnapshot(user => {
+            this.props.getUser(user.data())
+            if (this.props.selectedUser.email === this.props.loggedInUser.email) {
+              this.props.selectUser(user.data())
+            }
+            this.props.stopFetch()
+          })
       }
     })
     fire.auth().getRedirectResult()
@@ -45,25 +45,29 @@ class App extends Component {
           const lastName = result.user.displayName.split(' ')[1]
           const email = result.user.email
           const id = uuidv1()
-          db.collection('users')
-            .doc(result.user.email)
-            .set({
-              firstName,
-              lastName,
-              email,
-              id
-            })
+          let user =
+              db.collection("users")
+                .doc(result.user.email)
+          if (!user.id) {
+            db.collection('users')
+              .doc(result.user.email)
+              .set({
+                firstName,
+                lastName,
+                email,
+                id
+              })
+          }
         }
       })
   }
 
   componentWillReceiveProps(nextProps) {
-    // only go to /home when we get the user from Firestore
-    if(
+    if (
       Object.keys(this.props.loggedInUser).length === 0 &&
       this.props.loggedInUser.constructor === Object &&
       nextProps.loggedInUser.email
-    ){
+    ) {
       history.push('/home/news')
     }
   }

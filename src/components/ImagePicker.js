@@ -11,33 +11,34 @@ class ImagePicker extends React.Component {
     const storageRef = storage.ref();
     const imagesRef = storageRef.child(`userImages/${user.email}/${acceptedFiles[0].name}`);
     imagesRef.put(acceptedFiles[0])
-    .then(() => {
-      return storage.ref()
-      .child(`userImages/${user.email}/${acceptedFiles[0].name}`)
-      .getDownloadURL()
-      .then(url => {
-        return db.collection('users')
-        .doc(user.email)
-        .update({ image: url })
-      })
-    });
+      .then(() => {
+        return storage.ref()
+          .child(`userImages/${user.email}/${acceptedFiles[0].name}`)
+          .getDownloadURL()
+          .then(url => {
+            return db.collection('users')
+              .doc(user.email)
+              .update({ image: url })
+          })
+      });
   }
 
 
   render() {
     let dropzoneRef;
     return (
-      <div>
-        <Dropzone ref={(node) => { dropzoneRef = node; }} onDrop={this.onDrop}>
+      <div className="image-picker-container">
+        <Dropzone className="hide" ref={(node) => { dropzoneRef = node; }} onDrop={this.onDrop}>
           <p>Drop files here.</p>
         </Dropzone>
-        <button type="button" onClick={() => { dropzoneRef.open() }}>Open File Dialog</button>
+        <a onClick={() => { dropzoneRef.open() }}>change your picture</a>
       </div>
     )
   }
 }
 
 
-const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
 
 export default connect(mapStateToProps)(ImagePicker)
