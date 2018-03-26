@@ -11,7 +11,8 @@ import {
   Button,
 } from 'semantic-ui-react'
 
-class Home extends React.Component{
+
+class Home extends React.Component {
   constructor(props) {
     super(props)
 
@@ -22,6 +23,7 @@ class Home extends React.Component{
     }
   }
 
+
   componentDidMount() {
     let currentComponent = this
     //THIS IS LISTENING FOR CHANGES IN DB AND ADDING TO STATE
@@ -30,7 +32,7 @@ class Home extends React.Component{
       .onSnapshot(function (querySnapshot) {
         querySnapshot.docChanges.forEach((change) => {
           if (change.type === "added") {
-            const newPost = {...change.doc.data(), id: change.doc.id}
+            const newPost = { ...change.doc.data(), id: change.doc.id }
             currentComponent.setState({
               posts: [newPost].concat(currentComponent.state.posts),
               isPostSubmitted: false,
@@ -39,6 +41,7 @@ class Home extends React.Component{
         });
       })
   }
+
 
   parseLinkInContent = (content) => {
     const parseLinkExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/gi;
@@ -53,6 +56,7 @@ class Home extends React.Component{
     return link;
   }
 
+
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ isPostSubmitted: true })
@@ -66,32 +70,33 @@ class Home extends React.Component{
       content,
       link,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    }).then((doc)=>{
+    }).then((doc) => {
       console.log('doc after submit', doc.id)
-      db.collection("posts").doc(doc.id).update({id: doc.id})
+      db.collection("posts").doc(doc.id).update({ id: doc.id })
     })
-    .catch(function (error) {
-      console.error("Error adding document: ", error);
-    })
+      .catch(function (error) {
+        console.error("Error adding document: ", error);
+      })
   }
+
 
   renderPostCards = (category) => {
     return this.state.posts.filter(post => post.category === category)
-    .map((post, index) => {
-      return (
-        <PostCard key={index} post={post}/>
-      )
-    })
+      .map((post, index) => {
+        return (
+          <PostCard key={index} post={post} />
+        )
+      })
   }
+
 
   clearTextarea = () => {
     document.getElementById("new-post-textarea").value = "";
   }
 
+
   render() {
-    const category= this.props.match.params.category
-
-
+    const category = this.props.match.params.category
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
@@ -119,7 +124,7 @@ class Home extends React.Component{
                 </Menu.Item>
               </Menu>
             </nav>
-            { category === 'meetup' ? <Link to="/calendar">Calendar</Link> : null }
+            {category === 'meetup' ? <Link to="/calendar">Calendar</Link> : null}
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
               <TextArea
                 required
@@ -139,13 +144,15 @@ class Home extends React.Component{
             {this.renderPostCards(category)}
           </div>
         ) : (
-          <Spinner size={"L"}/>
-        )}
+            <Spinner size={"L"} />
+          )}
       </div>
     )
   }
 }
 
+
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
+
 
 export default connect(mapStateToProps)(Home)

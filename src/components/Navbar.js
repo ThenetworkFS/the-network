@@ -24,30 +24,30 @@ class Navbar extends Component {
     const user = this.props.loggedInUser
     return (
       <div>
-          {user && user.email ? (
-            <nav>
-              <Menu icon>
-                <Menu.Item name='The Network' />
-                <Menu.Item name='home/news' active={activeItem === 'home/news'} onClick={this.handleItemClick}>
-                  <Icon name='browser' />
-                </Menu.Item>
+        {user && user.email ? (
+          <nav>
+            <Menu icon>
+              <Menu.Item name='The Network' />
+              <Menu.Item name='home/news' active={activeItem === 'home/news'} onClick={this.handleItemClick}>
+                <Icon name='browser' />
+              </Menu.Item>
 
-                <Menu.Item name='users' active={activeItem === 'users'} onClick={this.handleItemClick}>
-                  <Icon name='users' />
-                </Menu.Item>
+              <Menu.Item name='users' active={activeItem === 'users'} onClick={this.handleItemClick}>
+                <Icon name='users' />
+              </Menu.Item>
 
-                <Menu.Item name={`profile/${user.id}`} active={activeItem === `profile/${user.id}`}
-                  onClick={(event, name) => {
-                    this.handleItemClick(event, name)
-                    this.props.selectUser(user)
-                  }
-                  }>
-                  <Icon name='user' />
-                </Menu.Item>
-                <button onClick={this.props.removeUser}>Sign out</button>
-              </Menu>
-            </nav>
-          ) : (
+              <Menu.Item name={`profile/${user.id}`} active={activeItem === `profile/${user.id}`}
+                onClick={(event, name) => {
+                  this.handleItemClick(event, name)
+                  this.props.selectUser(user)
+                }
+                }>
+                <Icon name='user' />
+              </Menu.Item>
+              <button onClick={this.props.removeUser}>Sign out</button>
+            </Menu>
+          </nav>
+        ) : (
             null
           )}
       </div>
@@ -57,6 +57,7 @@ class Navbar extends Component {
 
 
 const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
 
 const mapDispatchToProps = (dispatch) => ({
   removeUser: () => {

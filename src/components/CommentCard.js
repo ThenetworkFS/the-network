@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Spinner } from './'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
-const uuidv1 = require('uuid/v1')
+
 
 class CommentCard extends Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class CommentCard extends Component {
     }
   }
 
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.category !== this.props.match.params.category) {
       this.setState({
@@ -28,12 +29,13 @@ class CommentCard extends Component {
     }
   }
 
+
   handleCommentChange = (e, { value }) => this.setState({ newComment: value })
+
 
   onAddCommentClick = (event) => {
     event.preventDefault()
     this.clearTextarea();
-    const id = uuidv1()
     db.collection('posts')
       .doc(this.props.post.id)
       .collection('comments')
@@ -42,20 +44,22 @@ class CommentCard extends Component {
         firstName: this.props.loggedInUser.firstName,
         lastName: this.props.loggedInUser.lastName,
         content: this.state.newComment,
-        id: id,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       })
-
-    this.setState({
-      comments: [{
-        userEmail: this.props.loggedInUser.email,
-        firstName: this.props.loggedInUser.firstName,
-        lastName: this.props.loggedInUser.lastName,
-        content: this.state.newComment,
-        id: id
-      }].concat(this.state.comments)
-    })
+      .then((doc) => {
+        db.collection("posts").doc(this.props.post.id).collection("comments").doc(doc.id).update({ id: doc.id })
+        this.setState({
+          comments: [{
+            userEmail: this.props.loggedInUser.email,
+            firstName: this.props.loggedInUser.firstName,
+            lastName: this.props.loggedInUser.lastName,
+            content: this.state.newComment,
+            id: doc.id
+          }].concat(this.state.comments)
+        })
+      })
   }
+
 
   toggleComments = event => {
     event.preventDefault()
@@ -88,18 +92,18 @@ class CommentCard extends Component {
     console.log('comment', commentId)
     console.log('post', postId)
     event.preventDefault()
-      db
-        .collection('posts')
-        .doc(postId)
-        .collection('comments')
-        .doc(commentId)
-        .delete()
-        .catch(err => console.error(err))
+    db
+      .collection('posts')
+      .doc(postId)
+      .collection('comments')
+      .doc(commentId)
+      .delete()
+      .catch(err => console.error(err))
 
     const filtered = this.state.comments.filter(comment => comment.id !== commentId)
     this.setState({ comments: filtered })
-
   }
+
 
   renderComments = () => {
     const { post } = this.props
@@ -130,6 +134,7 @@ class CommentCard extends Component {
   clearTextarea = () => {
     document.getElementById("new-comment-textarea").value = "";
   }
+
 
   render() {
     return (
@@ -177,6 +182,8 @@ class CommentCard extends Component {
   }
 }
 
+
 const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
 
 export default withRouter(connect(mapStateToProps, null)(CommentCard))

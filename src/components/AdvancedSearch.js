@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Form, Select } from 'semantic-ui-react'
 
+
 const AdvancedSearch = (props) => {
   const options = [
     { key: 'GH', text: 'GH', value: 'GH' },
@@ -50,5 +51,6 @@ const AdvancedSearch = (props) => {
     </div>
   )
 }
+
 
 export default AdvancedSearch

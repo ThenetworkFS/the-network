@@ -23,34 +23,36 @@ class AllUsers extends Component {
     }
   }
 
+
   componentDidMount() {
     let currentComponent = this
     db.collection("users")
-    .onSnapshot(function (querySnapshot) {
-      querySnapshot.docChanges.forEach((change) => {
-        if (change.type === "added") {
-          currentComponent.setState({
-            allUsers: currentComponent.state.allUsers.filter(user => user.id !== currentComponent.props.loggedInUser.id).concat(change.doc.data())
-          });
-        }
-      });
-    })
+      .onSnapshot(function (querySnapshot) {
+        querySnapshot.docChanges.forEach((change) => {
+          if (change.type === "added") {
+            currentComponent.setState({
+              allUsers: currentComponent.state.allUsers.filter(user => user.id !== currentComponent.props.loggedInUser.id).concat(change.doc.data())
+            });
+          }
+        });
+      })
   }
+
 
   componentWillReceiveProps(nextProps) {
     let currentComponent = this
     let users = db.collection("users")
     if (nextProps.location.search === '') {
       users.get()
-      .then(users => {
-        let allUsers = [];
-        users.forEach(user => {
-          allUsers.push(user.data());
+        .then(users => {
+          let allUsers = [];
+          users.forEach(user => {
+            allUsers.push(user.data());
+          })
+          currentComponent.setState({
+            allUsers: allUsers.filter(user => user.id !== this.props.loggedInUser.id)
+          })
         })
-        currentComponent.setState({
-          allUsers: allUsers.filter(user => user.id !== this.props.loggedInUser.id)
-        })
-      })
     }
     if (
       this.props.location.search !== nextProps.location.search &&
@@ -60,10 +62,10 @@ class AllUsers extends Component {
       let query;
 
       if (params.has("cohort")) {
-        query = users.where("cohort", "==", params.get("cohort"))      
+        query = users.where("cohort", "==", params.get("cohort"))
       }
       if (params.has("cohortId")) {
-        query = users.where("cohortId", "==", params.get("cohortId"))      
+        query = users.where("cohortId", "==", params.get("cohortId"))
       }
       if (params.has("city")) {
         query = users.where("city", "==", params.get("city"))
@@ -73,17 +75,18 @@ class AllUsers extends Component {
       }
 
       query.get()
-      .then(function(users){
-        let filteredUsers = [];
-        users.forEach(user => {
-          filteredUsers.push(user.data());
+        .then(function (users) {
+          let filteredUsers = [];
+          users.forEach(user => {
+            filteredUsers.push(user.data());
+          })
+          currentComponent.setState({
+            allUsers: filteredUsers,
+          })
         })
-        currentComponent.setState({
-          allUsers: filteredUsers,
-        })
-      })
     }
   }
+
 
   submitHandler = (event) => {
     event.preventDefault()
@@ -114,10 +117,12 @@ class AllUsers extends Component {
     }
   }
 
+
   onInputChange = (evt, param) => {
     evt.preventDefault()
     this.setState({ [param.name]: param.value })
   }
+
 
   toggleAdvancedSearch = (event) => {
     event.preventDefault(event)
@@ -129,17 +134,20 @@ class AllUsers extends Component {
     })
   }
 
+
   filterUsersOnSearch = () => {
     const searchValue = this.state.searchVal;
     return this.state.allUsers.filter((user) => {
       return user.firstName.toLowerCase().includes(searchValue) ||
-             user.lastName.toLowerCase().includes(searchValue)
+        user.lastName.toLowerCase().includes(searchValue)
     })
   }
 
+
   renderSearchCards = (users) => {
-    return users.map(user => <SearchCard key={user.id} user={user}/>)
+    return users.map(user => <SearchCard key={user.id} user={user} />)
   }
+
 
   render() {
     let filteredUsers;
@@ -163,13 +171,13 @@ class AllUsers extends Component {
           >
             {advancedSearchIsClicked ? "close" : "more search options"}
           </a>
-          {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.submitHandler}/>}
+          {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.submitHandler} />}
           <div className="all-users-results">
             {searchVal ? (
               this.renderSearchCards(filteredUsers)
             ) : (
-              this.renderSearchCards(allUsers)
-            )}
+                this.renderSearchCards(allUsers)
+              )}
           </div>
         </div>
       </div>
@@ -177,12 +185,13 @@ class AllUsers extends Component {
   }
 }
 
-const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
 
+const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
 
 
 const mapDispatchToProps = {
   selectUser
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllUsers)

@@ -24,18 +24,20 @@ class PostCard extends Component {
     )
   }
 
+
   onUserNameClick = (event, user) => {
     event.preventDefault()
     return db.collection('users')
-    .doc(user.email)
-    .get()
-    .then(user => {
-      this.props.selectUser(user.data())
-      history.push(`/profile/${user.data().id}`)
-    })
+      .doc(user.email)
+      .get()
+      .then(user => {
+        this.props.selectUser(user.data())
+        history.push(`/profile/${user.data().id}`)
+      })
   }
 
-  deletePost= (event, id) => {
+
+  deletePost = (event, id) => {
     event.preventDefault()
     db
       .collection('posts')
@@ -71,28 +73,31 @@ class PostCard extends Component {
                 />
               </div>
             ) : (
-              <Card.Description>
-                <div className="formatted-post">
-                  {post.content}
-                </div>
-              </Card.Description>
-            )}
+                <Card.Description>
+                  <div className="formatted-post">
+                    {post.content}
+                  </div>
+                </Card.Description>
+              )}
           </Card.Content>
-          { post.user.id === user.id ?
-          <button onClick={(event) => this.deletePost(event, post.id)}>Delete</button>
-          : null
+          {post.user.id === user.id ?
+            <button onClick={(event) => this.deletePost(event, post.id)}>Delete</button>
+            : null
           }
-          <CommentCard post={post} onUserNameClick={this.onUserNameClick}/>
+          <CommentCard post={post} onUserNameClick={this.onUserNameClick} />
         </Card>
       </div>
     )
   }
 }
 
+
 const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
 
 const mapDispatchToProps = {
   selectUser
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostCard)

@@ -24,32 +24,35 @@ class Login extends React.Component {
     }
   }
 
+
   signInAnonymously = (event) => {
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
     fire.auth()
-    .signInWithEmailAndPassword(email, password)
-    .catch(err => {
-      console.log(err.code)
-      this.setState({
-        invalidLogin: true
+      .signInWithEmailAndPassword(email, password)
+      .catch(err => {
+        console.log(err.code)
+        this.setState({
+          invalidLogin: true
+        })
+        console.error(err)
       })
-      console.error(err)})
   }
+
 
   googleLogin = (event) => {
     event.preventDefault()
     const provider = new firebase.auth.GoogleAuthProvider()
     localStorage.setItem('googleLogin', '1');
     fire.auth()
-    .signInWithRedirect(provider)
-    .catch(() => {
-      localStorage.removeItem('googleLogin');
-    })
+      .signInWithRedirect(provider)
+      .catch(() => {
+        localStorage.removeItem('googleLogin');
+      })
   }
 
-  
+
   setInvalidToFalse = (event) => {
     event.preventDefault()
     this.setState({
@@ -57,8 +60,8 @@ class Login extends React.Component {
     })
   }
 
+
   render() {
-    console.log(this.state)
     return (
       <div className="login-form-container">
         {!this.props.isFetching ? (
@@ -74,7 +77,7 @@ class Login extends React.Component {
                   {' '}The Network
                 </Header>
                 <Form onSubmit={this.signInAnonymously} size="large">
-                {this.state.invalidLogin && <h5>Invalid User or Password</h5>}
+                  {this.state.invalidLogin && <h5>Invalid User or Password</h5>}
                   <Segment>
                     <Form.Input
                       onChange={this.setInvalidToFalse}
@@ -103,7 +106,7 @@ class Login extends React.Component {
                   Don't have an account? <a href="/signup">Sign Up Now</a>
                 </h5>
                 <h4>OR</h4>
-                <Button className="google-login-button"color="blue" size="small" onClick={this.googleLogin}>
+                <Button className="google-login-button" color="blue" size="small" onClick={this.googleLogin}>
                   <span>Login with</span>
                   <Icon name="google" className="large google icon google-login-icon" />
                 </Button>
@@ -111,12 +114,13 @@ class Login extends React.Component {
             </Grid>
           </div>
         ) : (
-          <Spinner size={"L"}/>
-        )}
+            <Spinner size={"L"} />
+          )}
       </div>
     )
   }
 }
+
 
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 

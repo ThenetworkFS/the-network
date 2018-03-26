@@ -32,9 +32,10 @@ class EditProfile extends React.Component {
     }
   }
 
+
   componentDidMount() {
     if (this.props.loggedInUser.email) {
-      if(this.props.loggedInUser.workInfo){
+      if (this.props.loggedInUser.workInfo) {
         this.setState(() => ({
           address: this.props.loggedInUser.workInfo.address,
         }))
@@ -42,42 +43,45 @@ class EditProfile extends React.Component {
     }
   }
 
+
   handleProfileSubmit = (event) => {
     event.preventDefault()
     this.setState({ isProfileSaved: true })
     if (this.state.isWorkAdressEdited && !this.state.isUserDetailsEdited) {
       this.getGeoCodeByAddress()
-      .then(result => {
-        const userWorkInfo = {
-          workInfo: {
-            address: this.state.address,
-            coordinates: result
+        .then(result => {
+          const userWorkInfo = {
+            workInfo: {
+              address: this.state.address,
+              coordinates: result
+            }
           }
-        }
-        this.updateUser(userWorkInfo)
-      })
+          this.updateUser(userWorkInfo)
+        })
     } else if (this.state.isWorkAdressEdited && this.state.isUserDetailsEdited) {
       this.getGeoCodeByAddress()
-      .then(result => {
-        this.setState(
-          {
-            loggedInUser: {
-              ...this.state.loggedInUser,
-              workInfo: {...this.state.workInfo, coordinates: result}
-            }
-          },
-          this.updateUser(this.state.loggedInUser)
-        )
-      })
+        .then(result => {
+          this.setState(
+            {
+              loggedInUser: {
+                ...this.state.loggedInUser,
+                workInfo: { ...this.state.workInfo, coordinates: result }
+              }
+            },
+            this.updateUser(this.state.loggedInUser)
+          )
+        })
     } else {
       this.updateUser(this.state.loggedInUser)
     }
   }
 
+
   getGeoCodeByAddress = () => {
     return geocodeByAddress(this.state.address)
-    .then(results => getLatLng(results[0]))
+      .then(results => getLatLng(results[0]))
   }
+
 
   updateUser = (userAttributes) => {
     db
@@ -102,16 +106,18 @@ class EditProfile extends React.Component {
     })
   }
 
+
   onWorkAddressChange = (address) => {
     this.setState({
       isWorkAdressEdited: true,
       address,
       loggedInUser: {
         ...this.state.loggedInUser,
-        workInfo: {...this.state.workInfo, address}
+        workInfo: { ...this.state.workInfo, address }
       }
     })
   }
+
 
   render() {
     const user = this.state.loggedInUser
@@ -119,7 +125,6 @@ class EditProfile extends React.Component {
       value: this.state.address,
       onChange: this.onWorkAddressChange,
     }
-
     return (
       <div className="user-profile-container">
         <Card className="user-profile">
@@ -221,6 +226,7 @@ class EditProfile extends React.Component {
 
 
 const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
 
 const mapDispatchToProps = {
   getUser
