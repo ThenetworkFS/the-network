@@ -68,16 +68,6 @@ class UserProfile extends React.Component {
           ) : (
             null
           )}
-          {user.slack ? (
-            <Header className="user-profile-details" as="h4">
-              <div>
-                <Icon className="user-profile-icon" name="slack" size="large"/>
-                <a className="user-profile-header" href={user.slack}>{user.slack}</a>
-              </div>
-            </Header>
-          ) : (
-            null
-          )}
           {user.github ? (
             <Header className="user-profile-details" as="h4">
               <div>
