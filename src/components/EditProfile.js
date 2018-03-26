@@ -44,6 +44,7 @@ class EditProfile extends React.Component {
 
   handleProfileSubmit = (event) => {
     event.preventDefault()
+    console.log('SAVE USER', this.state.loggedInUser)
     this.setState({ isProfileSaved: true })
     if (
       this.state.isWorkAdressEdited && 
@@ -52,6 +53,7 @@ class EditProfile extends React.Component {
       this.getGeoCodeByAddress()
       .then(result => {
         const userWorkInfo = {
+          companyLower: this.state.loggedInUser.companyLower,
           workInfo: {
             address: this.state.address,
             coordinates: result
@@ -109,12 +111,14 @@ class EditProfile extends React.Component {
   }
 
   onWorkAddressChange = (address) => {
+    const companyLower = address.split(',')[0].toLowerCase()
     this.setState({
       isWorkAdressEdited: true,
       address,
       loggedInUser: {
         ...this.state.loggedInUser,
-        workInfo: {...this.state.workInfo, address}
+        workInfo: {...this.state.workInfo, address},
+        companyLower: companyLower,
       }
     })
   }
@@ -200,7 +204,7 @@ class EditProfile extends React.Component {
                   value={user.linkedin}
                 />
               </Form.Field>
-              <label className="label">Work address</label>
+              <label className="label">Company</label>
               <PlacesAutocomplete inputProps={inputProps} />
             </div>
             <Button

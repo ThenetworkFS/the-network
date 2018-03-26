@@ -3,7 +3,7 @@ import { db } from '../fire'
 import { connect } from 'react-redux'
 import { selectUser } from '../store'
 import { AdvancedSearch, SearchCard } from './'
-import { Button, Input } from 'semantic-ui-react'
+import { Input } from 'semantic-ui-react'
 import history from '../history'
 
 
@@ -66,10 +66,10 @@ class AllUsers extends Component {
         query = users.where("cohortId", "==", params.get("cohortId"))
       }
       if (params.has("city")) {
-        query = users.where("city", "==", params.get("city"))
+        query = users.where("cityLower", "==", params.get("city"))
       }
       if (params.has("company")) {
-        query = users.where("company", "==", params.get("company"))
+        query = users.where("companyLower", "==", params.get("company"))
       }
 
       query.get()
