@@ -3,13 +3,14 @@ import { db } from '../fire'
 import firebase from 'firebase'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Spinner, PostCard } from './'
+import { Spinner, PostCard, PostSearch } from './'
 import {
   Menu,
   Form,
   TextArea,
   Button,
 } from 'semantic-ui-react'
+
 
 
 class Home extends React.Component {
@@ -69,6 +70,7 @@ class Home extends React.Component {
     const category = this.props.match.params.category
     return (
       <div className="homepage-container">
+      <PostSearch category={category}/>
         {!this.props.isFetching ? (
           <div className="feed-menu-container">
             <nav className="feed-menu">
