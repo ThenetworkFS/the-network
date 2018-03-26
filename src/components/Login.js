@@ -109,7 +109,7 @@ class Login extends React.Component {
             </Grid>
           </div>
         ) : (
-          <Spinner />
+          <Spinner size={"L"}/>
         )}
       </div>
     )

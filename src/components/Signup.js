@@ -11,6 +11,7 @@ import {
   Segment
 } from 'semantic-ui-react'
 import Spinner from './Spinner'
+import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 const uuidv1 = require('uuid/v1')
 
 class Signup extends React.Component {
@@ -31,6 +32,7 @@ class Signup extends React.Component {
       firstName,
       lastName,
       id,
+      image: ANONYMOUS_USER_IMAGE_URL,
       workInfo: {}
     }
     this.props.startFetch()
@@ -123,7 +125,7 @@ class Signup extends React.Component {
             </Grid>
           </div>
         ) : (
-          <Spinner />
+          <Spinner size={"L"}/>
         )}
       </div>
     )

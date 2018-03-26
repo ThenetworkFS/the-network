@@ -43,7 +43,7 @@ class UserProfile extends React.Component {
           ) : (
             null
           )}
-          {user.workInfo.address ? (
+          { user.workInfo && user.workInfo.address ? (
             <Header className="user-profile-details" as="h4">Works at: {user.workInfo.address}</Header>
           ) : (
             null
