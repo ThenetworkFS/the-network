@@ -1,4 +1,4 @@
-import { fire } from '../fire'
+import { fire, db } from '../fire'
 import React from 'react'
 import { startFetch } from '../store'
 import { connect } from 'react-redux'
