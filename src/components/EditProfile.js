@@ -97,7 +97,6 @@ class EditProfile extends React.Component {
 
   onInputChange = event => {
     event.preventDefault()
-    console.log('user', this.state.loggedInUser)
     this.setState({
       isUserDetailsEdited: true,
       loggedInUser: {
