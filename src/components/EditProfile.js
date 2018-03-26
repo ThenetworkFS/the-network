@@ -52,13 +52,14 @@ class EditProfile extends React.Component {
       !this.state.isUserDetailsEdited
     ) {
       this.getGeoCodeByAddress()
-        .then(result => {
-          const userWorkInfo = {
-            workInfo: {
-              address: this.state.address,
-              coordinates: result
-            }
+      .then(result => {
+        const userWorkInfo = {
+          companyLower: this.state.loggedInUser.companyLower,
+          workInfo: {
+            address: this.state.address,
+            coordinates: result
           }
+        }
         this.updateUser(userWorkInfo)
       })
     } else if (
@@ -125,12 +126,14 @@ class EditProfile extends React.Component {
 
 
   onWorkAddressChange = (address) => {
+    const companyLower = address.split(',')[0].toLowerCase()
     this.setState({
       isWorkAdressEdited: true,
       address,
       loggedInUser: {
         ...this.state.loggedInUser,
-        workInfo: { ...this.state.workInfo, address }
+        workInfo: {...this.state.workInfo, address},
+        companyLower: companyLower,
       }
     })
   }
@@ -238,7 +241,7 @@ class EditProfile extends React.Component {
                   value={user.linkedin}
                 />
               </Form.Field>
-              <label className="label">Work address</label>
+              <label className="label">Company</label>
               <PlacesAutocomplete inputProps={inputProps} />
             </div>
             <Button

@@ -3,7 +3,7 @@ import { db } from '../fire'
 import { connect } from 'react-redux'
 import { selectUser } from '../store'
 import { AdvancedSearch, SearchCard } from './'
-import { Button, Input } from 'semantic-ui-react'
+import { Input } from 'semantic-ui-react'
 import history from '../history'
 
 
@@ -68,10 +68,10 @@ class AllUsers extends Component {
         query = users.where("cohortId", "==", params.get("cohortId"))
       }
       if (params.has("city")) {
-        query = users.where("city", "==", params.get("city"))
+        query = users.where("cityLower", "==", params.get("city"))
       }
       if (params.has("company")) {
-        query = users.where("company", "==", params.get("company"))
+        query = users.where("companyLower", "==", params.get("company"))
       }
 
       query.get()
@@ -87,8 +87,7 @@ class AllUsers extends Component {
     }
   }
 
-
-  submitHandler = (event) => {
+  onSubmit = (event) => {
     event.preventDefault()
     if (
       this.state.cohort ||
@@ -120,7 +119,7 @@ class AllUsers extends Component {
 
   onInputChange = (evt, param) => {
     evt.preventDefault()
-    this.setState({ [param.name]: param.value })
+    this.setState({ [param.name]: param.value.toLowerCase() })
   }
 
 
@@ -171,16 +170,16 @@ class AllUsers extends Component {
           >
             {advancedSearchIsClicked ? "close" : "search options"}
           </a>
-          {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.submitHandler}/>}
+          {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>}
         </div>
-          <div className="all-users-results">
-            {searchVal ? (
-              this.renderSearchCards(filteredUsers)
-            ) : (
-                this.renderSearchCards(allUsers)
-              )}
-          </div>
+        <div className="all-users-results">
+          {searchVal ? (
+            this.renderSearchCards(filteredUsers)
+          ) : (
+            this.renderSearchCards(allUsers)
+          )}
         </div>
+      </div>
     )
   }
 }
