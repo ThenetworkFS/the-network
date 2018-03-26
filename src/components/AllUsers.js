@@ -161,7 +161,7 @@ class AllUsers extends Component {
             className="all-users-search-options"
             onClick={this.toggleAdvancedSearch}
           >
-            {advancedSearchIsClicked ? "close" : "more search options"}
+            {advancedSearchIsClicked ? "close" : "search options"}
           </a>
           {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.submitHandler}/>}
           <div className="all-users-results">

@@ -28,17 +28,17 @@ class Navbar extends Component {
         <div className="navbar-mobile">
             {user && user.email ? (
               <nav>
-                <Menu icon>
-                  <Menu.Item name='The Network' />
-                  <Menu.Item name='home/news' active={activeItem === 'home/news'} onClick={this.handleItemClick}>
+                <Menu>
+                  <Image className="logo" floated='left' size='mini' src={FULLSTACK_LOGO_URL} />
+                  <Menu.Item className="navbar-button-mobile border-left" name='home/news' active={activeItem === 'home/news'} onClick={this.handleItemClick}>
                     <Icon name='browser' />
                   </Menu.Item>
 
-                  <Menu.Item name='users' active={activeItem === 'users'} onClick={this.handleItemClick}>
+                  <Menu.Item className="navbar-button-mobile" name='users' active={activeItem === 'users'} onClick={this.handleItemClick}>
                     <Icon name='users' />
                   </Menu.Item>
 
-                  <Menu.Item name={`profile/${user.id}`} active={activeItem === `profile/${user.id}`}
+                  <Menu.Item className="navbar-button-mobile" name={`profile/${user.id}`} active={activeItem === `profile/${user.id}`}
                     onClick={(event, name) => {
                       this.handleItemClick(event, name)
                       this.props.selectUser(user)
@@ -46,7 +46,9 @@ class Navbar extends Component {
                     }>
                     <Icon name='user' />
                   </Menu.Item>
-                  <a onClick={this.props.removeUser}>sign out</a>
+                  <a className="signout-button" onClick={this.props.removeUser}>
+                    <Icon name='sign out' />
+                  </a>
                 </Menu>
               </nav>
             ) : (

@@ -115,7 +115,7 @@ class Calendar extends React.Component {
           className="calendar"
           ref={ref => this.BigCalendar = ref}
           events={myEventsList}
-          style={{ height: "600px", width: "1200px" }}
+          style={{ height: "600px", width: "90vw" }}
           defaultDate={new Date()}
         />
         <div>
