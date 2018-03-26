@@ -48,6 +48,7 @@ class CommentCard extends Component {
         userEmail: this.props.loggedInUser.email,
         firstName: this.props.loggedInUser.firstName,
         lastName: this.props.loggedInUser.lastName,
+        image: this.props.loggedInUser.image,
         content: this.state.newComment,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       })
@@ -58,6 +59,7 @@ class CommentCard extends Component {
             userEmail: this.props.loggedInUser.email,
             firstName: this.props.loggedInUser.firstName,
             lastName: this.props.loggedInUser.lastName,
+            image: this.props.loggedInUser.image,
             content: this.state.newComment,
             id: doc.id
           }].concat(this.state.comments)
@@ -117,7 +119,7 @@ class CommentCard extends Component {
       return (
         <Card className="comment-card" key={index}>
           <Card.Content>
-            <Image className={post.user.image ? "" : "postcard-anonymous anonymous"} floated='left' size='mini' src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL} />
+            <Image className={comment.image ? "" : "postcard-anonymous anonymous"} floated='left' size='mini' src={comment.image ? comment.image : ANONYMOUS_USER_IMAGE_URL} />
             <Card.Header>
               <a onClick={(event) => this.props.onUserNameClick(event, post.user)}>{comment.firstName} {comment.lastName}</a>
             </Card.Header>
