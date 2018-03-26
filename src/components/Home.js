@@ -17,29 +17,9 @@ class Home extends React.Component {
     super(props)
 
     this.state = {
-      posts: [],
       link: '',
       isPostSubmitted: false,
     }
-  }
-
-
-  componentDidMount() {
-    let currentComponent = this
-    //THIS IS LISTENING FOR CHANGES IN DB AND ADDING TO STATE
-    //ordering by most recent on first render, but not when adding new
-    db.collection("posts").orderBy("timestamp")
-      .onSnapshot(function (querySnapshot) {
-        querySnapshot.docChanges.forEach((change) => {
-          if (change.type === "added") {
-            const newPost = { ...change.doc.data(), id: change.doc.id }
-            currentComponent.setState({
-              posts: [newPost].concat(currentComponent.state.posts),
-              isPostSubmitted: false,
-            });
-          }
-        });
-      })
   }
 
 
@@ -76,16 +56,6 @@ class Home extends React.Component {
     })
       .catch(function (error) {
         console.error("Error adding document: ", error);
-      })
-  }
-
-
-  renderPostCards = (category) => {
-    return this.state.posts.filter(post => post.category === category)
-      .map((post, index) => {
-        return (
-          <PostCard key={index} post={post} />
-        )
       })
   }
 
@@ -141,7 +111,7 @@ class Home extends React.Component {
                 Post
               </Button>
             </Form>
-            {this.renderPostCards(category)}
+            <PostCard category={category} />
           </div>
         ) : (
             <Spinner size={"L"} />
