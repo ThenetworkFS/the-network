@@ -165,15 +165,14 @@ class AllUsers extends Component {
           </a>
           {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.submitHandler}/>}
         </div>
-          <div className="all-users-results">
-            {searchVal ? (
-              this.renderSearchCards(filteredUsers)
-            ) : (
-              this.renderSearchCards(allUsers)
-            )}
-          </div>
+        <div className="all-users-results">
+          {searchVal ? (
+            this.renderSearchCards(filteredUsers)
+          ) : (
+            this.renderSearchCards(allUsers)
+          )}
         </div>
-      // </div>
+      </div>
     )
   }
 }

@@ -439,7 +439,6 @@ body {
   }
 
   .feed-menu-container,
-  /* .all-users-search-container, */
   .user-profile-container {
     width: 90vw;
     margin: 0 auto;
@@ -461,19 +460,17 @@ body {
   .searchcard-container {
     width: 290px;
   }
-  
+
   .searchcard {
     width: 100% !important;
   }
 
   .logo {
     margin-left: 5px !important;
-    /* margin-right: 30px !important; */
     margin-right: 11px !important;
   }
 
   .signout-button {
-    /* width: 68px !important; */
     padding-left: 17px;
     padding-right: 13px;
   }
