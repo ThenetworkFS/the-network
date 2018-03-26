@@ -44,7 +44,7 @@ class UserProfile extends React.Component {
             null
           )}
           { user.workInfo && user.workInfo.address ? (
-            <Header className="user-profile-details" as="h4">Works at: {user.workInfo.address}</Header>
+            <Header className="user-profile-details" as="h4">Works at {user.workInfo.address}</Header>
           ) : (
             null
           )}
@@ -54,7 +54,7 @@ class UserProfile extends React.Component {
             null
           )}
           {user.interests ? (
-            <Header className="user-profile-details" as="h4">Is interested in: {user.interests}</Header>
+            <Header className="user-profile-details" as="h4">Is interested in {user.interests}</Header>
           ) : (
             null
           )}

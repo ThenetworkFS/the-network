@@ -91,7 +91,6 @@ class Home extends React.Component{
   render() {
     const category= this.props.match.params.category
 
-
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
@@ -119,22 +118,25 @@ class Home extends React.Component{
                 </Menu.Item>
               </Menu>
             </nav>
-            { category === 'meetup' ? <Link to="/calendar">Calendar</Link> : null }
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
               <TextArea
                 required
                 id="new-post-textarea"
                 placeholder='Post something'
                 name="content"
-                style={{ minHeight: 100 }} />
-              <Button
-                disabled={this.state.isPostSubmitted}
-                className="feed-newpost-submit-button"
-                floated="right"
-                color="blue"
-              >
-                Post
-              </Button>
+                style={{ minHeight: 100 }}
+              />
+              <div>
+                { category === 'meetup' ? <Link className="calendar-link" to="/calendar">Calendar</Link> : null }
+                <Button
+                  disabled={this.state.isPostSubmitted}
+                  className="feed-newpost-submit-button"
+                  floated="right"
+                  color="blue"
+                >
+                  Post
+                </Button>
+              </div>
             </Form>
             {this.renderPostCards(category)}
           </div>

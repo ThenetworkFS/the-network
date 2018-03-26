@@ -121,7 +121,7 @@ class CommentCard extends Component {
             ) : (
               <div>
                 <Form
-                  className="new-comment-textarea"
+                  className="comment-card-textarea-container"
                   onSubmit={this.onAddCommentClick}
                 >
                   <TextArea
