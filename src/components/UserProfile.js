@@ -54,7 +54,7 @@ class UserProfile extends React.Component {
             null
           )}
           {user.interests ? (
-            <Header className="user-profile-details" as="h4">Is interested in: {user.interests}</Header>
+            <Header className="user-profile-details" as="h4">Is interested in {user.interests}</Header>
           ) : (
             null
           )}

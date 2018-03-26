@@ -4,13 +4,45 @@ body {
   font-family: sans-serif;
 }
 
-.navbar {
-  display: flex;
+.navbar-mobile {
+  display: none;
   justify-content: center;
+}
+
+.navbar-desktop {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.navbar-buttons {
+  display: flex;
+}
+
+.navbar-button:first-child {
+  border-left: 1px solid rgba(34,36,38,.1);
+}
+
+.navbar-button {
+  width: 101px;
+  justify-content: center;
+  color: #4183c4 !important;
+}
+
+.signout-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .hide {
   display: none;
+}
+
+.logo {
+  width: 163px !important;
+  height: 34px !important;
+  margin-right: 58px !important;
+  top: 5px;
 }
 
 .anonymous {
@@ -377,4 +409,15 @@ body {
             -o-transform: rotate(360deg);
                 transform: rotate(360deg);
     }
+}
+
+
+@media (max-width: 767px) {
+  .navbar-mobile {
+    display: flex;
+  }
+  
+  .navbar-desktop {
+    display: none !important;
+  }
 }
