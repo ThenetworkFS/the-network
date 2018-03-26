@@ -185,13 +185,6 @@ class EditProfile extends React.Component {
                   name="interests"
                   value={user.interests}
                 />
-                <label className="label">Slack</label>
-                <Input
-                  type="text"
-                  onChange={this.onInputChange}
-                  name="slack"
-                  value={user.slack}
-                />
                 <label className="label">Github</label>
                 <Input
                   type="text"
