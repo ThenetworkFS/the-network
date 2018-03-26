@@ -30,7 +30,7 @@ class AllUsers extends Component {
       querySnapshot.docChanges.forEach((change) => {
         if (change.type === "added") {
           currentComponent.setState({
-            allUsers: currentComponent.state.allUsers.concat(change.doc.data())
+            allUsers: currentComponent.state.allUsers.filter(user => user.id !== currentComponent.props.loggedInUser.id).concat(change.doc.data())
           });
         }
       });
@@ -48,7 +48,7 @@ class AllUsers extends Component {
           allUsers.push(user.data());
         })
         currentComponent.setState({
-          allUsers,
+          allUsers: allUsers.filter(user => user.id !== this.props.loggedInUser.id)
         })
       })
     }
@@ -177,8 +177,12 @@ class AllUsers extends Component {
   }
 }
 
+const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
+
+
+
 const mapDispatchToProps = {
   selectUser
 }
 
-export default connect(null, mapDispatchToProps)(AllUsers)
+export default connect(mapStateToProps, mapDispatchToProps)(AllUsers)

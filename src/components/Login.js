@@ -48,6 +48,8 @@ class Login extends React.Component {
       localStorage.removeItem('googleLogin');
     })
   }
+
+  
   setInvalidToFalse = (event) => {
     event.preventDefault()
     this.setState({

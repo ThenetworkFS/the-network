@@ -109,6 +109,7 @@ class Calendar extends React.Component {
 
   render() {
     const myEventsList = this.state.events
+    const user = this.props.loggedInUser
     return (
       <div>
         <BigCalendar
@@ -147,7 +148,7 @@ class Calendar extends React.Component {
         }
         {
           this.state.editIsClicked ?
-            myEventsList.filter(event => event.userId === this.props.loggedInUser.id).map(calendarEvent => {
+            myEventsList.filter(event => event.userId === user.id).map(calendarEvent => {
               const startArray = calendarEvent.start.split('-')
               const endArray = calendarEvent.end.split('-')
               const start = `${startArray[1]}/${(+startArray[2] - 1)}/${startArray[0]}`
@@ -166,7 +167,9 @@ class Calendar extends React.Component {
               )
             })
             :
-            <button onClick={this.editIsClicked}>Edit Your Events</button>
+            myEventsList.filter(event => event.userId === user.id).length > 0 ?
+              <button onClick={this.editIsClicked}>Edit Your Events</button>
+              : null
         }
       </div>
     )
