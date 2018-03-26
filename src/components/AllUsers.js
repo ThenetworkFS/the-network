@@ -82,7 +82,7 @@ class AllUsers extends Component {
           users.forEach(user => {
             filteredUsers.push(user.data());
           })
-          
+
           currentComponent.setState({
             allUsers: filteredUsers
           })
