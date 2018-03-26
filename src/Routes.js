@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router-dom'
 import React from 'react'
-import { Signup, Login, Home, UserProfile, AllUsers, EditProfile, MapContainer, Calendar } from './components'
+import { Signup, Login, Home, UserProfile, AllUsers, EditProfile, MapContainer, Calendar, MentorForm} from './components'
 
 
 const Routes = () => {
@@ -14,6 +14,7 @@ const Routes = () => {
       <Route path="/users" component={AllUsers} />
       <Route exact path="/map" component={MapContainer} />
       <Route exact path="/calendar" component={Calendar} />
+      <Route exact path="/mentor" component={MentorForm}/>
     </Switch>
   )
 }
