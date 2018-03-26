@@ -3,7 +3,7 @@ import { db } from '../fire'
 import firebase from 'firebase'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Spinner, PostCard } from './'
+import { Spinner, Posts } from './'
 import {
   Menu,
   Form,
@@ -94,7 +94,6 @@ class Home extends React.Component {
                 </Menu.Item>
               </Menu>
             </nav>
-            {category === 'meetup' ? <Link to="/calendar">Calendar</Link> : null}
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
               <TextArea
                 required
@@ -114,7 +113,7 @@ class Home extends React.Component {
                 </Button>
               </div>
             </Form>
-            <PostCard category={category} />
+            <Posts category={category} />
           </div>
         ) : (
             <Spinner size={"L"} />
