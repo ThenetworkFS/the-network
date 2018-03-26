@@ -60,10 +60,10 @@ class AllUsers extends Component {
       let query;
 
       if (params.has("cohort")) {
-        query = users.where("cohort", "==", params.get("cohort"))      
+        query = users.where("cohort", "==", params.get("cohort"))
       }
       if (params.has("cohortId")) {
-        query = users.where("cohortId", "==", params.get("cohortId"))      
+        query = users.where("cohortId", "==", params.get("cohortId"))
       }
       if (params.has("city")) {
         query = users.where("city", "==", params.get("city"))
