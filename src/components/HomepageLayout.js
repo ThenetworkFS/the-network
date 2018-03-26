@@ -15,9 +15,11 @@ import {
   Sidebar,
   Visibility,
 } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
 
 // change in-line styling to CSS or styled components before committing
 const HomepageHeading = ({ mobile }) => (
+
   <Container text>
 
     <Header
@@ -41,7 +43,7 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
     />
-    <Button primary size='huge' href='/signup'>
+    <Button className='mouse-cursor-gradient-tracking' primary size='huge' href='/login'>
       Get Started
       <Icon name='right arrow' />
     </Button>
@@ -64,28 +66,11 @@ class DesktopContainer extends Component {
 
     return (
       <Responsive {...Responsive.onlyComputer}>
-        <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
-          <Segment inverted textAlign='center' style={{ minHeight: 700, padding: '1em 0em' }} vertical>
-            <Menu
-              fixed={fixed ? 'top' : null}
-              inverted={!fixed}
-              pointing={!fixed}
-              secondary={!fixed}
-              size='large'
-            >
-              <Container>
-                <Menu.Item as='a' active>Home</Menu.Item>
-                <Menu.Item as='a' active href="mailto:thenetworkFS@gmail.com">Contact Us</Menu.Item>
-                <Menu.Item position='right'>
-                  <Button as='a' inverted={!fixed} href='/'>Log in</Button>
-                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }} href='/signup'>Sign Up</Button>
-                </Menu.Item>
-              </Container>
-            </Menu>
+        <Visibility>
+          <Segment className="landing-header-container" inverted textAlign='center' style={{ minHeight: 700, padding: '1em 0em' }} vertical>
             <HomepageHeading />
           </Segment>
         </Visibility>
-
         {children}
       </Responsive>
     )
@@ -113,35 +98,13 @@ class MobileContainer extends Component {
 
     return (
       <Responsive {...Responsive.onlyMobile}>
-        <Sidebar.Pushable>
-          <Sidebar as={Menu} animation='uncover' inverted vertical visible={sidebarOpened}>
-            <Menu.Item as='a' active>Home</Menu.Item>
-            <Menu.Item as='a'>Work</Menu.Item>
-            <Menu.Item as='a'>Company</Menu.Item>
-            <Menu.Item as='a'>Careers</Menu.Item>
-            <Menu.Item as='a'>Log in</Menu.Item>
-            <Menu.Item as='a'>Sign Up</Menu.Item>
-          </Sidebar>
 
           <Sidebar.Pusher dimmed={sidebarOpened} onClick={this.handlePusherClick} style={{ minHeight: '100vh' }}>
-            <Segment inverted textAlign='center' style={{ minHeight: 350, padding: '1em 0em' }} vertical>
-              <Container>
-                <Menu inverted pointing secondary size='large'>
-                  <Menu.Item onClick={this.handleToggle}>
-                    <Icon name='sidebar' />
-                  </Menu.Item>
-                  <Menu.Item position='right'>
-                    <Button as='a' inverted>Log in</Button>
-                    <Button as='a' inverted style={{ marginLeft: '0.5em' }} >Sign Up</Button>
-                  </Menu.Item>
-                </Menu>
-              </Container>
+            <Segment className="landing-header-container" inverted textAlign='center' style={{ minHeight: 350, padding: '1em 0em' }} vertical>
               <HomepageHeading mobile />
             </Segment>
-
             {children}
           </Sidebar.Pusher>
-        </Sidebar.Pushable>
       </Responsive>
     )
   }
@@ -170,11 +133,11 @@ const HomepageLayout = () => (
           <Grid.Column width={8}>
             <Header as='h3' style={{ fontSize: '2em' }}>Get Answers to Your Questions</Header>
             <p style={{ fontSize: '1.33em' }}>
-              The job search can be hard, but we are here to help. By joining The Network, you are able to ask any question regarding company specific interviews, culture, and values.
+              The job search can be hard, but we are here to help. By joining The Network, you are able to ask any question regarding company specific interviews, culture, or anything else that is on your mind.
             </p>
             <Header as='h3' style={{ fontSize: '2em' }}>Get Mentorship</Header>
             <p style={{ fontSize: '1.33em' }}>
-              We have partnered with the Career Success team help you stay inspired after leaving Fullstack Academy by connecting with a mentor.
+              We have partnered with the Career Success team to help provide guidance by connecting Fullstack graduates with a mentor.
             </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
@@ -228,26 +191,35 @@ const HomepageLayout = () => (
         <Grid divided inverted stackable>
           <Grid.Row>
             <Grid.Column width={3}>
-              <Header inverted as='h4' content='About' />
+              <Header inverted as='h4' content='Contact Us' />
               <List link inverted>
-                <List.Item as='a'>Sitemap</List.Item>
-                <List.Item as='a'>Contact Us</List.Item>
-                <List.Item as='a'>Religious Ceremonies</List.Item>
-                <List.Item as='a'>Gazebo Plans</List.Item>
+                <List.Item>5 Hanover Square</List.Item>
+                <List.Item>New York, NY 10004</List.Item>
+                <List.Item as='a' href="mailto:thenetworkFS@gmail.com">Email</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={3}>
-              <Header inverted as='h4' content='Services' />
+              <Header inverted as='h4' content='About' />
               <List link inverted>
-                <List.Item as='a'>Banana Pre-Order</List.Item>
-                <List.Item as='a'>DNA FAQ</List.Item>
-                <List.Item as='a'>How To Access</List.Item>
-                <List.Item as='a'>Favorite X-Men</List.Item>
+                <List.Item as='a' href='https://www.fullstackacademy.com/'>Fullstack Academy</List.Item>
+                <List.Item as='a' href='https://www.fullstackacademy.com/faq'>FAQ</List.Item>
+                <List.Item as='a' href='https://www.fullstackacademy.com/careers'>Careers</List.Item>
+                <List.Item as='a' href=''>Mentorship Program</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={7}>
-              <Header as='h4' inverted>Footer Header</Header>
-              <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+              <Header as='h4' inverted>Find Us On:</Header>
+                <List>
+                  <a href='https://www.linkedin.com/school/fullstack-academy/' rel='noopener noreferrer' target='_blank'>
+                   <Icon name='huge linkedin' />
+                  </a>
+                  <a href='https://github.com/FullstackAcademy' rel='noopener noreferrer' target='_blank'>
+                    <Icon name='huge github' />
+                  </a>
+                  <a href='https://www.facebook.com/FullstackAcademy/' rel='noopener noreferrer' target='_blank'>
+                    <Icon name='huge facebook' />
+                  </a>
+                 </List>
             </Grid.Column>
           </Grid.Row>
         </Grid>

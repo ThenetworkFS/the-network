@@ -228,3 +228,41 @@ body {
                 transform: rotate(360deg);
     }
 }
+
+.landing-header-container {
+    background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/BSxsT2ETgj17i4701/videoblocks-earth-hologram-digital-globe-world-holographic-image-of-planet-earth-in-binary-code-on-a-blue-background-star-clusters-3d-illustration-of-the-virtual-hologram-communication-system-in-binary-code_rf7mk0n6e_thumbnail-full15.png") !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+
+.mouse-cursor-gradient-tracking {
+    position: relative;
+    background: #7983ff;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    border: none;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+  }
+  .mouse-cursor-gradient-tracking span {
+    position: relative;
+  }
+  .mouse-cursor-gradient-tracking::before {
+    --size: 0;
+    content: '';
+    position: absolute;
+    left: calc(var(--x) - var(--offsetLeft));
+    top: calc(var(--y) - var(--offsetTop));
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle closest-side, pink, transparent);
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+  }
+  .mouse-cursor-gradient-tracking:hover::before {
+    --size: 200px;
+  }
+

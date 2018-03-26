@@ -64,7 +64,7 @@ class App extends Component {
       this.props.loggedInUser.constructor === Object &&
       nextProps.loggedInUser.email
     ){
-      history.push('/HomepageLayout')
+      history.push('/home/news')
     }
   }
 

@@ -15,9 +15,9 @@ import {
 const Routes = () => {
   return (
     <Switch>
-      <Route exact path="/homepageLayout" component={HomepageLayout} />
+      <Route exact path="/" component={HomepageLayout} />
       <Route exact path="/home/:category" component={Home} />
-      <Route exact path="/" component={Login} />
+      <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/profile/:id" component={UserProfile} />
       <Route exact path="/profile/:id/edit" component={EditProfile} />

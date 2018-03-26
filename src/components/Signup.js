@@ -108,7 +108,7 @@ class Signup extends React.Component {
                   </Segment>
                 </Form>
                 <h5 className="login-form-prompt">
-                  Already have an account? <a href="/">Sign In</a>
+                  Already have an account? <a href="/login">Sign In</a>
                 </h5>
               </Grid.Column>
             </Grid>
