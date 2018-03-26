@@ -44,6 +44,7 @@ class UserProfile extends React.Component {
           ) : (
               null
             )}
+            <Header className="user-profile-cohort" as="h4">{user.cohort} {user.cohortId}</Header>
           {user.workInfo && user.workInfo.address ? (
             <Header className="user-profile-details" as="h4">Works at: {user.workInfo.address}</Header>
           ) : (

@@ -84,7 +84,7 @@ class PostCard extends Component {
           posts.filter(post => post.category === this.props.category)
             .map((post, index) => {
               return (
-                <div className="postcard-container">
+                <div className="postcard-container" key={index}>
                   <Card className="postcard">
                     <Card.Content>
                       <Image className={post.user.image ? "" : "postcard-anonymous anonymous"} floated='left' size='mini' src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL} />

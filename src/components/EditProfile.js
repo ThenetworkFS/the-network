@@ -5,7 +5,7 @@ import ImagePicker from './ImagePicker'
 import history from '../history'
 import { getUser } from '../store'
 import EditProject from './EditProject'
-import { Card, Form, Input, Button } from 'semantic-ui-react'
+import { Card, Form, Input, Button, Select } from 'semantic-ui-react'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
@@ -97,12 +97,24 @@ class EditProfile extends React.Component {
 
   onInputChange = event => {
     event.preventDefault()
+    console.log('user', this.state.loggedInUser)
     this.setState({
       isUserDetailsEdited: true,
       loggedInUser: {
         ...this.state.loggedInUser,
         [event.target.name]: event.target.value,
       },
+    })
+  }
+
+  onDropChange = (event, param) => {
+    event.preventDefault()
+    this.setState({
+      isUserDetailsEdited: true,
+      loggedInUser: {
+        ...this.state.loggedInUser,
+        [param.name]: param.value,
+      }
     })
   }
 
@@ -125,6 +137,10 @@ class EditProfile extends React.Component {
       value: this.state.address,
       onChange: this.onWorkAddressChange,
     }
+    const options = [
+      { key: 'GH', text: 'GH', value: 'GH' },
+      { key: 'FS', text: 'FS', value: 'FS' },
+    ]
     return (
       <div className="user-profile-container">
         <Card className="user-profile">
@@ -177,6 +193,24 @@ class EditProfile extends React.Component {
                   name="country"
                   value={user.country}
                 />
+                <div className="cohort-search-container">
+                  <Form.Field
+                    onChange={this.onDropChange}
+                    control={Select}
+                    label='Cohort'
+                    options={options}
+                    placeholder='Cohort'
+                    className='cohort'
+                    name="cohort"
+                  />
+                  <Form.Input
+                    label='Number'
+                    placeholder='Number'
+                    onChange={this.onInputChange}
+                    className='cohort-id'
+                    name="cohortId"
+                  />
+                </div>
                 <label className="label">Your interests</label>
                 <Input
                   type="text"
