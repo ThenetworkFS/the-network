@@ -19,6 +19,21 @@ class PostSearch extends Component {
     }
   }
 
+  componentDidMount() {
+    let currentComponent = this
+    db.collection("posts")
+      .where("category", "==", this.props.category)
+      .onSnapshot(function (querySnapshot) {
+        querySnapshot.docChanges.forEach((change) => {
+          if (change.type === "added") {
+            currentComponent.setState({
+              posts: currentComponent.state.posts.concat(change.doc.data())
+            });
+          }
+        });
+      })
+  }
+
   componentWillReceiveProps(nextProps) {
     console.log('NEXT PROPS', nextProps)
     if (nextProps.match.params.category !== this.props.match.params.category)  {
@@ -94,7 +109,6 @@ console.log('allPosts', allPosts)
         </div>
 
           { searchVal === '' ? (
-
             allPosts.map((post)=>{
               return (
                 <div>
@@ -105,7 +119,7 @@ console.log('allPosts', allPosts)
             }
             )
           ): (
-            allPosts.map((post)=>{
+            filteredPosts.map((post)=>{
               return (
                 <h1>{post.content}</h1>
               )
