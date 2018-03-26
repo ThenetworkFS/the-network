@@ -5,7 +5,7 @@ import ImagePicker from './ImagePicker'
 import history from '../history'
 import { getUser } from '../store'
 import EditProject from './EditProject'
-import { Card, Form, Input, Button } from 'semantic-ui-react'
+import { Card, Form, Input, Button, Select } from 'semantic-ui-react'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
@@ -32,15 +32,17 @@ class EditProfile extends React.Component {
     }
   }
 
+
   componentDidMount() {
     if (this.props.loggedInUser.email) {
-      if(this.props.loggedInUser.workInfo){
+      if (this.props.loggedInUser.workInfo) {
         this.setState(() => ({
           address: this.props.loggedInUser.workInfo.address,
         }))
       }
     }
   }
+
 
   handleProfileSubmit = (event) => {
     event.preventDefault()
@@ -50,13 +52,13 @@ class EditProfile extends React.Component {
       !this.state.isUserDetailsEdited
     ) {
       this.getGeoCodeByAddress()
-      .then(result => {
-        const userWorkInfo = {
-          workInfo: {
-            address: this.state.address,
-            coordinates: result
+        .then(result => {
+          const userWorkInfo = {
+            workInfo: {
+              address: this.state.address,
+              coordinates: result
+            }
           }
-        }
         this.updateUser(userWorkInfo)
       })
     } else if (
@@ -64,26 +66,28 @@ class EditProfile extends React.Component {
       this.state.isUserDetailsEdited
     ) {
       this.getGeoCodeByAddress()
-      .then(result => {
-        this.setState(
-          {
-            loggedInUser: {
-              ...this.state.loggedInUser,
-              workInfo: {...this.state.workInfo, coordinates: result}
-            }
-          },
-          this.updateUser(this.state.loggedInUser)
-        )
-      })
+        .then(result => {
+          this.setState(
+            {
+              loggedInUser: {
+                ...this.state.loggedInUser,
+                workInfo: { ...this.state.workInfo, coordinates: result }
+              }
+            },
+            this.updateUser(this.state.loggedInUser)
+          )
+        })
     } else {
       this.updateUser(this.state.loggedInUser)
     }
   }
 
+
   getGeoCodeByAddress = () => {
     return geocodeByAddress(this.state.address)
-    .then(results => getLatLng(results[0]))
+      .then(results => getLatLng(results[0]))
   }
+
 
   updateUser = (userAttributes) => {
     db
@@ -108,16 +112,29 @@ class EditProfile extends React.Component {
     })
   }
 
+  onDropChange = (event, param) => {
+    event.preventDefault()
+    this.setState({
+      isUserDetailsEdited: true,
+      loggedInUser: {
+        ...this.state.loggedInUser,
+        [param.name]: param.value,
+      }
+    })
+  }
+
+
   onWorkAddressChange = (address) => {
     this.setState({
       isWorkAdressEdited: true,
       address,
       loggedInUser: {
         ...this.state.loggedInUser,
-        workInfo: {...this.state.workInfo, address}
+        workInfo: { ...this.state.workInfo, address }
       }
     })
   }
+
 
   render() {
     const user = this.state.loggedInUser
@@ -125,7 +142,10 @@ class EditProfile extends React.Component {
       value: this.state.address,
       onChange: this.onWorkAddressChange,
     }
-
+    const options = [
+      { key: 'GH', text: 'GH', value: 'GH' },
+      { key: 'FS', text: 'FS', value: 'FS' },
+    ]
     return (
       <div className="user-profile-container">
         <Card className="user-profile">
@@ -178,6 +198,24 @@ class EditProfile extends React.Component {
                   name="country"
                   value={user.country}
                 />
+                <div className="cohort-search-container">
+                  <Form.Field
+                    onChange={this.onDropChange}
+                    control={Select}
+                    label='Cohort'
+                    options={options}
+                    placeholder='Cohort'
+                    className='cohort'
+                    name="cohort"
+                  />
+                  <Form.Input
+                    label='Number'
+                    placeholder='Number'
+                    onChange={this.onInputChange}
+                    className='cohort-id'
+                    name="cohortId"
+                  />
+                </div>
                 <label className="label">Your interests</label>
                 <Input
                   type="text"
@@ -220,6 +258,7 @@ class EditProfile extends React.Component {
 
 
 const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
 
 const mapDispatchToProps = {
   getUser
