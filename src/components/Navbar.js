@@ -23,7 +23,7 @@ class Navbar extends Component {
     const { activeItem } = this.state
     const user = this.props.loggedInUser
     return (
-      <div>
+      <div className="navbar">
           {user && user.email ? (
             <nav>
               <Menu icon>

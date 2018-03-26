@@ -4,6 +4,11 @@ body {
   font-family: sans-serif;
 }
 
+.navbar {
+  display: flex;
+  justify-content: center;
+}
+
 .hide {
   display: none;
 }
