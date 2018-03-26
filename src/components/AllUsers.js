@@ -32,7 +32,7 @@ class AllUsers extends Component {
         querySnapshot.docChanges.forEach((change) => {
           if (change.type === "added") {
             currentComponent.setState({
-              allUsers: currentComponent.state.allUsers.filter(user => user.id !== currentComponent.props.loggedInUser.id).concat(change.doc.data())
+              allUsers: currentComponent.state.allUsers.concat(change.doc.data())
             });
           }
         });
@@ -51,7 +51,7 @@ class AllUsers extends Component {
             allUsers.push(user.data());
           })
           currentComponent.setState({
-            allUsers: allUsers.filter(user => user.id !== this.props.loggedInUser.id)
+            allUsers: allUsers
           })
         })
     }
@@ -84,7 +84,7 @@ class AllUsers extends Component {
           })
           
           currentComponent.setState({
-            allUsers: filteredUsers.filter(user => user.id !== this.props.loggedInUser.id)
+            allUsers: filteredUsers
           })
         })
     }
@@ -156,7 +156,8 @@ class AllUsers extends Component {
     if (this.state.searchVal) {
       filteredUsers = this.filterUsersOnSearch()
     }
-    const { allUsers, advancedSearchIsClicked, searchVal } = this.state
+    const allUsers= this.state.allUsers.filter(user => user.id !== this.props.loggedInUser.id)
+    const { advancedSearchIsClicked, searchVal } = this.state
     return (
       <div>
       <Link to="/map">See where our almuni work</Link>
