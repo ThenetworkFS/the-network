@@ -68,6 +68,7 @@ class Home extends React.Component {
 
   render() {
     const category = this.props.match.params.category
+    console.log(category)
     return (
       <div className="homepage-container">
       <PostSearch category={category}/>
@@ -96,7 +97,6 @@ class Home extends React.Component {
                 </Menu.Item>
               </Menu>
             </nav>
-            {category === 'meetup' ? <Link to="/calendar">Calendar</Link> : null}
             <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
               <TextArea
                 required
@@ -116,7 +116,8 @@ class Home extends React.Component {
                 </Button>
               </div>
             </Form>
-            <PostCard category={category} />
+            { category === 'meetup' ? <Link className="calendar-link" to="/calendar">Calendar</Link>: null }
+            <Posts category={category} />
           </div>
         ) : (
             <Spinner size={"L"} />
