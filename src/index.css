@@ -162,6 +162,7 @@ body {
   float: left;
   max-width: 100%;
   word-wrap: break-word;
+  margin-bottom: 10px;
 }
 
 .feed-menu-item {
