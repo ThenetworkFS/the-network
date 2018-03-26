@@ -5,6 +5,7 @@ import { selectUser } from '../store'
 import { AdvancedSearch, SearchCard } from './'
 import { Input } from 'semantic-ui-react'
 import history from '../history'
+import { Link } from 'react-router-dom'
 
 
 class AllUsers extends Component {
@@ -31,7 +32,7 @@ class AllUsers extends Component {
         querySnapshot.docChanges.forEach((change) => {
           if (change.type === "added") {
             currentComponent.setState({
-              allUsers: currentComponent.state.allUsers.filter(user => user.id !== currentComponent.props.loggedInUser.id).concat(change.doc.data())
+              allUsers: currentComponent.state.allUsers.concat(change.doc.data())
             });
           }
         });
@@ -50,7 +51,7 @@ class AllUsers extends Component {
             allUsers.push(user.data());
           })
           currentComponent.setState({
-            allUsers: allUsers.filter(user => user.id !== this.props.loggedInUser.id)
+            allUsers: allUsers
           })
         })
     }
@@ -74,14 +75,16 @@ class AllUsers extends Component {
         query = users.where("companyLower", "==", params.get("company"))
       }
 
+
       query.get()
         .then(function (users) {
           let filteredUsers = [];
           users.forEach(user => {
             filteredUsers.push(user.data());
           })
+          
           currentComponent.setState({
-            allUsers: filteredUsers,
+            allUsers: filteredUsers
           })
         })
     }
@@ -153,9 +156,11 @@ class AllUsers extends Component {
     if (this.state.searchVal) {
       filteredUsers = this.filterUsersOnSearch()
     }
-    const { allUsers, advancedSearchIsClicked, searchVal } = this.state
+    const allUsers= this.state.allUsers.filter(user => user.id !== this.props.loggedInUser.id)
+    const { advancedSearchIsClicked, searchVal } = this.state
     return (
       <div>
+      <Link to="/map">See where our almuni work</Link>
         <div className="all-users-search-container">
           <Input
             onChange={this.onInputChange}

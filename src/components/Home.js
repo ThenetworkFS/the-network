@@ -104,7 +104,6 @@ class Home extends React.Component {
                 style={{ minHeight: 100 }}
               />
               <div>
-                { category === 'meetup' ? <Link className="calendar-link" to="/calendar">Calendar</Link> : null }
                 <Button
                   disabled={this.state.isPostSubmitted}
                   className="feed-newpost-submit-button"
