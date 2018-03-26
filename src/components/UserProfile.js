@@ -46,7 +46,7 @@ class UserProfile extends React.Component {
             )}
             <Header className="user-profile-cohort" as="h4">{user.cohort} {user.cohortId}</Header>
           {user.workInfo && user.workInfo.address ? (
-            <Header className="user-profile-details" as="h4">Works at: {user.workInfo.address}</Header>
+            <Header className="user-profile-details" as="h4">Works at {user.workInfo.address}</Header>
           ) : (
               null
             )}
@@ -56,7 +56,7 @@ class UserProfile extends React.Component {
               null
             )}
           {user.interests ? (
-            <Header className="user-profile-details" as="h4">Is interested in: {user.interests}</Header>
+            <Header className="user-profile-details" as="h4">Is interested in {user.interests}</Header>
           ) : (
               null
             )}
@@ -68,18 +68,8 @@ class UserProfile extends React.Component {
               </div>
             </Header>
           ) : (
-              null
-            )}
-          {user.slack ? (
-            <Header className="user-profile-details" as="h4">
-              <div>
-                <Icon className="user-profile-icon" name="slack" size="large" />
-                <a className="user-profile-header" href={user.slack}>{user.slack}</a>
-              </div>
-            </Header>
-          ) : (
-              null
-            )}
+            null
+          )}
           {user.github ? (
             <Header className="user-profile-details" as="h4">
               <div>

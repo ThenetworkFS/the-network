@@ -101,15 +101,19 @@ class Home extends React.Component {
                 id="new-post-textarea"
                 placeholder='Post something'
                 name="content"
-                style={{ minHeight: 100 }} />
-              <Button
-                disabled={this.state.isPostSubmitted}
-                className="feed-newpost-submit-button"
-                floated="right"
-                color="blue"
-              >
-                Post
-              </Button>
+                style={{ minHeight: 100 }}
+              />
+              <div>
+                { category === 'meetup' ? <Link className="calendar-link" to="/calendar">Calendar</Link> : null }
+                <Button
+                  disabled={this.state.isPostSubmitted}
+                  className="feed-newpost-submit-button"
+                  floated="right"
+                  color="blue"
+                >
+                  Post
+                </Button>
+              </div>
             </Form>
             <PostCard category={category} />
           </div>

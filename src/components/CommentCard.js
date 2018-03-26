@@ -27,6 +27,11 @@ class CommentCard extends Component {
         comments: []
       })
     }
+    if (nextProps.post !== this.props.post) {
+      this.setState({
+        viewComments: false,
+      })
+    }
   }
 
 
@@ -149,7 +154,7 @@ class CommentCard extends Component {
             ) : (
                 <div>
                   <Form
-                    className="new-comment-textarea"
+                    className="comment-card-textarea-container"
                     onSubmit={this.onAddCommentClick}
                   >
                     <TextArea

@@ -4,13 +4,68 @@ body {
   font-family: sans-serif;
 }
 
+.navbar-mobile {
+  display: none;
+  justify-content: center;
+}
+
+.navbar-desktop {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.navbar-buttons {
+  display: flex;
+}
+
+.navbar-button:first-child,
+.border-left {
+  border-left: 1px solid rgba(34,36,38,.1);
+}
+
+.navbar-button {
+  width: 101px;
+  justify-content: center;
+}
+
+.navbar-button,
+.navbar-button-mobile {
+  color: #4183c4 !important;
+}
+
+.signout-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 .hide {
   display: none;
+}
+
+.logo {
+  width: 163px !important;
+  height: 34px !important;
+  margin-right: 58px !important;
+  top: 5px;
 }
 
 .anonymous {
   border: 1px solid rgba(0, 0, 0, .2);
   padding-top: 20px;
+}
+
+.calendar {
+  margin: 0 auto;
+}
+
+.calendar-link {
+  position: relative; 
+  top: 14px;
+}
+
+.calendar-link:hover {
+  text-decoration: underline;
 }
 
 .image-picker-container {
@@ -65,6 +120,11 @@ body {
   margin-bottom: 12px;
 }
 
+.searchcard-container {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
 .feed-menu,
 .user-profile-container {
   margin-top: 12px;
@@ -99,10 +159,15 @@ body {
   text-align: right;
 }
 
+.comment-card-textarea-container textarea {
+  margin-top: 8px !important;
+}
+
 .formatted-post {
   float: left;
   max-width: 100%;
   word-wrap: break-word;
+  margin-bottom: 10px;
 }
 
 .feed-menu-item {
@@ -176,6 +241,12 @@ body {
 }
 
 .all-users-results {
+  margin-top: 20px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
   margin-top: 20px;
 }
 
@@ -355,4 +426,55 @@ body {
             -o-transform: rotate(360deg);
                 transform: rotate(360deg);
     }
+}
+
+
+@media (max-width: 767px) {
+  .navbar-mobile {
+    display: flex;
+  }
+  
+  .navbar-desktop {
+    display: none !important;
+  }
+
+  .feed-menu-container,
+  /* .all-users-search-container, */
+  .user-profile-container {
+    width: 90vw;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    margin-top: 12px;
+  }
+
+  .feed-menu {
+    max-width: 338px;
+    margin: 0 auto;
+    margin-bottom: 12px;
+  }
+
+  .feed-menu-item {
+    min-width: 0px;
+    max-width: 73px;
+  }
+
+  .searchcard-container {
+    width: 290px;
+  }
+  
+  .searchcard {
+    width: 100% !important;
+  }
+
+  .logo {
+    margin-left: 5px !important;
+    /* margin-right: 30px !important; */
+    margin-right: 11px !important;
+  }
+
+  .signout-button {
+    /* width: 68px !important; */
+    padding-left: 17px;
+    padding-right: 13px;
+  }
 }

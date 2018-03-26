@@ -169,9 +169,10 @@ class AllUsers extends Component {
             className="all-users-search-options"
             onClick={this.toggleAdvancedSearch}
           >
-            {advancedSearchIsClicked ? "close" : "more search options"}
+            {advancedSearchIsClicked ? "close" : "search options"}
           </a>
-          {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.submitHandler} />}
+          {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.submitHandler}/>}
+        </div>
           <div className="all-users-results">
             {searchVal ? (
               this.renderSearchCards(filteredUsers)
@@ -180,7 +181,6 @@ class AllUsers extends Component {
               )}
           </div>
         </div>
-      </div>
     )
   }
 }
