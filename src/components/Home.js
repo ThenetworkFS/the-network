@@ -67,6 +67,7 @@ class Home extends React.Component {
 
   render() {
     const category = this.props.match.params.category
+    console.log(category)
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
@@ -113,6 +114,7 @@ class Home extends React.Component {
                 </Button>
               </div>
             </Form>
+            { category === 'meetup' ? <Link className="calendar-link" to="/calendar">Calendar</Link>: null }
             <Posts category={category} />
           </div>
         ) : (
