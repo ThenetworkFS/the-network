@@ -49,21 +49,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(null, mapDispatchToProps)(SearchCard)
-
-
-// const mapStateToProps = ({ user: { loggedInUser }}) => ({ loggedInUser })
-
-// export default connect(mapStateToProps)(SearchCard)
-
-
-{/* <Card className="postcard">
-  <Card.Content>
-    <Image floated='left' size='mini' src='https://react.semantic-ui.com/assets/images/avatar/large/steve.jpg' />
-    <Card.Header>
-      <a onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
-    </Card.Header>
-    <Card.Meta>
-      FS - 1801
-    </Card.Meta>
-  </Card.Content>
-</Card> */}

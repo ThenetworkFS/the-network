@@ -85,7 +85,7 @@ class AllUsers extends Component {
     }
   }
 
-  submitHandler = (event) => {
+  onSubmit = (event) => {
     event.preventDefault()
     if (
       this.state.cohort ||
@@ -116,7 +116,7 @@ class AllUsers extends Component {
 
   onInputChange = (evt, param) => {
     evt.preventDefault()
-    this.setState({ [param.name]: param.value })
+    this.setState({ [param.name]: param.value.toLowerCase() })
   }
 
   toggleAdvancedSearch = (event) => {
@@ -163,7 +163,7 @@ class AllUsers extends Component {
           >
             {advancedSearchIsClicked ? "close" : "search options"}
           </a>
-          {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.submitHandler}/>}
+          {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>}
         </div>
         <div className="all-users-results">
           {searchVal ? (
