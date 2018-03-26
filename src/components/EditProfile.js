@@ -17,7 +17,7 @@ class EditProfile extends React.Component {
       loggedInUser: props.loggedInUser,
       isProfileSaved: false,
       address: '',
-      // isWorkAdressEdited is necessary for googleMap API
+      // isWorkAdressEdited is necessary to get coordinates from googleMap API
       isWorkAdressEdited: false,
       isUserDetailsEdited: false,
     }
@@ -45,7 +45,10 @@ class EditProfile extends React.Component {
   handleProfileSubmit = (event) => {
     event.preventDefault()
     this.setState({ isProfileSaved: true })
-    if (this.state.isWorkAdressEdited && !this.state.isUserDetailsEdited) {
+    if (
+      this.state.isWorkAdressEdited && 
+      !this.state.isUserDetailsEdited
+    ) {
       this.getGeoCodeByAddress()
       .then(result => {
         const userWorkInfo = {
@@ -56,7 +59,10 @@ class EditProfile extends React.Component {
         }
         this.updateUser(userWorkInfo)
       })
-    } else if (this.state.isWorkAdressEdited && this.state.isUserDetailsEdited) {
+    } else if (
+      this.state.isWorkAdressEdited && 
+      this.state.isUserDetailsEdited
+    ) {
       this.getGeoCodeByAddress()
       .then(result => {
         this.setState(

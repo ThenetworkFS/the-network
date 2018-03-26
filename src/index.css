@@ -120,6 +120,11 @@ body {
   margin-bottom: 12px;
 }
 
+.searchcard-container {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
 .feed-menu,
 .user-profile-container {
   margin-top: 12px;
@@ -236,6 +241,12 @@ body {
 }
 
 .all-users-results {
+  margin-top: 20px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
   margin-top: 20px;
 }
 
@@ -428,7 +439,7 @@ body {
   }
 
   .feed-menu-container,
-  .all-users-search-container,
+  /* .all-users-search-container, */
   .user-profile-container {
     width: 90vw;
     margin: 0 auto;
@@ -447,6 +458,10 @@ body {
     max-width: 73px;
   }
 
+  .searchcard-container {
+    width: 290px;
+  }
+  
   .searchcard {
     width: 100% !important;
   }
