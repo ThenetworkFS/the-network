@@ -9,16 +9,18 @@ import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 
 class SearchCard extends Component {
 
+
   onUserNameClick = (event, user) => {
     event.preventDefault()
     db.collection('users')
-    .doc(user.email)
-    .get()
-    .then(user => {
-      this.props.selectUser(user.data())
-      history.push(`/profile/${user.data().id}`)
-    })
+      .doc(user.email)
+      .get()
+      .then(user => {
+        this.props.selectUser(user.data())
+        history.push(`/profile/${user.data().id}`)
+      })
   }
+
 
   render() {
     const user = this.props.user
@@ -44,8 +46,10 @@ class SearchCard extends Component {
   }
 }
 
+
 const mapDispatchToProps = {
   selectUser
 }
+
 
 export default connect(null, mapDispatchToProps)(SearchCard)

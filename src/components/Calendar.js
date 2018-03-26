@@ -109,6 +109,7 @@ class Calendar extends React.Component {
 
   render() {
     const myEventsList = this.state.events
+    const user = this.props.loggedInUser
     return (
       <div>
         <BigCalendar
@@ -118,57 +119,57 @@ class Calendar extends React.Component {
           style={{ height: "600px", width: "90vw" }}
           defaultDate={new Date()}
         />
-        <div>
-          {this.state.addIsClicked ? (
-            <form onSubmit={this.handleAddSubmit}>
-              <h6>Title</h6>
-              <input
-                name="title"
-              />
-              <h6>Time</h6>
-              <input
-                name="time"
-              />
-              <h6>State Date</h6>
-              <input
-                name="start"
-                placeholder="ex. 04/22/2018"
-              />
-              <h6>End Date</h6>
-              <input
-                name="end"
-                placeholder="ex. 04/23/2018"
-              />
-              <div>
-                <button>Add</button>
+        {this.state.addIsClicked ? (
+          <form onSubmit={this.handleAddSubmit}>
+            <h6>Title</h6>
+            <input
+              name="title"
+            />
+            <h6>Time</h6>
+            <input
+              name="time"
+            />
+            <h6>State Date</h6>
+            <input
+              name="start"
+              placeholder="ex. 04/22/2018"
+            />
+            <h6>End Date</h6>
+            <input
+              name="end"
+              placeholder="ex. 04/23/2018"
+            />
+            <div>
+              <button>Add</button>
+            </div>
+          </form>
+        ) :
+          <button type="submit" onClick={this.addIsClicked}>Add Event</button>
+        }
+        {this.state.editIsClicked ?
+          myEventsList.filter(event => event.userId === user.id).map(calendarEvent => {
+            const startArray = calendarEvent.start.split('-')
+            const endArray = calendarEvent.end.split('-')
+            const start = `${startArray[1]}/${(+startArray[2] - 1)}/${startArray[0]}`
+            const end = `${endArray[1]}/${(+endArray[2] - 1)}/${endArray[0]}`
+            return (
+              <div key={calendarEvent.id}>
+                <form onSubmit={(event) => this.handleEditSumbit(event, calendarEvent.id)}>
+                  <input name="title" defaultValue={calendarEvent.title.split('|')[0]} />
+                  <input name="time" defaultValue={calendarEvent.title.split('|')[1]} />
+                  <input name="start" defaultValue={start} />
+                  <input name="end" defaultValue={end} />
+                  <button type="submit">Save</button>
+                </form>
+                <button onClick={(event) => this.deleteEvent(event, calendarEvent.id)}>Delete</button>
               </div>
-            </form>
+            )
+          }
           ) : (
-            <button type="submit" onClick={this.addIsClicked}>Add Event</button>          
+            myEventsList.filter(event => event.userId === user.id).length > 0 ?
+              <button onClick={this.editIsClicked}>Edit Your Events</button>
+              : null
           )}
-          {this.state.editIsClicked ? (
-            myEventsList.filter(event => event.userId === this.props.loggedInUser.id).map(calendarEvent => {
-              const startArray = calendarEvent.start.split('-')
-              const endArray = calendarEvent.end.split('-')
-              const start = `${startArray[1]}/${(+startArray[2] - 1)}/${startArray[0]}`
-              const end = `${endArray[1]}/${(+endArray[2] - 1)}/${endArray[0]}`
-              return (
-                <div key={calendarEvent.id}>
-                  <form onSubmit={(event) => this.handleEditSumbit(event, calendarEvent.id)}>
-                    <input name="title" defaultValue={calendarEvent.title.split('|')[0]} />
-                    <input name="time" defaultValue={calendarEvent.title.split('|')[1]} />
-                    <input name="start" defaultValue={start} />
-                    <input name="end" defaultValue={end} />
-                    <button type="submit">Save</button>
-                  </form>
-                  <button onClick={(event) => this.deleteEvent(event, calendarEvent.id)}>Delete</button>
-                </div>
-              )
-            })
-          ) : (
-            <button onClick={this.editIsClicked}>Edit Your Events</button>
-          )}
-        </div>
       </div>
     )
   }

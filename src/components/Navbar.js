@@ -93,6 +93,7 @@ class Navbar extends Component {
 
 const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
 
+
 const mapDispatchToProps = (dispatch) => ({
   removeUser: () => {
     fire.auth().signOut()

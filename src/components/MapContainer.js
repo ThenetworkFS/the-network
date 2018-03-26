@@ -37,11 +37,10 @@ export class MapContainer extends React.Component {
     });
     setTimeout(() => {
       this.setState({
-        zoom: 12})
+        zoom: 12
+      })
     }, 2500)
   }
-
-
 
 
   onMouseoverMarker = (props, marker, e) => {
@@ -88,7 +87,7 @@ export class MapContainer extends React.Component {
                       position={user.workInfo.coordinates}
                       onMouseover={this.onMouseoverMarker}
                       onMouseout={this.onMouseoutMarker}
-                      
+
                     />
                     : null
                 )
@@ -103,12 +102,12 @@ export class MapContainer extends React.Component {
               </InfoWindow>
             </Map>
           </div>
-          : null}
+          : null
+        }
       </div>
-    );
+    )
   }
 }
-
 
 
 export default GoogleApiWrapper({
