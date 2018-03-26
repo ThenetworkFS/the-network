@@ -25,6 +25,11 @@ class CommentCard extends Component {
         comments:[]
       })
     }
+    if(nextProps.post !== this.props.post){
+      this.setState({
+        viewComments:false,
+      })
+    }
   }
 
   handleCommentChange = (e, { value }) => this.setState({ newComment: value })
@@ -115,7 +120,7 @@ class CommentCard extends Component {
               <Spinner size={"S"}/>
             ) : (
               <div>
-                <Form 
+                <Form
                   className="comment-card-textarea-container"
                   onSubmit={this.onAddCommentClick}
                 >
