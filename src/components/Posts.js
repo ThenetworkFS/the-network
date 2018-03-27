@@ -13,20 +13,40 @@ class Posts extends Component {
     }
   }
 
-  componentDidMount() {
-    let currentComponent = this
-    db.collection("posts").orderBy("timestamp")
-      .onSnapshot(function (querySnapshot) {
-        querySnapshot.docChanges.forEach((change) => {
-          if (change.type === "added") {
-            const newPost = { ...change.doc.data(), id: change.doc.id }
-            currentComponent.setState({
-              posts: [newPost].concat(currentComponent.state.posts),
-              isPostSubmitted: false,
-            });
-          }
-        });
+  listen({category}) {
+    if (this.unsub) this.unsub()
+
+    this.unsub = db.collection("posts").where('category', '==', category).orderBy("timestamp")
+      .onSnapshot((querySnapshot) => {
+        this.setState({
+          posts: querySnapshot.docs.map(doc => doc.data())
+        })
       })
+
+        // querySnapshot.docChanges.forEach((change) => {
+        //   if (change.type === "added") {
+        //     const newPost = { ...change.doc.data(), id: change.doc.id }
+        //     currentComponent.setState({
+        //       posts: [newPost].concat(currentComponent.state.posts),
+        //       isPostSubmitted: false,
+        //     });
+        //   }
+        // });
+      // })
+  }
+
+  componentDidMount() {
+    this.listen(this.props)
+  }
+
+  componentWillUnmount() {
+    if (this.unsub) this.unsub()
+  }
+
+  componentWillReceiveProps({category}) {
+    if (category !== this.props.category) {
+      this.listen({category})
+    }
   }
 
   onPostDelete = (event, id) => {
