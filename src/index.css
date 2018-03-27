@@ -146,6 +146,11 @@ body {
   padding-top: 6px;
 }
 
+.postcard-delete-button,
+.comment-card-delete-button {
+  float: right;
+}
+
 .rounded-image {
   border-radius: 50%;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import history from '../history'
 import { db } from '../fire'
-import { Card, Image } from 'semantic-ui-react'
+import { Card, Image, Icon } from 'semantic-ui-react'
 import { CommentCard } from './'
 import MicrolinkCard from 'react-microlink'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
@@ -40,9 +40,21 @@ class PostCard extends Component {
       <div className="postcard-container">
         <Card className="postcard">
           <Card.Content>
-            <Image className={post.user.image ? "rounded-image" : "postcard-anonymous anonymous"} floated='left' size='mini' src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL} />
+            <Image
+              className={post.user.image ? "rounded-image" : "postcard-anonymous anonymous"}
+              floated='left'
+              size='mini'
+              src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL}
+            />
             <Card.Header>
               <a onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
+              {post.user.id === user.id ? (
+                <a className="postcard-delete-button" onClick={(event) => onPostDelete(event, post.id)}>
+                  <Icon name="trash" />
+                </a>
+              ) : ( 
+                null
+              )}
             </Card.Header>
             <Card.Meta>
               FS - 1801
@@ -66,10 +78,6 @@ class PostCard extends Component {
                 </Card.Description>
               )}
           </Card.Content>
-          {post.user.id === user.id ?
-            <button onClick={(event) => onPostDelete(event, post.id)}>Delete</button>
-            : null
-          }
           <CommentCard post={post} onUserNameClick={this.onUserNameClick} />
         </Card>
       </div>

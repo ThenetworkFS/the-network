@@ -51,7 +51,6 @@ class Home extends React.Component {
       link,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then((doc) => {
-      console.log('doc after submit', doc.id)
       db.collection("posts").doc(doc.id).update({ id: doc.id })
       this.setState({ isPostSubmitted: false })
     })

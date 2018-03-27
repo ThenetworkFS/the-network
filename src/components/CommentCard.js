@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button, TextArea, Card, Image } from 'semantic-ui-react'
+import { Form, Button, TextArea, Card, Image, Icon } from 'semantic-ui-react'
 import { db } from '../fire'
 import firebase from 'firebase'
 import { connect } from 'react-redux'
@@ -120,14 +120,17 @@ class CommentCard extends Component {
             <Image className={comment.image ? "rounded-image" : "postcard-anonymous anonymous"} floated='left' size='mini' src={comment.image ? comment.image : ANONYMOUS_USER_IMAGE_URL} />
             <Card.Header>
               <a onClick={(event) => this.props.onUserNameClick(event, post.user)}>{comment.firstName} {comment.lastName}</a>
+              {comment.userEmail === user.email ? (
+                <a className="comment-card-delete-button" onClick={(event) => this.deleteComment(event, comment.id, post.id)}>
+                  <Icon name="trash" /> 
+                </a>
+              ) : (
+                null
+              )}
             </Card.Header>
             <Card.Meta>
               FS - 1801
             </Card.Meta>
-            {comment.userEmail === user.email ?
-              <button onClick={(event) => this.deleteComment(event, comment.id, post.id)}>Delete</button>
-              : null
-            }
             <Card.Description>{comment.content}</Card.Description>
           </Card.Content>
         </Card>
