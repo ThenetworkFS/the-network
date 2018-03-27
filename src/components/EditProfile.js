@@ -53,6 +53,7 @@ class EditProfile extends React.Component {
     ) {
       this.getGeoCodeByAddress()
       .then(result => {
+        console.log('result', result)
         const userWorkInfo = {
           companyLower: this.state.loggedInUser.companyLower,
           workInfo: {

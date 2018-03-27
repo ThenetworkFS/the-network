@@ -1,24 +1,12 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { startFetch } from '../store'
+import React from 'react'
 import {
   Button,
   Container,
-  Divider,
-  Grid,
   Header,
-  Icon,
-  Image,
-  List,
-  Menu,
-  Responsive,
-  Segment,
-  Sidebar,
-  Visibility,
+  Icon
 } from 'semantic-ui-react'
-import { Link } from 'react-router-dom';
-import Spinner from './Spinner'
+
 
 
 const HomepageHeading = ({ mobile }) => (

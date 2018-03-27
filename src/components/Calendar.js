@@ -1,4 +1,4 @@
-import { fire, db } from '../fire'
+import { db } from '../fire'
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import React from 'react'

@@ -62,6 +62,7 @@ export class MapContainer extends React.Component {
 
   render() {
     const users = this.state.users;
+    console.log('USERS', users)
     return (
       <div>
         {this.state.isFinished ? (

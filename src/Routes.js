@@ -7,7 +7,6 @@ import {
   Home,
   UserProfile,
   AllUsers,
-  SearchResults,
   AdvancedSearch,
   EditProfile,
   MapContainer,
