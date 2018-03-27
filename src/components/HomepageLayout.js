@@ -46,7 +46,7 @@ class HomepageLayout extends React.Component {
                 </Grid.Row>
                 <Grid.Row>
                   <Grid.Column textAlign='center'>
-                    <Link to="/map">See Where We Work</Link>
+                    <Button as='a' size='large' href="/map">See Where We Work</Button>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -96,9 +96,9 @@ class HomepageLayout extends React.Component {
                     <Grid.Column width={3}>
                       <Header inverted as='h4' content='About' />
                       <List link inverted>
-                        <List.Item as='a' href='https://www.fullstackacademy.com/'>Fullstack Academy</List.Item>
-                        <List.Item as='a' href='https://www.fullstackacademy.com/faq'>FAQ</List.Item>
-                        <List.Item as='a' href='https://www.fullstackacademy.com/careers'>Careers</List.Item>
+                        <List.Item as='a' href='https://www.fullstackacademy.com/' rel='noopener noreferrer' target='_blank'>Fullstack Academy</List.Item>
+                        <List.Item as='a' href='https://www.fullstackacademy.com/faq' rel='noopener noreferrer' target='_blank'>FAQ</List.Item>
+                        <List.Item as='a' href='https://www.fullstackacademy.com/careers' rel='noopener noreferrer' target='_blank'>Careers</List.Item>
                         <List.Item as='a' href=''>Mentorship Program</List.Item>
                       </List>
                     </Grid.Column>
@@ -106,13 +106,13 @@ class HomepageLayout extends React.Component {
                       <Header as='h4' inverted>Find Us On:</Header>
                       <List>
                         <a href='https://www.linkedin.com/school/fullstack-academy/' rel='noopener noreferrer' target='_blank'>
-                          <Icon name='huge linkedin' />
+                          <Icon name='linkedin' size='huge' />
                         </a>
                         <a href='https://github.com/FullstackAcademy' rel='noopener noreferrer' target='_blank'>
-                          <Icon name='huge github' />
+                          <Icon name='github' size='huge' />
                         </a>
                         <a href='https://www.facebook.com/FullstackAcademy/' rel='noopener noreferrer' target='_blank'>
-                          <Icon name='huge facebook' />
+                          <Icon name='facebook' size='huge' />
                         </a>
                       </List>
                     </Grid.Column>

@@ -56,10 +56,11 @@ body {
 
 .calendar-link {
   position: relative;
-  top: 14px;
+  top: 2px;
 }
 
-.calendar-link:hover {
+.calendar-link:hover,
+.alumni-map-link:hover {
   text-decoration: underline;
 }
 
@@ -116,7 +117,8 @@ body {
 }
 
 .feed-menu,
-.user-profile-container {
+.user-profile-container, 
+.calendar {
   margin-top: 12px;
 }
 
@@ -134,6 +136,11 @@ body {
   height: 35px !important;
   border-radius: 50%;
   padding-top: 6px;
+}
+
+.postcard-delete-button,
+.comment-card-delete-button {
+  float: right;
 }
 
 .rounded-image {
@@ -235,6 +242,11 @@ body {
 
 .all-users-results {
   margin-top: 20px;
+}
+
+.alumni-buttons {
+  display: flex;
+  justify-content: space-between;
 }
 
 .advanced-search-container {

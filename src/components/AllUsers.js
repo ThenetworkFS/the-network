@@ -75,18 +75,17 @@ class AllUsers extends Component {
         query = users.where("companyLower", "==", params.get("company"))
       }
 
-
-      query.get()
-        .then(function (users) {
-          let filteredUsers = [];
-          users.forEach(user => {
-            filteredUsers.push(user.data());
-          })
-
-          currentComponent.setState({
-            allUsers: filteredUsers
-          })
+      query
+      .get()
+      .then(function (users) {
+        let filteredUsers = [];
+        users.forEach(user => {
+          filteredUsers.push(user.data());
         })
+        currentComponent.setState({
+          allUsers: filteredUsers
+        })
+      })
     }
   }
 
@@ -160,7 +159,6 @@ class AllUsers extends Component {
     const { advancedSearchIsClicked, searchVal } = this.state
     return (
       <div>
-      <Link to="/map">See where our almuni work</Link>
         <div className="all-users-search-container">
           <Input
             onChange={this.onInputChange}
@@ -169,12 +167,15 @@ class AllUsers extends Component {
             className="all-users-searchbar"
             name="searchVal"
           />
-          <a
-            className="all-users-search-options"
-            onClick={this.toggleAdvancedSearch}
-          >
-            {advancedSearchIsClicked ? "close" : "search options"}
-          </a>
+          <div className="alumni-buttons">
+            <Link className="alumni-map-link" to="/map">alumni map</Link>
+            <a
+              className="all-users-search-options"
+              onClick={this.toggleAdvancedSearch}
+            >
+              {advancedSearchIsClicked ? "close" : "search options"}
+            </a>
+          </div>
           {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>}
         </div>
         <div className="all-users-results">

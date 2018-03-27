@@ -55,12 +55,12 @@ class Home extends React.Component {
       link,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then((doc) => {
-      console.log('doc after submit', doc.id)
       db.collection("posts").doc(doc.id).update({ id: doc.id })
+      this.setState({ isPostSubmitted: false })
     })
-      .catch(function (error) {
-        console.error("Error adding document: ", error);
-      })
+    .catch(function (error) {
+      console.error("Error adding document: ", error);
+    })
   }
 
 
@@ -71,7 +71,6 @@ class Home extends React.Component {
 
   render() {
     const category = this.props.match.params.category
-console.log('cateegory', category)
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
