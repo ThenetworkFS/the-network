@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Input } from 'semantic-ui-react'
 import { Dropdown } from 'semantic-ui-react'
+import { PostCard } from './'
 
 class PostSearch extends Component {
   constructor(props) {
@@ -58,6 +59,7 @@ class PostSearch extends Component {
   }
 
   render() {
+    const user = this.props.loggedInUser
 
     const dropdownOptions = [
       {
@@ -122,10 +124,7 @@ class PostSearch extends Component {
           />
         {postsToShow.map((post, index) => {
             return (
-              <div key={index}>
-                <h1>testing</h1>
-                <h1>{post.content}</h1>
-              </div>
+              <PostCard key={index} post={post} user={user} />
             )
           })
         }
@@ -134,9 +133,12 @@ class PostSearch extends Component {
   }
 }
 
+const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
+
+
 const mapDispatchToProps = {
   selectUser
 }
 
 
-export default withRouter(connect(null, mapDispatchToProps)(PostSearch))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostSearch))
