@@ -4,10 +4,8 @@ import {
   Button,
   Container,
   Header,
-  Icon
+  Icon,
 } from 'semantic-ui-react'
-
-
 
 const HomepageHeading = ({ mobile }) => (
 
