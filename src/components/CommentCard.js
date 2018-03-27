@@ -111,7 +111,6 @@ class CommentCard extends Component {
 
 
   renderComments = () => {
-    console.log('this.state.comments', this.state.comments)
     const { post } = this.props
     const user = this.props.loggedInUser
     return this.state.comments.reverse().map((comment, index) => {
