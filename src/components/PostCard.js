@@ -51,7 +51,7 @@ class PostCard extends Component {
       <div className="postcard-container">
         <Card className="postcard">
           <Card.Content>
-            <Image className={post.user.image ? "" : "postcard-anonymous anonymous"} floated='left' size='mini' src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL} />
+            <Image className={post.user.image ? "rounded-image" : "postcard-anonymous anonymous"} floated='left' size='mini' src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL} />
             <Card.Header>
               <a onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
             </Card.Header>

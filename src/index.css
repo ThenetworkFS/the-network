@@ -142,8 +142,12 @@ body {
 .postcard-anonymous {
   width: 35px !important;
   height: 35px !important;
-  border-radius: 50%;;
+  border-radius: 50%;
   padding-top: 6px;
+}
+
+.rounded-image {
+  border-radius: 50%;
 }
 
 .comment-card-container {
