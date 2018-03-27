@@ -29,6 +29,17 @@ class Posts extends Component {
       })
   }
 
+  onPostDelete = (event, id) => {
+    event.preventDefault()
+    db
+      .collection('posts')
+      .doc(id)
+      .delete()
+      .catch(err => console.error(err))
+      const filtered= this.state.posts.filter(post => post.id !== id)
+      this.setState({ posts: filtered })
+  }
+
   render() {
     const { posts } = this.state;
     const user = this.props.loggedInUser
@@ -37,7 +48,7 @@ class Posts extends Component {
         {
           posts
           .filter(post => post.category === this.props.category)
-          .map((post, index) => <PostCard key={index} post={post} user={user} /> )
+          .map((post, index) => <PostCard key={index} post={post} user={user} onPostDelete={this.onPostDelete} /> )
         }
       </div>
     )

@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "eslint-plugin-promise": "^3.7.0",
     "firebase": "^4.11.0",
+    "firebase-admin": "^5.11.0",
+    "firebase-functions": "^0.9.1",
     "fireview": "0.0.7",
     "google-maps-react": "^1.1.6",
     "history": "^4.7.2",

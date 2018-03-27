@@ -34,19 +34,8 @@ class PostCard extends Component {
       })
   }
 
-  onPostDelete = (event, id) => {
-    event.preventDefault()
-    db
-      .collection('posts')
-      .doc(id)
-      .delete()
-      .catch(err => console.error(err))
-      const filtered= this.state.posts.filter(post => post.id !== id)
-      this.setState({ posts: filtered })
-  }
-
   render() {
-    const { user, post } = this.props
+    const { user, post, onPostDelete } = this.props
     return (
       <div className="postcard-container">
         <Card className="postcard">
@@ -78,7 +67,7 @@ class PostCard extends Component {
               )}
           </Card.Content>
           {post.user.id === user.id ?
-            <button onClick={(event) => this.onPostDelete(event, post.id)}>Delete</button>
+            <button onClick={(event) => onPostDelete(event, post.id)}>Delete</button>
             : null
           }
           <CommentCard post={post} onUserNameClick={this.onUserNameClick} />
