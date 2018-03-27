@@ -297,6 +297,12 @@ body {
   width: 85px !important;
 }
 
+.event-form {
+  min-width: 300px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
 /*!
  * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
  * Copyright 2015 Daniel Cardoso <@DanielCardoso>

@@ -38,13 +38,20 @@ class Calendar extends React.Component {
 
 
   handleAddSubmit = (event) => {
+    console.log('submitting')
+    console.log('TITLE', event.target.title.value);
+    console.log("START", event.target.start.value);
+    console.log("END", event.target.end.value);
     event.preventDefault()
     this.setState({ addIsClicked: false })
     const title = `${event.target.title.value} | ${event.target.time.value}`
-    const startArray = event.target.start.value.split('/')
-    const endArray = event.target.end.value.split('/')
-    const start = `${startArray[2]}-${startArray[0]}-${(+startArray[1] + 1)}`
-    const end = `${endArray[2]}-${endArray[0]}-${(+endArray[1] + 1)}`
+    const startArray = event.target.start.value.split('-')
+    const endArray = event.target.end.value.split('-')
+    // const start = `${startArray[2]}-${startArray[0]}-${(+startArray[1] + 1)}`
+    // const end = `${endArray[2]}-${endArray[0]}-${(+endArray[1] + 1)}`
+    const start = event.target.start.value
+    const end = event.target.end.value
+
     const userId = this.props.loggedInUser.id
     const id = uuidv1()
     const calendarEvent = {
@@ -54,6 +61,7 @@ class Calendar extends React.Component {
       userId,
       id
     }
+    console.log('EVENT', calendarEvent)
     db.collection("events").doc(id).set(calendarEvent)
       .catch(function (error) {
         console.error("Error adding document: ", error);
@@ -114,49 +122,75 @@ class Calendar extends React.Component {
     const user = this.props.loggedInUser
     return (
       <div>
-        <BigCalendar
-          className="calendar"
-          ref={ref => this.BigCalendar = ref}
-          events={myEventsList}
-          style={{ height: "600px", width: "90vw" }}
-          defaultDate={new Date()}
-        />
+        {(this.state.addIsClicked || this.state.editIsClicked) ? (
+          null
+        ) : (
+          <BigCalendar
+            className="calendar"
+            ref={ref => this.BigCalendar = ref}
+            events={myEventsList}
+            style={{ height: "600px", width: "90vw" }}
+            defaultDate={new Date()}
+          />
+        )}
         {this.state.addIsClicked ? (
-          // <Form onSubmit={(event) => this.handleAddSubmit}>
-          //   <div className="user-profile-username edit-profile">
-          //     <Form.Field>
-          //       <label className="label">Title</label>
-          //       <Input
-          //         type='text'
-          //         onChange={this.onInputChange}
-          //         name="title"
-          //       />
-          //     </Form.Field>
-          //   </div>
-          // </Form>
-          <form onSubmit={this.handleAddSubmit}>
-            <h6>Title</h6>
-            <input
-              name="title"
-            />
-            <h6>Time</h6>
-            <input
-              name="time"
-            />
-            <h6>State Date</h6>
-            <input
-              name="start"
-              placeholder="ex. 04/22/2018"
-            />
-            <h6>End Date</h6>
-            <input
-              name="end"
-              placeholder="ex. 04/23/2018"
-            />
-            <div>
-              <button>Add</button>
+          <Form onSubmit={this.handleAddSubmit}>
+            <div className="event-form">
+              <Form.Field>
+                <label className="label">Title</label>
+                <Input
+                  type='text'
+                  name="title"
+                />
+                <label className="label">Time</label>
+                <Input
+                  type='time'
+                  name="time"
+                />
+                <label className="label">Start Date</label>
+                <Input
+                  type='date'
+                  name="start"
+                  placeholder="ex. 04/22/2018"
+                />
+                <label className="label">End Date</label>
+                <Input
+                  type='date'
+                  name="end"
+                  placeholder="ex. 04/23/2018"
+                />
+                <Button
+                  className="feed-newpost-submit-button"
+                  color="blue"
+                >
+                  Add Event
+                </Button>
+              </Form.Field>
             </div>
-          </form>
+          </Form>
+          // <form onSubmit={this.handleAddSubmit}>
+          //   <h6>Title</h6>
+          //   <input
+          //     name="title"
+          //   />
+          //   <h6>Time</h6>
+          //   <input
+          //     name="time"
+          //   />
+          //   <h6>State Date</h6>
+          //   <input
+          //     name="start"
+          //     placeholder="ex. 04/22/2018"
+          //   />
+          //   <h6>End Date</h6>
+          //   <input
+          //     name="end"
+          //     placeholder="ex. 04/23/2018"
+          //   />
+          //   <div>
+          //     <button>Add</button>
+          //   </div>
+          // </form>
         ) : (
           <Button
             onClick={this.addIsClicked}
