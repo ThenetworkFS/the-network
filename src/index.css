@@ -117,7 +117,7 @@ body {
 }
 
 .feed-menu,
-.user-profile-container, 
+.user-profile-container,
 .calendar {
   margin-top: 12px;
 }
@@ -265,6 +265,18 @@ body {
 .searchcard-content {
   position: relative;
   top: 5px;
+}
+.all-posts-search-container {
+  margin-bottom: 15px;
+  display: flex
+}
+
+.all-posts-input {
+  flex-basis: 1
+}
+.all-posts-dropdown {
+  float: right;
+  width: 85px !important
 }
 
 .searchcard-anonymous {

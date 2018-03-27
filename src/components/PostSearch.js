@@ -51,7 +51,7 @@ class PostSearch extends Component {
       searchVal: event.target.value
     })
   }
-  onDropdownChange = (event, params) =>{
+  onDropdownChange = (event, params) => {
     event.preventDefault()
     this.setState({
       selectedCategory: params.value
@@ -59,6 +59,7 @@ class PostSearch extends Component {
   }
 
   render() {
+    console.log(this.state)
     const user = this.props.loggedInUser
 
     const dropdownOptions = [
@@ -89,56 +90,59 @@ class PostSearch extends Component {
     ]
 
 
-    let postsToShow = this.state.posts.filter((post)=>{
+    let postsToShow = this.state.posts.filter((post) => {
 
-      if (this.state.selectedCategory === "allPosts"){
+      if (this.state.selectedCategory === "allPosts") {
         return (post.content
-                .toLowerCase()
-                .includes(this.state.searchVal.toLowerCase())
-                || post.user.firstName.toLowerCase()
-                .includes(this.state.searchVal.toLowerCase())
-                || post.user.lastName.toLowerCase()
-                .includes(this.state.searchVal.toLowerCase())
-            )
+          .toLowerCase()
+          .includes(this.state.searchVal.toLowerCase())
+          || post.user.firstName.toLowerCase()
+            .includes(this.state.searchVal.toLowerCase())
+          || post.user.lastName.toLowerCase()
+            .includes(this.state.searchVal.toLowerCase())
+        )
       } else {
         return post.category === this.state.selectedCategory
           && (post.content
+            .toLowerCase()
+            .includes(this.state.searchVal.toLowerCase())
+            || post.user.firstName
               .toLowerCase()
               .includes(this.state.searchVal.toLowerCase())
-              || post.user.firstName
-              .toLowerCase()
-              .includes(this.state.searchVal.toLowerCase())
-              || post.user.lastName
+            || post.user.lastName
               .toLowerCase()
               .includes(this.state.searchVal.toLowerCase())
           )
-        }
-      })
+      }
+    })
 
     return (
       <div >
-        <h1>Search </h1>
         <div className="all-posts-search-container">
-          <Input
-            onChange={this.onSearchChange}
-            icon={{ name: "search", circular: true, link: true }}
-            placeholder="Search..."
-            className="posts-searchbar"
-            name="searchVal"
-          />
+            <Input
+              className="all-posts-input"
+              onChange={this.onSearchChange}
+              action={<Dropdown
+                className="all-posts-dropdown"
+                onChange={this.onDropdownChange}
+                placeholder='Category'
+                button
+                basic
+                floating
+                selection
+                options={dropdownOptions}
+                defaultValue='all posts' />}
+              icon='search'
+              name="searchVal"
+              iconPosition='left'
+              placeholder='Search...'
+            />
         </div>
-        <Dropdown
-          onChange={this.onDropdownChange}
-          placeholder='Category'
-          search
-          selection
-          options={dropdownOptions}
-          />
         {postsToShow.map((post, index) => {
-            return (
-              <PostCard key={index} post={post} user={user} />
-            )
-          })
+          return (
+            <PostCard key={index} post={post} user={user} />
+          )
+        })
         }
       </div>
     )
