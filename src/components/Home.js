@@ -72,7 +72,7 @@ class Home extends React.Component {
     console.log(category)
     return (
       <div className="homepage-container">
-      <PostSearch category={category}/>
+      <PostSearch/>
         {!this.props.isFetching ? (
           <div className="feed-menu-container">
             <nav className="feed-menu">
