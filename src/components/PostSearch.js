@@ -92,20 +92,32 @@ class PostSearch extends Component {
     let postsToShow = this.state.posts.filter((post)=>{
 
       if (this.state.selectedCategory === "allPosts"){
-        return post.content
+        return (post.content
                 .toLowerCase()
                 .includes(this.state.searchVal.toLowerCase())
+                || post.user.firstName.toLowerCase()
+                .includes(this.state.searchVal.toLowerCase())
+                || post.user.lastName.toLowerCase()
+                .includes(this.state.searchVal.toLowerCase())
+            )
       } else {
         return post.category === this.state.selectedCategory
-          && post.content
+          && (post.content
               .toLowerCase()
               .includes(this.state.searchVal.toLowerCase())
-      }
-    })
+              || post.user.firstName
+              .toLowerCase()
+              .includes(this.state.searchVal.toLowerCase())
+              || post.user.lastName
+              .toLowerCase()
+              .includes(this.state.searchVal.toLowerCase())
+          )
+        }
+      })
 
     return (
       <div >
-        <h1>Search {this.props.category}</h1>
+        <h1>Search </h1>
         <div className="all-posts-search-container">
           <Input
             onChange={this.onSearchChange}

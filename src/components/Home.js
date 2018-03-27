@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import Posts from './Posts'
 import { Spinner, PostCard, PostSearch } from './'
 import {
+  Icon,
   Menu,
   Form,
   TextArea,
@@ -23,6 +24,7 @@ class Home extends React.Component {
       isPostSubmitted: false,
     }
   }
+
 
 
   parseLinkInContent = (content) => {
@@ -69,10 +71,9 @@ class Home extends React.Component {
 
   render() {
     const category = this.props.match.params.category
-    console.log(category)
+console.log('cateegory', category)
     return (
       <div className="homepage-container">
-      <PostSearch/>
         {!this.props.isFetching ? (
           <div className="feed-menu-container">
             <nav className="feed-menu">
@@ -85,10 +86,6 @@ class Home extends React.Component {
                   <Link to="/home/meetup">meetup</Link>
                 </Menu.Item>
 
-                <Menu.Item className="feed-menu-item" name='projects' active={category === 'projects'}>
-                  <Link to="/home/projects">projects</Link>
-                </Menu.Item>
-
                 <Menu.Item className="feed-menu-item" name='jobs' active={category === 'jobs'}>
                   <Link to="/home/jobs">jobs</Link>
                 </Menu.Item>
@@ -96,9 +93,14 @@ class Home extends React.Component {
                 <Menu.Item className="feed-menu-item" name='forum' active={category === 'forum'}>
                   <Link to="/home/forum">forum</Link>
                 </Menu.Item>
+
+                <Menu.Item className="feed-menu-item" name='search' active={category === 'postSearch'}>
+                  <Link to="/home/postSearch"><Icon name="search"/></Link>
+                </Menu.Item>
               </Menu>
             </nav>
-            <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
+            {category !== 'postSearch' ?
+            (<Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
               <TextArea
                 required
                 id="new-post-textarea"
@@ -116,7 +118,8 @@ class Home extends React.Component {
                   Post
                 </Button>
               </div>
-            </Form>
+            </Form>)
+            : <PostSearch/>}
             { category === 'meetup' ? <Link className="calendar-link" to="/calendar">Calendar</Link>: null }
             <Posts category={category} />
           </div>
