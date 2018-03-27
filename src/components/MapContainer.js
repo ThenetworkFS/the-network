@@ -3,8 +3,8 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import { db } from "../fire";
 
 const style = {
-  width: "30%",
-  height: "70%",
+  width: "100vw",
+  height: "100vh",
   position: "relative"
 };
 
