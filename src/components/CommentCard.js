@@ -129,7 +129,7 @@ class CommentCard extends Component {
               )}
             </Card.Header>
             <Card.Meta>
-              FS - 1801
+              {user.cohort}-{user.cohortId}
             </Card.Meta>
             <Card.Description>{comment.content}</Card.Description>
           </Card.Content>
