@@ -259,6 +259,11 @@ body {
   margin-top: 20px;
 }
 
+.alumni-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
 .advanced-search-container {
   margin-bottom: 70px;
   margin-top: 12px;
