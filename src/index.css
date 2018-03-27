@@ -64,7 +64,8 @@ body {
   top: 2px;
 }
 
-.calendar-link:hover {
+.calendar-link:hover,
+.alumni-map-link:hover {
   text-decoration: underline;
 }
 
@@ -126,7 +127,8 @@ body {
 }
 
 .feed-menu,
-.user-profile-container {
+.user-profile-container, 
+.calendar {
   margin-top: 12px;
 }
 

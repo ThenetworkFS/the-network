@@ -168,7 +168,7 @@ class AllUsers extends Component {
             name="searchVal"
           />
           <div className="alumni-buttons">
-            <Link to="/map">alumni map</Link>
+            <Link className="alumni-map-link" to="/map">alumni map</Link>
             <a
               className="all-users-search-options"
               onClick={this.toggleAdvancedSearch}
