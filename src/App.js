@@ -30,11 +30,13 @@ class App extends Component {
         db.collection('users')
           .doc(user.email)
           .onSnapshot(user => {
-            this.props.getUser(user.data())
-            if (this.props.selectedUser.email === this.props.loggedInUser.email) {
-              this.props.selectUser(user.data())
+            if (user.data()) {
+              this.props.getUser(user.data())
+              if (this.props.selectedUser.email === this.props.loggedInUser.email) {
+                this.props.selectUser(user.data())
+              }
+              this.props.stopFetch()
             }
-            this.props.stopFetch()
           })
       }
     })
@@ -45,22 +47,25 @@ class App extends Component {
           const lastName = result.user.displayName.split(' ')[1]
           const email = result.user.email
           const id = uuidv1()
-          let user =
-              db.collection("users")
-                .doc(result.user.email)
-          if (!user.id) {
-            db.collection('users')
-              .doc(result.user.email)
-              .set({
-                firstName,
-                lastName,
-                email,
-                id
-              })
-          }
+          db.collection("users")
+            .doc(email)
+            .get()
+            .then(user => {
+              if (!user.exists) {
+                db.collection('users')
+                  .doc(email)
+                  .set({
+                    firstName,
+                    lastName,
+                    email,
+                    id
+                  })
+              }
+            })
         }
       })
   }
+
 
   componentWillReceiveProps(nextProps) {
     if (
@@ -71,6 +76,7 @@ class App extends Component {
       history.push('/home/news')
     }
   }
+
 
   render() {
     return (

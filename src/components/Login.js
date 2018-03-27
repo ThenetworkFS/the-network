@@ -27,12 +27,12 @@ class Login extends React.Component {
 
   signInAnonymously = (event) => {
     event.preventDefault()
+    this.props.startFetch()
     const email = event.target.email.value
     const password = event.target.password.value
     fire.auth()
       .signInWithEmailAndPassword(email, password)
       .catch(err => {
-        console.log(err.code)
         this.setState({
           invalidLogin: true
         })

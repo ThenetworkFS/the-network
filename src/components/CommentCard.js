@@ -96,8 +96,6 @@ class CommentCard extends Component {
 
 
   deleteComment(event, commentId, postId) {
-    console.log('comment', commentId)
-    console.log('post', postId)
     event.preventDefault()
     db
       .collection('posts')
@@ -119,7 +117,7 @@ class CommentCard extends Component {
       return (
         <Card className="comment-card" key={index}>
           <Card.Content>
-            <Image className={comment.image ? "" : "postcard-anonymous anonymous"} floated='left' size='mini' src={comment.image ? comment.image : ANONYMOUS_USER_IMAGE_URL} />
+            <Image className={comment.image ? "rounded-image" : "postcard-anonymous anonymous"} floated='left' size='mini' src={comment.image ? comment.image : ANONYMOUS_USER_IMAGE_URL} />
             <Card.Header>
               <a onClick={(event) => this.props.onUserNameClick(event, post.user)}>{comment.firstName} {comment.lastName}</a>
             </Card.Header>
