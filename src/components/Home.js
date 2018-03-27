@@ -53,10 +53,11 @@ class Home extends React.Component {
     }).then((doc) => {
       console.log('doc after submit', doc.id)
       db.collection("posts").doc(doc.id).update({ id: doc.id })
+      this.setState({ isPostSubmitted: false })
     })
-      .catch(function (error) {
-        console.error("Error adding document: ", error);
-      })
+    .catch(function (error) {
+      console.error("Error adding document: ", error);
+    })
   }
 
 
