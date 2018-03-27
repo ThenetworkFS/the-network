@@ -37,7 +37,7 @@ export class MapContainer extends React.Component {
       });
     setTimeout(() => {
       this.setState({
-        zoom: 12
+        zoom: 14
       })
     }, 2500)
   }
