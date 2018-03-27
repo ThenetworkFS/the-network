@@ -7,7 +7,6 @@ import {
   Icon,
 } from 'semantic-ui-react'
 
-
 const HomepageHeading = ({ mobile }) => (
 
     <Container text>
