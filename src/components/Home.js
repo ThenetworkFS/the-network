@@ -3,6 +3,7 @@ import { db } from '../fire'
 import firebase from 'firebase'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Posts from './Posts'
 import { Spinner, PostCard, PostSearch } from './'
 import {
   Menu,
