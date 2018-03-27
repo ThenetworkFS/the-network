@@ -1,9 +1,11 @@
 import { db } from '../fire'
-import BigCalendar from 'react-big-calendar';
-import moment from 'moment';
+import BigCalendar from 'react-big-calendar'
+import moment from 'moment'
 import React from 'react'
 import { connect } from 'react-redux'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+import { Button, Form, Input } from 'semantic-ui-react'
+
 const uuidv1 = require('uuid/v1')
 BigCalendar.momentLocalizer(moment);
 
@@ -120,6 +122,18 @@ class Calendar extends React.Component {
           defaultDate={new Date()}
         />
         {this.state.addIsClicked ? (
+          // <Form onSubmit={(event) => this.handleAddSubmit}>
+          //   <div className="user-profile-username edit-profile">
+          //     <Form.Field>
+          //       <label className="label">Title</label>
+          //       <Input
+          //         type='text'
+          //         onChange={this.onInputChange}
+          //         name="title"
+          //       />
+          //     </Form.Field>
+          //   </div>
+          // </Form>
           <form onSubmit={this.handleAddSubmit}>
             <h6>Title</h6>
             <input
@@ -143,9 +157,16 @@ class Calendar extends React.Component {
               <button>Add</button>
             </div>
           </form>
-        ) :
-          <button type="submit" onClick={this.addIsClicked}>Add Event</button>
-        }
+        ) : (
+          <Button
+            onClick={this.addIsClicked}
+            className="feed-newpost-submit-button"
+            floated="left"
+            color="blue"
+          >
+            Add Your Events
+          </Button>
+        )}
         {this.state.editIsClicked ?
           myEventsList.filter(event => event.userId === user.id).map(calendarEvent => {
             const startArray = calendarEvent.start.split('-')
@@ -164,11 +185,19 @@ class Calendar extends React.Component {
                 <button onClick={(event) => this.deleteEvent(event, calendarEvent.id)}>Delete</button>
               </div>
             )
-          }
-          ) : (
-            myEventsList.filter(event => event.userId === user.id).length > 0 ?
-              <button onClick={this.editIsClicked}>Edit Your Events</button>
-              : null
+          }) : (
+            myEventsList.filter(event => event.userId === user.id).length > 0 ? (
+              <Button
+                onClick={this.editIsClicked}
+                className="feed-newpost-submit-button"
+                floated="right"
+                color="blue"
+              >
+                Edit Your Events
+              </Button>
+            ) : (
+              null
+            )
           )}
       </div>
     )
