@@ -1,5 +1,5 @@
 import React from "react";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { Map, InfoWindow, Marker } from "google-maps-react";
 import { db } from "../fire";
 
 const style = {
@@ -8,7 +8,7 @@ const style = {
   position: "relative"
 };
 
-export class MapContainer extends React.Component {
+export default class MapContainer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -35,11 +35,15 @@ export class MapContainer extends React.Component {
         });
         currentComponent.setState({ isFinished: true });
       });
-    setTimeout(() => {
+    this.timer = setTimeout(() => {
       this.setState({
         zoom: 14
       })
     }, 2500)
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer)
   }
 
 
@@ -61,13 +65,19 @@ export class MapContainer extends React.Component {
   }
 
   render() {
+    if (!window.google) {
+      requestAnimationFrame(() => {
+        this.setState({ attempt: (this.state.attempt || 0) + 1 })
+      })
+      return null
+    }
     const users = this.state.users;
     return (
       <div>
         {this.state.isFinished ? (
           <div>
             <Map
-              google={this.props.google}
+              google={window.google}
               zoom={this.state.zoom}
               style={style}
               initialCenter={{
@@ -107,6 +117,4 @@ export class MapContainer extends React.Component {
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyDbroKDMDh0wHknE4B2wZk41pvvHAd1CSc"
-})(MapContainer);
+// export default MapContainer;
