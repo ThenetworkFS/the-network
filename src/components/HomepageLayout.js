@@ -11,7 +11,6 @@ import {
   List,
   Segment
 } from 'semantic-ui-react'
-import { Link } from 'react-router-dom';
 import Spinner from './Spinner'
 import ResponsiveContainer from './ResponsiveContainer'
 
@@ -122,8 +121,8 @@ class HomepageLayout extends React.Component {
             </Segment>
           </ResponsiveContainer>
         ) : (
-            <Spinner size={"L"} />
-          )}
+          <Spinner size={"L"} />
+        )}
       </div>
     )
   }
