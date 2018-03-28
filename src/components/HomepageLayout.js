@@ -77,7 +77,7 @@ class HomepageLayout extends React.Component {
                 <p style={{ fontSize: '1.33em', textAlign: 'center' }}>
                   Stay connected to the community You help build.
         </p>
-                <Button as='a' size='large' href='/signup'>Join Us</Button>
+                <Button as='a' size='large' href='/login'>Join Us</Button>
 
               </Container>
             </Segment>

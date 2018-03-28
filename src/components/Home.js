@@ -4,6 +4,7 @@ import firebase from 'firebase'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Spinner, Posts } from './'
+import PropTypes from 'prop-types'
 import {
   Menu,
   Form,
@@ -105,7 +106,7 @@ class Home extends React.Component {
               <div>
                 <Button
                   disabled={this.state.isPostSubmitted}
-                  className="feed-newpost-submit-button"
+                  className='mouse-cursor-gradient-tracking'
                   floated="right"
                   color="blue"
                 >
