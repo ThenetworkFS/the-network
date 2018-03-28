@@ -57,7 +57,7 @@ class Posts extends Component {
         {
           posts
           .filter(post => post.category === this.props.category)
-          .map((post, index) => <PostCard key={index} post={post} user={user} onPostDelete={this.onPostDelete} /> )
+          .map((post, index) => <PostCard key={index} post={post} user={user} selectUser={this.props.selectUser} onPostDelete={this.onPostDelete} /> )
         }
       </div>
     )

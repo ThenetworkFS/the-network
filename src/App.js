@@ -66,8 +66,8 @@ class App extends Component {
       })
   }
 
-
   componentWillReceiveProps(nextProps) {
+    console.log('NEXTPROPS', nextProps)
     if (
       Object.keys(this.props.loggedInUser).length === 0 &&
       this.props.loggedInUser.constructor === Object &&
@@ -76,7 +76,6 @@ class App extends Component {
       history.push('/home/news')
     }
   }
-
 
   render() {
     return (
@@ -90,9 +89,7 @@ class App extends Component {
   }
 }
 
-
 const mapStateToProps = ({ user: { loggedInUser, selectedUser } }) => ({ loggedInUser, selectedUser })
-
 
 const mapDispatchToProps = {
   getUser,
@@ -100,6 +97,5 @@ const mapDispatchToProps = {
   startFetch,
   stopFetch,
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
