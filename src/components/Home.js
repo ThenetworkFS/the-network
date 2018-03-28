@@ -10,8 +10,7 @@ import {
   Menu,
   Form,
   TextArea,
-  Button,
-  Icon
+  Button
 } from 'semantic-ui-react'
 
 
@@ -23,7 +22,7 @@ class Home extends React.Component {
     this.state = {
       link: '',
       isPostSubmitted: false,
-      isDisabled: true
+      isCode: false
     }
   }
 
@@ -45,16 +44,18 @@ class Home extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ isPostSubmitted: true })
+    this.setState({ isPostSubmitted: true, isCode: false })
     const content = event.target.content.value;
     const link = this.parseLinkInContent(content);
     const category = this.props.match.params.category;
+    const code = this.state.isCode
     this.clearTextarea();
     db.collection("posts").add({
       user: this.props.loggedInUser,
       category,
       content,
       link,
+      code,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then((doc) => {
       db.collection("posts").doc(doc.id).update({ id: doc.id })
@@ -72,13 +73,13 @@ class Home extends React.Component {
 
  code = (event) => {
    event.preventDefault()
-   this.setState({isDisabled: !this.state.isDisabled})
+   this.setState({isCode: !this.state.isCode})
  }
 
 
   render() {
     const category = this.props.match.params.category
-    const dis= this.state.isDisabled
+    const code= this.state.isCode
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
@@ -117,8 +118,8 @@ class Home extends React.Component {
               />
               { category === "forum" ? 
                 <div>
-                <Icon onClick={this.code} name={dis ? "disabled code icon" : "code"} size="large" />
-                <h8>Add Code Snippet</h8>
+                <Icon onClick={this.code} name="code" className={code ? "code" : "disabled code icon"} size="large" />
+                <span>Add Code Snippet</span>
                 </div>
                 : null}
               <div>

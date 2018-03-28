@@ -5,7 +5,7 @@ import { Card, Image, Icon } from 'semantic-ui-react'
 import { CommentCard } from './'
 import MicrolinkCard from 'react-microlink'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
-
+import Highlight from 'react-highlight'
 
 class PostCard extends Component {
   formatPostWithLink = (post) => {
@@ -69,13 +69,20 @@ class PostCard extends Component {
                   target='_blank'
                 />
               </div>
-            ) : (
+            ) :
+              post.code ? (
+                  <Highlight className="javascript">
+                    {post.content}
+                  </Highlight>
+              ) : (
                   <Card.Description>
                     <div className="formatted-post">
                       {post.content}
                     </div>
                   </Card.Description>
-              )}
+                )
+
+            }
           </Card.Content>
           <CommentCard post={post} onUserNameClick={this.onUserNameClick} />
         </Card>
