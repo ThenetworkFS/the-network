@@ -34,7 +34,7 @@ class PostCard extends Component {
   }
 
   render() {
-    console.log('postcard props', this.props)
+
     const { user, post, onPostDelete } = this.props
     return (
       <div className="postcard-container">
