@@ -77,9 +77,9 @@ class PostSearch extends Component {
         value: "meetup",
         text: "meetup"
       }, {
-        key: "projects",
-        value: "projects",
-        text: "projects"
+        key: "jobs",
+        value: "jobs",
+        text: "jobs"
       },
       {
         key: "forum",
