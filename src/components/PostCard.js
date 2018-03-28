@@ -35,6 +35,7 @@ class PostCard extends Component {
   }
 
   render() {
+    console.log('postcard props', this.props)
     const { user, post, onPostDelete } = this.props
     return (
       <div className="postcard-container">
@@ -52,7 +53,7 @@ class PostCard extends Component {
                 <a className="postcard-delete-button" onClick={(event) => onPostDelete(event, post.id)}>
                   <Icon name="trash" />
                 </a>
-              ) : ( 
+              ) : (
                 null
               )}
             </Card.Header>
