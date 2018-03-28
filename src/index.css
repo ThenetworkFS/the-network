@@ -28,7 +28,7 @@ body {
   justify-content: center;
 }
 
-.navbar-button,
+.navbar-button,	
 .navbar-button-mobile {
   color: #4183c4 !important;
 }
@@ -55,8 +55,16 @@ body {
   padding-top: 20px;
 }
 
-.calendar {
+.calendar,
+.calendar-buttons {
   margin: 0 auto;
+  width: 90vw;
+}
+
+.calendar-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
 }
 
 .calendar-link {
@@ -121,13 +129,8 @@ body {
   margin-bottom: 12px;
 }
 
-.searchcard-container {
-  margin-left: 6px;
-  margin-right: 6px;
-}
-
 .feed-menu,
-.user-profile-container, 
+.user-profile-container,
 .calendar {
   margin-top: 12px;
 }
@@ -135,6 +138,22 @@ body {
 .feed-newpost-submit-button {
   margin-top: 6px !important;
   margin-bottom: 20px !important;
+}
+
+.event-button {
+  display: block !important;
+  width: 140px !important;
+  margin: 0 auto !important;
+  margin-top: 30px !important;
+}
+
+.event-buttons-inline {
+  display: flex;
+}
+
+.searchcard-container {	
+  margin-left: 6px;	
+  margin-right: 6px;	
 }
 
 .postcard-container .postcard {
@@ -252,12 +271,10 @@ body {
 }
 
 .all-users-results {
-  margin-top: 20px;
-
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 auto;
+  display: flex;	
+  flex-wrap: wrap;	
+  justify-content: center;	
+  margin: 0 auto;	
   margin-top: 20px;
 }
 
@@ -283,6 +300,18 @@ body {
   position: relative;
   top: 5px;
 }
+.all-posts-search-container {
+  margin-bottom: 15px;
+  display: flex
+}
+
+.all-posts-input {
+  flex-basis: 1
+}
+.all-posts-dropdown {
+  float: right;
+  width: 85px !important
+}
 
 .searchcard-anonymous {
   padding-top: 10px;
@@ -295,6 +324,24 @@ body {
 .cohort-search-container > .cohort-id {
   float: right;
   width: 85px !important;
+}
+
+.event-form {
+  min-width: 300px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.edit-event-form-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.edit-event-form-inner-container {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 /*!
@@ -490,6 +537,7 @@ body {
   .navbar-desktop {
     display: none !important;
   }
+}
 
   .feed-menu-container,
   .user-profile-container {
@@ -500,7 +548,7 @@ body {
   }
 
   .feed-menu {
-    max-width: 338px;
+    max-width: 317px;
     margin: 0 auto;
     margin-bottom: 12px;
   }
@@ -527,4 +575,5 @@ body {
     padding-left: 17px;
     padding-right: 13px;
   }
-}
+
+
