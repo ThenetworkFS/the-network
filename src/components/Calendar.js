@@ -52,13 +52,32 @@ class Calendar extends React.Component {
     return new Date(tempDate).toISOString().split('T')[0]
   }
 
+  convertTime = (time) => {
+    time = time.split(':');
+    var hours = Number(time[0]);
+    var minutes = Number(time[1]);
+    let timeValue;
+
+    if (hours > 0 && hours <= 12){
+      timeValue= "" + hours
+    } else if (hours > 12) {
+      timeValue= "" + (hours - 12)
+    } else if (hours === 0){
+      timeValue= "12";
+    }
+    timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;
+    timeValue += (hours >= 12) ? " PM" : " AM";
+    return timeValue
+  }
+
   onAddEventSubmit = (event) => {
     event.preventDefault()
     this.setState({ addIsClicked: false })
-    const title = `${event.target.title.value} | ${event.target.time.value}`
+    const convertedTime = this.convertTime(event.target.time.value)
+    const title = `${event.target.title.value} | ${convertedTime}`
     const start = event.target.start.value
     const end = event.target.end.value
-
+    
     const userId = this.props.loggedInUser.id
     const id = uuidv1()
     const calendarEvent = {
@@ -78,7 +97,8 @@ class Calendar extends React.Component {
   onEditEventSubmit = (event, id) => {
     event.preventDefault()
     this.setState({ editIsClicked: false })
-    const title = `${event.target.title.value} | ${event.target.time.value}`
+    const convertedTime = this.convertTime(event.target.time.value)
+    const title = `${event.target.title.value} | ${convertedTime}`
     const start = event.target.start.value
     const end = event.target.end.value
     const userId = this.props.loggedInUser.id
@@ -134,7 +154,6 @@ class Calendar extends React.Component {
 
   render() {
     const myEventsList = this.state.events
-    console.log('EVENTS', myEventsList)
     const user = this.props.loggedInUser
     return (
       <div>
