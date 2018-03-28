@@ -12,7 +12,8 @@ import {
   MapContainer,
   Calendar,
   MentorForm,
-  PostSearch
+  PostSearch,
+  EventForm,
 } from "./components";
 
 const Routes = () => {

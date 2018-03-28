@@ -21,25 +21,54 @@ class Calendar extends React.Component {
     }
   }
 
+  listen({category}) {
+    if (this.unsub) this.unsub()
 
-  componentDidMount() {
-    let currentComponent = this
-    db.collection("events")
-      .onSnapshot(function (querySnapshot) {
-        querySnapshot.docChanges.forEach((change) => {
-          if (change.type === "added") {
-            currentComponent.setState({
-              events: currentComponent.state.events.concat(change.doc.data())
-            });
-          }
-        });
+    this.unsub = db.collection("events")
+      .onSnapshot((querySnapshot) => {
+        this.setState({
+          events: querySnapshot.docs.map(doc => doc.data())
+        })
       })
   }
 
+  componentDidMount() {
+    this.listen(this.props)
+  }
+
+  componentWillUnmount() {
+    if (this.unsub) this.unsub()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('NEXT PROPS', nextProps)
+    console.log('PROPS', this.props)
+  }
+
+  // componentDidMount() {
+  //   let currentComponent = this
+  //   db.collection("events")
+  //     .onSnapshot(function (querySnapshot) {
+  //       querySnapshot.docChanges.forEach((change) => {
+  //         if (change.type === "added") {
+  //           currentComponent.setState({
+  //             events: currentComponent.state.events.concat(change.doc.data())
+  //           });
+  //         }
+  //       });
+  //     })
+  // }
+
   // React Big Calendar end date is exclusive
-  makeEndDateInclusive = (endDate) => {
-    let tempDate = new Date(endDate)
+  makeDateInclusive = (date) => {
+    let tempDate = new Date(date)
     tempDate.setDate(tempDate.getDate() + 1)
+    return new Date(tempDate).toISOString().split('T')[0]
+  }
+
+  makeDateExclusive = (date) => {
+    let tempDate = new Date(date)
+    tempDate.setDate(tempDate.getDate() - 1)
     return new Date(tempDate).toISOString().split('T')[0]
   }
 
@@ -54,8 +83,8 @@ class Calendar extends React.Component {
     const id = uuidv1()
     const calendarEvent = {
       title,
-      start,
-      end: this.makeEndDateInclusive(end),
+      start: this.makeDateInclusive(start),
+      end: this.makeDateInclusive(end),
       userId,
       id
     }
@@ -76,7 +105,7 @@ class Calendar extends React.Component {
     const calendarEvent = {
       title,
       start,
-      end
+      end,
     }
     db.collection("events").doc(id).update(calendarEvent)
       .catch(function (error) {
@@ -156,14 +185,16 @@ class Calendar extends React.Component {
               const title = calendarEvent.title.split('|')[0]
               const time = calendarEvent.title.split('|')[1]
               const { start, end, id } = calendarEvent
+              const formattedStart = this.makeDateExclusive(start)
+              const formattedEnd = this.makeDateExclusive(end)
               return (
                 <div className="edit-event-form-inner-container" key={id}>
                   <EventForm
                     isEditing={true}
                     title={title}
                     time={time}
-                    start={start}
-                    end={end}
+                    start={formattedStart}
+                    end={formattedEnd}
                     onSubmit={(evt) => this.onEditEventSubmit(evt, id)}
                     onDelete={(evt) => this.deleteEvent(evt, id)}
                   />
