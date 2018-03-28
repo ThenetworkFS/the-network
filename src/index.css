@@ -18,6 +18,7 @@ body {
   display: flex;
 }
 
+.navbar-button:first-child,
 .navbar-button:first-child {
   border-left: 1px solid rgba(34,36,38,.1);
 }
@@ -25,6 +26,10 @@ body {
 .navbar-button {
   width: 101px;
   justify-content: center;
+}
+
+.navbar-button,	
+.navbar-button-mobile {
   color: #4183c4 !important;
 }
 
@@ -127,6 +132,11 @@ body {
   margin-bottom: 20px !important;
 }
 
+.searchcard-container {	
+  margin-left: 6px;	
+  margin-right: 6px;	
+}
+
 .postcard-container .postcard {
   width: 100% !important;
 }
@@ -168,6 +178,7 @@ body {
   float: left;
   max-width: 100%;
   word-wrap: break-word;
+  margin-bottom: 10px;
 }
 
 .feed-menu-item {
@@ -241,6 +252,10 @@ body {
 }
 
 .all-users-results {
+  display: flex;	
+  flex-wrap: wrap;	
+  justify-content: center;	
+  margin: 0 auto;	
   margin-top: 20px;
 }
 
