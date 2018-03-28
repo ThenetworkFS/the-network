@@ -173,6 +173,7 @@ body {
 
 .postcard-container .postcard {
   width: 100% !important;
+  max-width: 370px !important;
 }
 
 .postcard-anonymous {
@@ -226,6 +227,19 @@ body {
 /* Feed menu button selected */
 .ui.menu .active.item {
   background: rgba(33, 132, 209, .05) !important;
+}
+
+.add-code-snippet-link {
+  color: #4183c4;
+  cursor: pointer;
+}
+
+.snippet-comment {
+  margin-top: 14px;
+}
+
+.add-code-snippet-link span {
+  margin-left: 5px;
 }
 
 

@@ -52,8 +52,8 @@ class PostCard extends Component {
                   <Icon name="trash" />
                 </a>
               ) : (
-                  null
-                )}
+                null
+              )}
             </Card.Header>
             <Card.Meta>
               {user.cohort}-{user.cohortId}
@@ -70,19 +70,17 @@ class PostCard extends Component {
                 />
               </div>
             ) :
-              post.code ? (
-                  <Highlight className="javascript">
-                    {post.content}
-                  </Highlight>
-              ) : (
-                  <Card.Description>
-                    <div className="formatted-post">
-                      {post.content}
-                    </div>
-                  </Card.Description>
-                )
-
-            }
+            post.code ? (
+              <Highlight className="javascript">
+                {post.content}
+              </Highlight>
+            ) : (
+              <Card.Description>
+                <div className="formatted-post">
+                  {post.content}
+                </div>
+              </Card.Description>
+            )}
           </Card.Content>
           <CommentCard post={post} onUserNameClick={this.onUserNameClick} />
         </Card>

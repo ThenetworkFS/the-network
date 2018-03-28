@@ -107,34 +107,42 @@ class Home extends React.Component {
                 </Menu.Item>
               </Menu>
             </nav>
-            {category !== 'postSearch' ?
-            (<Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
-              <TextArea
-                required
-                id="new-post-textarea"
-                placeholder='Post something'
-                name="content"
-                style={{ minHeight: 100 }}
-              />
-              { category === "forum" ? 
+            {category !== 'postSearch' ? (
+              <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
+                <TextArea
+                  required
+                  id="new-post-textarea"
+                  placeholder='Post something'
+                  name="content"
+                  style={{ minHeight: 100 }}
+                />
                 <div>
-                <Icon onClick={this.code} name="code" className={code ? "code" : "disabled code icon"} size="large" />
-                <span>Add Code Snippet</span>
+                  <Button
+                    disabled={this.state.isPostSubmitted}
+                    className="feed-newpost-submit-button"
+                    floated="right"
+                    color="blue"
+                  >
+                    Post
+                  </Button>
                 </div>
-                : null}
-              <div>
-                <Button
-                  disabled={this.state.isPostSubmitted}
-                  className="feed-newpost-submit-button"
-                  floated="right"
-                  color="blue"
-                >
-                  Post
-                </Button>
+              </Form> 
+            ) : (
+              <PostSearch/>
+            )}
+            {category === 'meetup' ? <Link className="calendar-link" to="/calendar">Calendar</Link>: null }
+            {category === "forum" ? (
+              <div onClick={this.code} className="add-code-snippet-link">
+                <Icon 
+                  name="code"
+                  className={code ? "code" : "disabled code icon"}
+                  size="large"
+                />
+                <span>format as code snippet</span>
               </div>
-            </Form>)
-            : <PostSearch/>}
-            { category === 'meetup' ? <Link className="calendar-link" to="/calendar">Calendar</Link>: null }
+            ) : (
+              null
+            )}
             <Posts category={category} />
           </div>
         ) : (
