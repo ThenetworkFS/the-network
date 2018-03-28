@@ -5,8 +5,7 @@ import { Card, Image, Icon } from 'semantic-ui-react'
 import { CommentCard } from './'
 import MicrolinkCard from 'react-microlink'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
-
-
+import Highlight from 'react-highlight'
 
 class PostCard extends Component {
   formatPostWithLink = (post) => {
@@ -52,12 +51,12 @@ class PostCard extends Component {
                 <a className="postcard-delete-button" onClick={(event) => onPostDelete(event, post.id)}>
                   <Icon name="trash" />
                 </a>
-              ) : ( 
-                null
-              )}
+              ) : (
+                  null
+                )}
             </Card.Header>
             <Card.Meta>
-             {user.cohort}-{user.cohortId}
+              {user.cohort}-{user.cohortId}
             </Card.Meta>
             {post.link ? (
               <div>
@@ -70,13 +69,20 @@ class PostCard extends Component {
                   target='_blank'
                 />
               </div>
-            ) : (
-                <Card.Description>
-                  <div className="formatted-post">
+            ) :
+              post.code ? (
+                  <Highlight className="javascript">
                     {post.content}
-                  </div>
-                </Card.Description>
-              )}
+                  </Highlight>
+              ) : (
+                  <Card.Description>
+                    <div className="formatted-post">
+                      {post.content}
+                    </div>
+                  </Card.Description>
+                )
+
+            }
           </Card.Content>
           <CommentCard post={post} onUserNameClick={this.onUserNameClick} />
         </Card>

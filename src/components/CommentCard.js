@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Spinner } from './'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
-
+import Highlight from 'react-highlight'
 
 class CommentCard extends Component {
   constructor(props) {
@@ -15,7 +15,8 @@ class CommentCard extends Component {
       viewComments: false,
       comments: [],
       newComment: '',
-      loadingComments: false
+      loadingComments: false,
+      isCode: false
     }
   }
 
@@ -50,19 +51,23 @@ class CommentCard extends Component {
         lastName: this.props.loggedInUser.lastName,
         image: this.props.loggedInUser.image,
         content: this.state.newComment,
+        code: this.state.isCode,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       })
       .then((doc) => {
         db.collection("posts").doc(this.props.post.id).collection("comments").doc(doc.id).update({ id: doc.id })
         this.setState({
-          comments: [{
+          comments: 
+            this.state.comments.concat([{
             userEmail: this.props.loggedInUser.email,
             firstName: this.props.loggedInUser.firstName,
             lastName: this.props.loggedInUser.lastName,
             image: this.props.loggedInUser.image,
             content: this.state.newComment,
-            id: doc.id
-          }].concat(this.state.comments)
+            id: doc.id,
+            code: this.state.isCode
+          }]),
+          isCode: false
         })
       })
   }
@@ -79,7 +84,7 @@ class CommentCard extends Component {
       db.collection("posts")
         .doc(this.props.post.id)
         .collection('comments')
-        .orderBy("timestamp", "desc")
+        .orderBy("timestamp", "asc")
         .get()
         .then(comments => {
           let commentsArr = []
@@ -113,7 +118,7 @@ class CommentCard extends Component {
   renderComments = () => {
     const { post } = this.props
     const user = this.props.loggedInUser
-    return this.state.comments.reverse().map((comment, index) => {
+    return this.state.comments.map((comment, index) => {
       return (
         <Card className="comment-card" key={index}>
           <Card.Content>
@@ -122,16 +127,22 @@ class CommentCard extends Component {
               <a className="comment-card-username" onClick={(event) => this.props.onUserNameClick(event, post.user)}>{comment.firstName} {comment.lastName}</a>
               {comment.userEmail === user.email ? (
                 <a className="comment-card-delete-button" onClick={(event) => this.deleteComment(event, comment.id, post.id)}>
-                  <Icon name="trash" /> 
+                  <Icon name="trash" />
                 </a>
               ) : (
-                null
-              )}
+                  null
+                )}
             </Card.Header>
             <Card.Meta>
               {user.cohort}-{user.cohortId}
             </Card.Meta>
-            <Card.Description>{comment.content}</Card.Description>
+            {comment.code ?
+              <Highlight className="javascript">
+                {comment.content}
+              </Highlight>
+              :
+              <Card.Description>{comment.content}</Card.Description>
+            }
           </Card.Content>
         </Card>
       )
@@ -143,8 +154,15 @@ class CommentCard extends Component {
     document.getElementById("new-comment-textarea").value = "";
   }
 
+  code = (event) => {
+    event.preventDefault()
+    this.setState({ isCode: !this.state.isCode })
+  }
+
 
   render() {
+    const category = this.props.match.params.category
+    const code = this.state.isCode
     return (
       <div className="comment-card-container">
         <a className="comment-card-reveal-link" onClick={this.toggleComments}>
@@ -167,6 +185,12 @@ class CommentCard extends Component {
                       placeholder='Comment on this post...'
                       onChange={this.handleCommentChange}
                     />
+                    {category === "forum" ?
+                      <div>
+                        <Icon onClick={this.code} name="code" className={code ? "code" : "disabled code icon"} size="large" />
+                        <span>Add Code Snippet</span>
+                      </div>
+                      : null}
                     <Button
                       // disabled={this.state.isPostSubmitted}
                       className="feed-newpost-submit-button"
