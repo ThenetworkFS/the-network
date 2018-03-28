@@ -5,6 +5,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { Button, Form, Input } from 'semantic-ui-react'
+import { EventForm } from './'
 
 const uuidv1 = require('uuid/v1')
 BigCalendar.momentLocalizer(moment);
@@ -16,7 +17,6 @@ class Calendar extends React.Component {
     this.state = {
       addIsClicked: false,
       editIsClicked: false,
-      isFinished: false,
       events: []
     }
   }
@@ -36,21 +36,26 @@ class Calendar extends React.Component {
       })
   }
 
+  // React Big Calendar end date is exclusive
+  makeEndDateInclusive = (endDate) => {
+    let tempDate = new Date(endDate)
+    tempDate.setDate(tempDate.getDate() + 1)
+    return new Date(tempDate).toISOString().split('T')[0]
+  }
 
-  handleAddSubmit = (event) => {
+  onAddEventSubmit = (event) => {
     event.preventDefault()
     this.setState({ addIsClicked: false })
     const title = `${event.target.title.value} | ${event.target.time.value}`
-    const startArray = event.target.start.value.split('/')
-    const endArray = event.target.end.value.split('/')
-    const start = `${startArray[2]}-${startArray[0]}-${(+startArray[1] + 1)}`
-    const end = `${endArray[2]}-${endArray[0]}-${(+endArray[1] + 1)}`
+    const start = event.target.start.value
+    const end = event.target.end.value
+
     const userId = this.props.loggedInUser.id
     const id = uuidv1()
     const calendarEvent = {
       title,
       start,
-      end,
+      end: this.makeEndDateInclusive(end),
       userId,
       id
     }
@@ -61,14 +66,12 @@ class Calendar extends React.Component {
   }
 
 
-  handleEditSumbit = (event, id) => {
+  onEditEventSubmit = (event, id) => {
     event.preventDefault()
     this.setState({ editIsClicked: false })
     const title = `${event.target.title.value} | ${event.target.time.value}`
-    const startArray = event.target.start.value.split('/')
-    const endArray = event.target.end.value.split('/')
-    const start = `${startArray[2]}-${startArray[0]}-${(+startArray[1] + 1)}`
-    const end = `${endArray[2]}-${endArray[0]}-${(+endArray[1] + 1)}`
+    const start = event.target.start.value
+    const end = event.target.end.value
     const userId = this.props.loggedInUser.id
     const calendarEvent = {
       title,
@@ -98,98 +101,79 @@ class Calendar extends React.Component {
     this.setState({ events: newArray })
   }
 
-
   addIsClicked = () => {
     this.setState({ addIsClicked: true })
   }
-
 
   editIsClicked = () => {
     this.setState({ editIsClicked: true })
   }
 
+  renderAddEventButton = () => {
+    if (!this.state.addIsClicked && !this.state.editIsClicked) {
+      return (
+        <Button
+          onClick={this.addIsClicked}
+          floated="left"
+          color="blue"
+        >
+          Add Your Event
+        </Button>
+      )
+    }
+  }
 
   render() {
     const myEventsList = this.state.events
     const user = this.props.loggedInUser
     return (
       <div>
-        <BigCalendar
-          className="calendar"
-          ref={ref => this.BigCalendar = ref}
-          events={myEventsList}
-          style={{ height: "600px", width: "90vw" }}
-          defaultDate={new Date()}
-        />
-        {this.state.addIsClicked ? (
-          // <Form onSubmit={(event) => this.handleAddSubmit}>
-          //   <div className="user-profile-username edit-profile">
-          //     <Form.Field>
-          //       <label className="label">Title</label>
-          //       <Input
-          //         type='text'
-          //         onChange={this.onInputChange}
-          //         name="title"
-          //       />
-          //     </Form.Field>
-          //   </div>
-          // </Form>
-          <form onSubmit={this.handleAddSubmit}>
-            <h6>Title</h6>
-            <input
-              name="title"
-            />
-            <h6>Time</h6>
-            <input
-              name="time"
-            />
-            <h6>State Date</h6>
-            <input
-              name="start"
-              placeholder="ex. 04/22/2018"
-            />
-            <h6>End Date</h6>
-            <input
-              name="end"
-              placeholder="ex. 04/23/2018"
-            />
-            <div>
-              <button>Add</button>
-            </div>
-          </form>
+        {(this.state.addIsClicked || this.state.editIsClicked) ? (
+          null
         ) : (
-          <Button
-            onClick={this.addIsClicked}
-            className="feed-newpost-submit-button"
-            floated="left"
-            color="blue"
-          >
-            Add Your Events
-          </Button>
+          <BigCalendar
+            className="calendar"
+            ref={ref => this.BigCalendar = ref}
+            events={myEventsList}
+            style={{ height: "600px", width: "90vw" }}
+            defaultDate={new Date()}
+          />
         )}
-        {this.state.editIsClicked ?
-          myEventsList.filter(event => event.userId === user.id).map(calendarEvent => {
-            const startArray = calendarEvent.start.split('-')
-            const endArray = calendarEvent.end.split('-')
-            const start = `${startArray[1]}/${(+startArray[2] - 1)}/${startArray[0]}`
-            const end = `${endArray[1]}/${(+endArray[2] - 1)}/${endArray[0]}`
-            return (
-              <div key={calendarEvent.id}>
-                <form onSubmit={(event) => this.handleEditSumbit(event, calendarEvent.id)}>
-                  <input name="title" defaultValue={calendarEvent.title.split('|')[0]} />
-                  <input name="time" defaultValue={calendarEvent.title.split('|')[1]} />
-                  <input name="start" defaultValue={start} />
-                  <input name="end" defaultValue={end} />
-                  <button type="submit">Save</button>
-                </form>
-                <button onClick={(event) => this.deleteEvent(event, calendarEvent.id)}>Delete</button>
-              </div>
-            )
-          }) : (
-            myEventsList.filter(event => event.userId === user.id).length > 0 ? (
+        <div className="calendar-buttons">
+          {this.state.addIsClicked ? (
+            <EventForm
+              isEditing={false}
+              onSubmit={this.onAddEventSubmit}
+            />
+          ) : (
+            <div>
+              {this.renderAddEventButton()}
+            </div>
+          )}
+          <div className="edit-event-form-container">
+          {this.state.editIsClicked ?
+            myEventsList.filter(event => event.userId === user.id).map(calendarEvent => {
+              const title = calendarEvent.title.split('|')[0]
+              const time = calendarEvent.title.split('|')[1]
+              const { start, end, id } = calendarEvent
+              return (
+                <div className="edit-event-form-inner-container" key={id}>
+                  <EventForm
+                    isEditing={true}
+                    title={title}
+                    time={time}
+                    start={start}
+                    end={end}
+                    onSubmit={(evt) => this.onEditEventSubmit(evt, id)}
+                    onDelete={(evt) => this.deleteEvent(evt, id)}
+                  />
+                </div>
+              )
+            }
+          ) : (
+            myEventsList.filter(event => event.userId === user.id).length > 0 && !this.state.addIsClicked ? (
               <Button
                 onClick={this.editIsClicked}
-                className="feed-newpost-submit-button"
                 floated="right"
                 color="blue"
               >
@@ -199,6 +183,8 @@ class Calendar extends React.Component {
               null
             )
           )}
+          </div>
+        </div>
       </div>
     )
   }
