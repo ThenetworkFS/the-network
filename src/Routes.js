@@ -10,7 +10,9 @@ import {
   AdvancedSearch,
   EditProfile,
   MapContainer,
-  Calendar
+  Calendar,
+  MentorForm,
+  PostSearch
 } from "./components";
 
 const Routes = () => {
@@ -25,7 +27,9 @@ const Routes = () => {
       <Route exact path="/advancedSearch" component={AdvancedSearch} />
       <Route exact path="/map" component={MapContainer} />
       <Route exact path="/calendar" component={Calendar} />
+      <Route exact path="/mentor" component={MentorForm}/>
       <Route path="/users" component={AllUsers} />
+      <Route path="home/postSearch" component={PostSearch} />
     </Switch>
   );
 };

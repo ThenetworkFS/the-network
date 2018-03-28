@@ -113,7 +113,7 @@ class CommentCard extends Component {
   renderComments = () => {
     const { post } = this.props
     const user = this.props.loggedInUser
-    return this.state.comments.map((comment, index) => {
+    return this.state.comments.reverse().map((comment, index) => {
       return (
         <Card className="comment-card" key={index}>
           <Card.Content>
@@ -129,7 +129,7 @@ class CommentCard extends Component {
               )}
             </Card.Header>
             <Card.Meta>
-              FS - 1801
+              {user.cohort}-{user.cohortId}
             </Card.Meta>
             <Card.Description>{comment.content}</Card.Description>
           </Card.Content>

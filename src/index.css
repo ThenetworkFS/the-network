@@ -28,7 +28,7 @@ body {
   justify-content: center;
 }
 
-.navbar-button,
+.navbar-button,	
 .navbar-button-mobile {
   color: #4183c4 !important;
 }
@@ -121,13 +121,8 @@ body {
   margin-bottom: 12px;
 }
 
-.searchcard-container {
-  margin-left: 6px;
-  margin-right: 6px;
-}
-
 .feed-menu,
-.user-profile-container, 
+.user-profile-container,
 .calendar {
   margin-top: 12px;
 }
@@ -135,6 +130,11 @@ body {
 .feed-newpost-submit-button {
   margin-top: 6px !important;
   margin-bottom: 20px !important;
+}
+
+.searchcard-container {	
+  margin-left: 6px;	
+  margin-right: 6px;	
 }
 
 .postcard-container .postcard {
@@ -252,12 +252,10 @@ body {
 }
 
 .all-users-results {
-  margin-top: 20px;
-
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 auto;
+  display: flex;	
+  flex-wrap: wrap;	
+  justify-content: center;	
+  margin: 0 auto;	
   margin-top: 20px;
 }
 
@@ -282,6 +280,18 @@ body {
 .searchcard-content {
   position: relative;
   top: 5px;
+}
+.all-posts-search-container {
+  margin-bottom: 15px;
+  display: flex
+}
+
+.all-posts-input {
+  flex-basis: 1
+}
+.all-posts-dropdown {
+  float: right;
+  width: 85px !important
 }
 
 .searchcard-anonymous {
@@ -496,6 +506,7 @@ body {
   .navbar-desktop {
     display: none !important;
   }
+}
 
   .feed-menu-container,
   .user-profile-container {
@@ -533,4 +544,5 @@ body {
     padding-left: 17px;
     padding-right: 13px;
   }
-}
+
+

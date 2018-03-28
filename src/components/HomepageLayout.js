@@ -46,7 +46,7 @@ class HomepageLayout extends React.Component {
                 </Grid.Row>
                 <Grid.Row>
                   <Grid.Column textAlign='center'>
-                    <Link to="/map">See Where We Work</Link>
+                    <Button as='a' size='large' href="/map">See Where We Work</Button>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
