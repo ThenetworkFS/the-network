@@ -46,7 +46,7 @@ class PostCard extends Component {
               src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL}
             />
             <Card.Header>
-              <a onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
+              <a className="postcard-username" onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
               {post.user.id === user.id ? (
                 <a className="postcard-delete-button" onClick={(event) => onPostDelete(event, post.id)}>
                   <Icon name="trash" />
