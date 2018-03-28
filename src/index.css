@@ -55,8 +55,16 @@ body {
   padding-top: 20px;
 }
 
-.calendar {
+.calendar,
+.calendar-buttons {
   margin: 0 auto;
+  width: 90vw;
+}
+
+.calendar-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
 }
 
 .calendar-link {
@@ -130,6 +138,17 @@ body {
 .feed-newpost-submit-button {
   margin-top: 6px !important;
   margin-bottom: 20px !important;
+}
+
+.event-button {
+  display: block !important;
+  width: 140px !important;
+  margin: 0 auto !important;
+  margin-top: 30px !important;
+}
+
+.event-buttons-inline {
+  display: flex;
 }
 
 .searchcard-container {	
@@ -517,7 +536,7 @@ body {
   }
 
   .feed-menu {
-    max-width: 338px;
+    max-width: 317px;
     margin: 0 auto;
     margin-bottom: 12px;
   }
