@@ -9,6 +9,7 @@ import {
   Form,
   TextArea,
   Button,
+  Icon
 } from 'semantic-ui-react'
 
 
@@ -19,6 +20,7 @@ class Home extends React.Component {
     this.state = {
       link: '',
       isPostSubmitted: false,
+      isDisabled: true
     }
   }
 
@@ -64,9 +66,15 @@ class Home extends React.Component {
     document.getElementById("new-post-textarea").value = "";
   }
 
+ code = (event) => {
+   event.preventDefault()
+   this.setState({isDisabled: !this.state.isDisabled})
+ }
+
 
   render() {
     const category = this.props.match.params.category
+    const dis= this.state.isDisabled
     return (
       <div className="homepage-container">
         {!this.props.isFetching ? (
@@ -102,6 +110,12 @@ class Home extends React.Component {
                 name="content"
                 style={{ minHeight: 100 }}
               />
+              { category === "forum" ? 
+                <div>
+                <Icon onClick={this.code} name={dis ? "disabled code icon" : "code"} size="large" />
+                <h8>Add Code Snippet</h8>
+                </div>
+                : null}
               <div>
                 <Button
                   disabled={this.state.isPostSubmitted}

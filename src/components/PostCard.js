@@ -7,7 +7,6 @@ import MicrolinkCard from 'react-microlink'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 
 
-
 class PostCard extends Component {
   formatPostWithLink = (post) => {
     const linkIndex = post.content.indexOf(post.link)
@@ -52,12 +51,12 @@ class PostCard extends Component {
                 <a className="postcard-delete-button" onClick={(event) => onPostDelete(event, post.id)}>
                   <Icon name="trash" />
                 </a>
-              ) : ( 
-                null
-              )}
+              ) : (
+                  null
+                )}
             </Card.Header>
             <Card.Meta>
-             {user.cohort}-{user.cohortId}
+              {user.cohort}-{user.cohortId}
             </Card.Meta>
             {post.link ? (
               <div>
@@ -71,11 +70,11 @@ class PostCard extends Component {
                 />
               </div>
             ) : (
-                <Card.Description>
-                  <div className="formatted-post">
-                    {post.content}
-                  </div>
-                </Card.Description>
+                  <Card.Description>
+                    <div className="formatted-post">
+                      {post.content}
+                    </div>
+                  </Card.Description>
               )}
           </Card.Content>
           <CommentCard post={post} onUserNameClick={this.onUserNameClick} />
