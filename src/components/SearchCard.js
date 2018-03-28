@@ -32,7 +32,7 @@ class SearchCard extends Component {
               <Image className={user.image ? "searchcard-image" : "searchcard-image searchcard-anonymous"} floated='left' size='mini' src={user.image ? user.image : ANONYMOUS_USER_IMAGE_URL} />
               <div className="searchcard-content">
                 <Card.Header>
-                  <a onClick={(event) => this.onUserNameClick(event, user)}>{user.firstName} {user.lastName}</a>
+                  <a className="searchcard-username" onClick={(event) => this.onUserNameClick(event, user)}>{user.firstName} {user.lastName}</a>
                 </Card.Header>
                 <Card.Meta>
                   FS - 1801

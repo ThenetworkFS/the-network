@@ -119,7 +119,7 @@ class CommentCard extends Component {
           <Card.Content>
             <Image className={comment.image ? "rounded-image" : "postcard-anonymous anonymous"} floated='left' size='mini' src={comment.image ? comment.image : ANONYMOUS_USER_IMAGE_URL} />
             <Card.Header>
-              <a onClick={(event) => this.props.onUserNameClick(event, post.user)}>{comment.firstName} {comment.lastName}</a>
+              <a className="comment-card-username" onClick={(event) => this.props.onUserNameClick(event, post.user)}>{comment.firstName} {comment.lastName}</a>
               {comment.userEmail === user.email ? (
                 <a className="comment-card-delete-button" onClick={(event) => this.deleteComment(event, comment.id, post.id)}>
                   <Icon name="trash" /> 

@@ -59,7 +59,6 @@ class PostSearch extends Component {
   }
 
   render() {
-    console.log(this.state)
     const user = this.props.loggedInUser
 
     const dropdownOptions = [
@@ -131,7 +130,7 @@ class PostSearch extends Component {
                 floating
                 selection
                 options={dropdownOptions}
-                defaultValue='all posts' />}
+                defaultValue='allPosts' />}
               icon='search'
               name="searchVal"
               iconPosition='left'
