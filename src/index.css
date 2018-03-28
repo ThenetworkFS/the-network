@@ -248,6 +248,55 @@ body {
   margin-top: 20px !important;
 }
 
+.user-profile-save-button {
+  margin-bottom: 20px !important;
+}
+
+.user-profile-project-container {
+  padding-left: 20px;
+  margin-top: 20px;
+}
+
+.user-profile-project-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-profile-project-buttons {
+  display: flex;
+}
+
+.cohort-search-container .label {
+  margin-bottom: 0px !important;
+}
+
+.cohort-search-container .label label {
+  font-weight: 200 !important;
+}
+
+.label-project {
+  margin-bottom: 20px;
+}
+
+.project-title {
+  text-transform: uppercase !important;
+  margin-bottom: 0px !important;
+}
+
+.project-description {
+  font-weight: 200 !important;
+  margin-top: 0px !important;
+}
+
+.project-button {
+  margin-left: 10px !important;
+}
+
+.add-project-link {
+  float: right;
+  margin-right: 3px;
+}
+
 .label,
 .edit-profile {
   text-align: left;
@@ -343,6 +392,8 @@ body {
   margin-right: 20px;
   margin-bottom: 20px;
 }
+
+
 
 /*!
  * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)

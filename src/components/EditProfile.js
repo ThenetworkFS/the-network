@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import ImagePicker from './ImagePicker'
 import history from '../history'
 import { getUser } from '../store'
-import EditProject from './EditProject'
+import { Projects } from './'
 import { Card, Form, Input, Button, Select } from 'semantic-ui-react'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
@@ -208,14 +208,14 @@ class EditProfile extends React.Component {
                     label='Cohort'
                     options={options}
                     placeholder='Cohort'
-                    className='cohort'
+                    className='cohort label'
                     name="cohort"
                   />
                   <Form.Input
                     label='Number'
                     placeholder='Number'
                     onChange={this.onInputChange}
-                    className='cohort-id'
+                    className='cohort-id label'
                     name="cohortId"
                   />
                 </div>
@@ -252,7 +252,7 @@ class EditProfile extends React.Component {
               Save Profile
             </Button>
           </Form>
-          <EditProject />
+          <Projects />
         </Card>
       </div>
     )
