@@ -35,7 +35,7 @@ class SearchCard extends Component {
                   <a onClick={(event) => this.onUserNameClick(event, user)}>{user.firstName} {user.lastName}</a>
                 </Card.Header>
                 <Card.Meta>
-                  FS - 1801
+                  {user.cohort} - {user.cohortId}
                 </Card.Meta>
               </div>
             </div>
