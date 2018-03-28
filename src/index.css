@@ -332,6 +332,18 @@ body {
   margin: 0 auto;
 }
 
+.edit-event-form-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.edit-event-form-inner-container {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
 /*!
  * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
  * Copyright 2015 Daniel Cardoso <@DanielCardoso>

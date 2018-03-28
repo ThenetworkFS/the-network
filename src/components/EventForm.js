@@ -19,13 +19,13 @@ const EventForm = (props) => {
             name="time"
             defaultValue={time ? time : ""}
           />
-          <label className="label">Start Date (inclusive)</label>
+          <label className="label">Start Date</label>
           <Input
             type="date"
             name="start"
             defaultValue={start ? start : ""}
           />
-          <label className="label">End Date (exclusive)</label>
+          <label className="label">End Date</label>
           <Input
             type="date"
             name="end"

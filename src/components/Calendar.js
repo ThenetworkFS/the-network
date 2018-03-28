@@ -36,6 +36,12 @@ class Calendar extends React.Component {
       })
   }
 
+  // React Big Calendar end date is exclusive
+  makeEndDateInclusive = (endDate) => {
+    let tempDate = new Date(endDate)
+    tempDate.setDate(tempDate.getDate() + 1)
+    return new Date(tempDate).toISOString().split('T')[0]
+  }
 
   onAddEventSubmit = (event) => {
     event.preventDefault()
@@ -49,7 +55,7 @@ class Calendar extends React.Component {
     const calendarEvent = {
       title,
       start,
-      end,
+      end: this.makeEndDateInclusive(end),
       userId,
       id
     }
@@ -144,13 +150,14 @@ class Calendar extends React.Component {
               {this.renderAddEventButton()}
             </div>
           )}
+          <div className="edit-event-form-container">
           {this.state.editIsClicked ?
             myEventsList.filter(event => event.userId === user.id).map(calendarEvent => {
               const title = calendarEvent.title.split('|')[0]
               const time = calendarEvent.title.split('|')[1]
               const { start, end, id } = calendarEvent
               return (
-                <div>
+                <div className="edit-event-form-inner-container" key={id}>
                   <EventForm
                     isEditing={true}
                     title={title}
@@ -176,6 +183,7 @@ class Calendar extends React.Component {
               null
             )
           )}
+          </div>
         </div>
       </div>
     )
