@@ -151,6 +151,7 @@ class AllUsers extends Component {
 
 
   render() {
+    console.log('STATE IN ALL USERS: ',this.state)
     let filteredUsers;
     if (this.state.searchVal) {
       filteredUsers = this.filterUsersOnSearch()
