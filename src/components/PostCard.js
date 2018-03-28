@@ -5,8 +5,7 @@ import { Card, Image, Icon } from 'semantic-ui-react'
 import { CommentCard } from './'
 import MicrolinkCard from 'react-microlink'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
-
-
+import Highlight from 'react-highlight'
 
 class PostCard extends Component {
   formatPostWithLink = (post) => {
@@ -48,7 +47,7 @@ class PostCard extends Component {
               src={post.user.image ? post.user.image : ANONYMOUS_USER_IMAGE_URL}
             />
             <Card.Header>
-              <a onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
+              <a className="postcard-username" onClick={(event) => this.onUserNameClick(event, post.user)}>{post.user.firstName} {post.user.lastName}</a>
               {post.user.id === user.id ? (
                 <a className="postcard-delete-button" onClick={(event) => onPostDelete(event, post.id)}>
                   <Icon name="trash" />
@@ -58,7 +57,7 @@ class PostCard extends Component {
               )}
             </Card.Header>
             <Card.Meta>
-             {user.cohort}-{user.cohortId}
+              {user.cohort}-{user.cohortId}
             </Card.Meta>
             {post.link ? (
               <div>
@@ -71,13 +70,18 @@ class PostCard extends Component {
                   target='_blank'
                 />
               </div>
+            ) :
+            post.code ? (
+              <Highlight className="javascript">
+                {post.content}
+              </Highlight>
             ) : (
-                <Card.Description>
-                  <div className="formatted-post">
-                    {post.content}
-                  </div>
-                </Card.Description>
-              )}
+              <Card.Description>
+                <div className="formatted-post">
+                  {post.content}
+                </div>
+              </Card.Description>
+            )}
           </Card.Content>
           <CommentCard post={post} onUserNameClick={this.onUserNameClick} />
         </Card>

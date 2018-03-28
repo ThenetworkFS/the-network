@@ -11,7 +11,7 @@ body {
 
 .navbar-desktop {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .navbar-buttons {
@@ -43,11 +43,18 @@ body {
   display: none;
 }
 
-.logo {
+.logo,
+.logo-desktop {
   width: 163px !important;
   height: 34px !important;
   margin-right: 58px !important;
   top: 5px;
+}
+
+.logo-desktop {
+  display: block !important;
+  position: absolute !important;
+  left: 10%;
 }
 
 .anonymous {
@@ -73,7 +80,15 @@ body {
 }
 
 .calendar-link:hover,
-.alumni-map-link:hover {
+.alumni-map-link:hover,
+.all-users-search-options:hover,
+.user-profile-edit-link:hover,
+.user-profile-header:hover,
+.searchcard-username:hover,
+.postcard-username:hover,
+.comment-card-username:hover,
+.signout-button:hover,
+.comment-card-reveal-link:hover {
   text-decoration: underline;
 }
 
@@ -158,6 +173,7 @@ body {
 
 .postcard-container .postcard {
   width: 100% !important;
+  max-width: 370px !important;
 }
 
 .postcard-anonymous {
@@ -174,6 +190,8 @@ body {
 
 .rounded-image {
   border-radius: 50%;
+  width: 35px !important;
+  height: 35px !important;
 }
 
 .comment-card-container {
@@ -209,6 +227,19 @@ body {
 /* Feed menu button selected */
 .ui.menu .active.item {
   background: rgba(33, 132, 209, .05) !important;
+}
+
+.add-code-snippet-link {
+  color: #4183c4;
+  cursor: pointer;
+}
+
+.snippet-comment {
+  margin-top: 14px;
+}
+
+.add-code-snippet-link span {
+  margin-left: 5px;
 }
 
 
@@ -359,7 +390,8 @@ body {
 }
 .all-posts-dropdown {
   float: right;
-  width: 85px !important
+  width: 85px !important;
+  border-radius: 0px 4px 4px 0px !important;
 }
 
 .searchcard-anonymous {
@@ -579,13 +611,18 @@ body {
     --size: 200px;
   }
 
+@media (max-width: 1020px) {
+  .logo-desktop {
+    left: 2%;
+  }
+}
 
 @media (max-width: 767px) {
   .navbar-mobile {
     display: flex;
   }
 
-  .navbar-desktop {
+  .navbar-desktop-container {
     display: none !important;
   }
 }
@@ -626,5 +663,7 @@ body {
     padding-left: 17px;
     padding-right: 13px;
   }
+
+
 
 

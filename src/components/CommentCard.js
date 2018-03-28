@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Spinner } from './'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
-
+import Highlight from 'react-highlight'
 
 class CommentCard extends Component {
   constructor(props) {
@@ -15,7 +15,8 @@ class CommentCard extends Component {
       viewComments: false,
       comments: [],
       newComment: '',
-      loadingComments: false
+      loadingComments: false,
+      isCode: false
     }
   }
 
@@ -50,19 +51,23 @@ class CommentCard extends Component {
         lastName: this.props.loggedInUser.lastName,
         image: this.props.loggedInUser.image,
         content: this.state.newComment,
+        code: this.state.isCode,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       })
       .then((doc) => {
         db.collection("posts").doc(this.props.post.id).collection("comments").doc(doc.id).update({ id: doc.id })
         this.setState({
-          comments: [{
+          comments: 
+            this.state.comments.concat([{
             userEmail: this.props.loggedInUser.email,
             firstName: this.props.loggedInUser.firstName,
             lastName: this.props.loggedInUser.lastName,
             image: this.props.loggedInUser.image,
             content: this.state.newComment,
-            id: doc.id
-          }].concat(this.state.comments)
+            id: doc.id,
+            code: this.state.isCode
+          }]),
+          isCode: false
         })
       })
   }
@@ -79,7 +84,7 @@ class CommentCard extends Component {
       db.collection("posts")
         .doc(this.props.post.id)
         .collection('comments')
-        .orderBy("timestamp", "desc")
+        .orderBy("timestamp", "asc")
         .get()
         .then(comments => {
           let commentsArr = []
@@ -113,16 +118,16 @@ class CommentCard extends Component {
   renderComments = () => {
     const { post } = this.props
     const user = this.props.loggedInUser
-    return this.state.comments.reverse().map((comment, index) => {
+    return this.state.comments.map((comment, index) => {
       return (
         <Card className="comment-card" key={index}>
           <Card.Content>
             <Image className={comment.image ? "rounded-image" : "postcard-anonymous anonymous"} floated='left' size='mini' src={comment.image ? comment.image : ANONYMOUS_USER_IMAGE_URL} />
             <Card.Header>
-              <a onClick={(event) => this.props.onUserNameClick(event, post.user)}>{comment.firstName} {comment.lastName}</a>
+              <a className="comment-card-username" onClick={(event) => this.props.onUserNameClick(event, post.user)}>{comment.firstName} {comment.lastName}</a>
               {comment.userEmail === user.email ? (
                 <a className="comment-card-delete-button" onClick={(event) => this.deleteComment(event, comment.id, post.id)}>
-                  <Icon name="trash" /> 
+                  <Icon name="trash" />
                 </a>
               ) : (
                 null
@@ -131,7 +136,13 @@ class CommentCard extends Component {
             <Card.Meta>
               {user.cohort}-{user.cohortId}
             </Card.Meta>
-            <Card.Description>{comment.content}</Card.Description>
+            {comment.code ? (
+              <Highlight className="javascript">
+                {comment.content}
+              </Highlight>
+            ) : (
+              <Card.Description>{comment.content}</Card.Description>
+            )}
           </Card.Content>
         </Card>
       )
@@ -143,8 +154,15 @@ class CommentCard extends Component {
     document.getElementById("new-comment-textarea").value = "";
   }
 
+  code = (event) => {
+    event.preventDefault()
+    this.setState({ isCode: !this.state.isCode })
+  }
+
 
   render() {
+    const category = this.props.match.params.category
+    const code = this.state.isCode
     return (
       <div className="comment-card-container">
         <a className="comment-card-reveal-link" onClick={this.toggleComments}>
@@ -155,36 +173,48 @@ class CommentCard extends Component {
             {this.state.loadingComments ? (
               <Spinner size={"S"} />
             ) : (
-                <div>
-                  <Form
-                    className="comment-card-textarea-container"
-                    onSubmit={this.onAddCommentClick}
+              <div>
+                <Form
+                  className="comment-card-textarea-container"
+                  onSubmit={this.onAddCommentClick}
+                >
+                  <TextArea
+                    required
+                    id="new-comment-textarea"
+                    label='Comment'
+                    placeholder='Comment on this post...'
+                    onChange={this.handleCommentChange}
+                  />
+                  <Button
+                    className="feed-newpost-submit-button"
+                    floated="right"
+                    color="blue"
                   >
-                    <TextArea
-                      required
-                      id="new-comment-textarea"
-                      label='Comment'
-                      placeholder='Comment on this post...'
-                      onChange={this.handleCommentChange}
+                    Comment
+                </Button>
+                {category === "forum" ? (
+                  <div onClick={this.code} className="add-code-snippet-link snippet-comment">
+                    <Icon 
+                      name="code"
+                      className={code ? "code" : "disabled code icon"}
+                      size="large"
                     />
-                    <Button
-                      // disabled={this.state.isPostSubmitted}
-                      className="feed-newpost-submit-button"
-                      floated="right"
-                      color="blue"
-                    >
-                      Comment
-                  </Button>
-                    <div className="comment-card-inner-container">
-                      {this.renderComments()}
-                    </div>
-                  </Form>
+                    <span>format as code snippet</span>
+                  </div>
+                ) : (
+                  null
+                )}
+                <div className="comment-card-inner-container">
+                  {this.renderComments()}
                 </div>
-              )}
+                </Form>
+              </div>
+              )
+            }
           </div>
         ) : (
-            null
-          )}
+          null
+        )}
       </div>
     )
   }
