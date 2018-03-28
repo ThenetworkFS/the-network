@@ -4,7 +4,7 @@ import moment from 'moment'
 import React from 'react'
 import { connect } from 'react-redux'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { Button, Form, Input } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import { EventForm } from './'
 
 const uuidv1 = require('uuid/v1')
@@ -21,7 +21,7 @@ class Calendar extends React.Component {
     }
   }
 
-  listen({category}) {
+  listen() {
     if (this.unsub) this.unsub()
 
     this.unsub = db.collection("events")
@@ -33,37 +33,17 @@ class Calendar extends React.Component {
   }
 
   componentDidMount() {
-    this.listen(this.props)
+    this.listen()
   }
 
   componentWillUnmount() {
     if (this.unsub) this.unsub()
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('NEXT PROPS', nextProps)
-    console.log('PROPS', this.props)
-  }
-
-  // componentDidMount() {
-  //   let currentComponent = this
-  //   db.collection("events")
-  //     .onSnapshot(function (querySnapshot) {
-  //       querySnapshot.docChanges.forEach((change) => {
-  //         if (change.type === "added") {
-  //           currentComponent.setState({
-  //             events: currentComponent.state.events.concat(change.doc.data())
-  //           });
-  //         }
-  //       });
-  //     })
-  // }
-
   // React Big Calendar end date is exclusive
   makeDateInclusive = (date) => {
     let tempDate = new Date(date)
-    tempDate.setDate(tempDate.getDate() + 1)
-    return new Date(tempDate).toISOString().split('T')[0]
+    return tempDate.setDate(tempDate.getDate() + 1)
   }
 
   makeDateExclusive = (date) => {
@@ -104,8 +84,8 @@ class Calendar extends React.Component {
     const userId = this.props.loggedInUser.id
     const calendarEvent = {
       title,
-      start,
-      end,
+      start: this.makeDateInclusive(start),
+      end: this.makeDateInclusive(end),
     }
     db.collection("events").doc(id).update(calendarEvent)
       .catch(function (error) {
@@ -154,6 +134,7 @@ class Calendar extends React.Component {
 
   render() {
     const myEventsList = this.state.events
+    console.log('EVENTS', myEventsList)
     const user = this.props.loggedInUser
     return (
       <div>
@@ -223,6 +204,5 @@ class Calendar extends React.Component {
 
 
 const mapStateToProps = ({ user: { loggedInUser } }) => ({ loggedInUser })
-
 
 export default connect(mapStateToProps)(Calendar)
