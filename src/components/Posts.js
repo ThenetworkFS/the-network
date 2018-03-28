@@ -16,23 +16,12 @@ class Posts extends Component {
   listen({category}) {
     if (this.unsub) this.unsub()
 
-    this.unsub = db.collection("posts").where('category', '==', category).orderBy("timestamp")
+    this.unsub = db.collection("posts").where('category', '==', category).orderBy("timestamp", "desc")
       .onSnapshot((querySnapshot) => {
         this.setState({
           posts: querySnapshot.docs.map(doc => doc.data())
         })
       })
-
-        // querySnapshot.docChanges.forEach((change) => {
-        //   if (change.type === "added") {
-        //     const newPost = { ...change.doc.data(), id: change.doc.id }
-        //     currentComponent.setState({
-        //       posts: [newPost].concat(currentComponent.state.posts),
-        //       isPostSubmitted: false,
-        //     });
-        //   }
-        // });
-      // })
   }
 
   componentDidMount() {

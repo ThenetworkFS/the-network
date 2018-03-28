@@ -26,7 +26,7 @@ class HomepageLayout extends React.Component {
               <Grid container stackable verticalAlign='middle'>
                 <Grid.Row>
                   <Grid.Column width={8}>
-                    <Header as='h3' style={{ fontSize: '2em' }}>Get Answers to Your Questions</Header>
+                    <Header as='h3' style={{ fontSize: '2em' }}>Answers to Your Questions</Header>
                     <p style={{ fontSize: '1.33em' }}>
                       The job search can be hard, but we are here to help. By joining The Network, you are able to ask any question regarding company specific interviews, culture, or anything else that is on your mind.
             </p>
@@ -77,7 +77,7 @@ class HomepageLayout extends React.Component {
                 <p style={{ fontSize: '1.33em', textAlign: 'center' }}>
                   Stay connected to the community You help build.
         </p>
-                <Button as='a' size='large' href='/login'>Join Us</Button>
+                <Button as='a' size='large' className='mouse-cursor-gradient-tracking' href='/login'>Join Us</Button>
 
               </Container>
             </Segment>

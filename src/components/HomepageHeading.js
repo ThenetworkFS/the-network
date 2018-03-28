@@ -10,7 +10,7 @@ import {
 const HomepageHeading = ({ mobile }) => (
 
     <Container text>
-  
+
       <Header
         as='h1'
         content='The Network'
@@ -38,7 +38,7 @@ const HomepageHeading = ({ mobile }) => (
       </Button>
     </Container>
   )
-  
+
   HomepageHeading.propTypes = {
     mobile: PropTypes.bool,
   }
