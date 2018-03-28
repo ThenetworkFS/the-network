@@ -130,19 +130,19 @@ class CommentCard extends Component {
                   <Icon name="trash" />
                 </a>
               ) : (
-                  null
-                )}
+                null
+              )}
             </Card.Header>
             <Card.Meta>
               {user.cohort}-{user.cohortId}
             </Card.Meta>
-            {comment.code ?
+            {comment.code ? (
               <Highlight className="javascript">
                 {comment.content}
               </Highlight>
-              :
+            ) : (
               <Card.Description>{comment.content}</Card.Description>
-            }
+            )}
           </Card.Content>
         </Card>
       )
@@ -173,42 +173,48 @@ class CommentCard extends Component {
             {this.state.loadingComments ? (
               <Spinner size={"S"} />
             ) : (
-                <div>
-                  <Form
-                    className="comment-card-textarea-container"
-                    onSubmit={this.onAddCommentClick}
+              <div>
+                <Form
+                  className="comment-card-textarea-container"
+                  onSubmit={this.onAddCommentClick}
+                >
+                  <TextArea
+                    required
+                    id="new-comment-textarea"
+                    label='Comment'
+                    placeholder='Comment on this post...'
+                    onChange={this.handleCommentChange}
+                  />
+                  <Button
+                    className="feed-newpost-submit-button"
+                    floated="right"
+                    color="blue"
                   >
-                    <TextArea
-                      required
-                      id="new-comment-textarea"
-                      label='Comment'
-                      placeholder='Comment on this post...'
-                      onChange={this.handleCommentChange}
+                    Comment
+                </Button>
+                {category === "forum" ? (
+                  <div onClick={this.code} className="add-code-snippet-link snippet-comment">
+                    <Icon 
+                      name="code"
+                      className={code ? "code" : "disabled code icon"}
+                      size="large"
                     />
-                    {category === "forum" ?
-                      <div>
-                        <Icon onClick={this.code} name="code" className={code ? "code" : "disabled code icon"} size="large" />
-                        <span>Add Code Snippet</span>
-                      </div>
-                      : null}
-                    <Button
-                      // disabled={this.state.isPostSubmitted}
-                      className="feed-newpost-submit-button"
-                      floated="right"
-                      color="blue"
-                    >
-                      Comment
-                  </Button>
-                    <div className="comment-card-inner-container">
-                      {this.renderComments()}
-                    </div>
-                  </Form>
+                    <span>format as code snippet</span>
+                  </div>
+                ) : (
+                  null
+                )}
+                <div className="comment-card-inner-container">
+                  {this.renderComments()}
                 </div>
-              )}
+                </Form>
+              </div>
+              )
+            }
           </div>
         ) : (
-            null
-          )}
+          null
+        )}
       </div>
     )
   }
