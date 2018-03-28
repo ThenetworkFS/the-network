@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { removeUser, selectUser } from '../store'
 import { fire } from '../fire'
 import history from '../history'
@@ -55,35 +55,37 @@ class Navbar extends Component {
               null
             )}
         </div>
-        <div className="navbar-desktop-container">
-          <Image className="logo-desktop" floated='left' size='mini' src={FULLSTACK_LOGO_URL} />        
+        <div className="navbar-desktop-container">        
           {user && user.email ? (
-            <nav>
-              <Menu className="navbar-desktop">
-                <div>
-                  <div className="navbar-buttons">
-                    <Menu.Item className="navbar-button" name='home/news' active={activeItem === 'home/news'} onClick={this.handleItemClick}>
-                      News Feed
-                    </Menu.Item>
+            <Fragment>
+              <Image className="logo-desktop" floated='left' size='mini' src={FULLSTACK_LOGO_URL} />
+              <nav>
+                <Menu className="navbar-desktop">
+                  <div>
+                    <div className="navbar-buttons">
+                      <Menu.Item className="navbar-button" name='home/news' active={activeItem === 'home/news'} onClick={this.handleItemClick}>
+                        News Feed
+                      </Menu.Item>
 
-                    <Menu.Item className="navbar-button" name='users' active={activeItem === 'users'} onClick={this.handleItemClick}>
-                      Alumni
-                    </Menu.Item>
+                      <Menu.Item className="navbar-button" name='users' active={activeItem === 'users'} onClick={this.handleItemClick}>
+                        Alumni
+                      </Menu.Item>
 
-                    <Menu.Item className="navbar-button" name={`profile/${user.id}`} active={activeItem === `profile/${user.id}`}
-                      onClick={(event, name) => {
-                        this.handleItemClick(event, name)
-                        this.props.selectUser(user)
-                      }}
-                    >
-                      My Profile
-                    </Menu.Item>
-                    <a className="signout-button" onClick={this.props.removeUser}>sign out</a>                  
+                      <Menu.Item className="navbar-button" name={`profile/${user.id}`} active={activeItem === `profile/${user.id}`}
+                        onClick={(event, name) => {
+                          this.handleItemClick(event, name)
+                          this.props.selectUser(user)
+                        }}
+                      >
+                        My Profile
+                      </Menu.Item>
+                      <a className="signout-button" onClick={this.props.removeUser}>sign out</a>                  
+                    </div>
+                    {/* <a className="signout-button" onClick={this.props.removeUser}>sign out</a> */}
                   </div>
-                  {/* <a className="signout-button" onClick={this.props.removeUser}>sign out</a> */}
-                </div>
-              </Menu>
-            </nav>
+                </Menu>
+              </nav>
+            </ Fragment>
           ) : (
             null
           )}
