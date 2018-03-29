@@ -28,7 +28,7 @@ body {
   justify-content: center;
 }
 
-.navbar-button,	
+.navbar-button,
 .navbar-button-mobile {
   color: #4183c4 !important;
 }
@@ -167,9 +167,9 @@ body {
   display: flex;
 }
 
-.searchcard-container {	
-  margin-left: 6px;	
-  margin-right: 6px;	
+.searchcard-container {
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 .postcard-container .postcard {
@@ -352,10 +352,10 @@ body {
 }
 
 .all-users-results {
-  display: flex;	
-  flex-wrap: wrap;	
-  justify-content: center;	
-  margin: 0 auto;	
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
   margin-top: 20px;
 }
 
@@ -604,7 +604,7 @@ body {
     top: calc(var(--y) - var(--offsetTop));
     width: var(--size);
     height: var(--size);
-    background: radial-gradient(circle closest-side, pink, transparent);
+    background: radial-gradient(circle closest-side, rgb(238, 217, 220), transparent);
     transform: translate(-50%, -50%);
     transition: width 0.2s ease, height 0.2s ease;
   }

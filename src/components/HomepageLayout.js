@@ -76,7 +76,7 @@ class HomepageLayout extends React.Component {
                 <p style={{ fontSize: '1.33em', textAlign: 'center' }}>
                   Stay connected to the community You help build.
         </p>
-                <Button as='a' size='large' href='/signup'>Join Us</Button>
+                <Button as='a' size='large' href='/login'>Join Us</Button>
 
               </Container>
             </Segment>
@@ -89,7 +89,7 @@ class HomepageLayout extends React.Component {
                       <List link inverted>
                         <List.Item>5 Hanover Square</List.Item>
                         <List.Item>New York, NY 10004</List.Item>
-                        <List.Item as='a' href="mailto:thenetworkFS@gmail.com">Email</List.Item>
+                        <List.Item as='a' href='mailto:thenetworkFS@gmail.com'>Email</List.Item>
                       </List>
                     </Grid.Column>
                     <Grid.Column width={3}>
@@ -98,7 +98,7 @@ class HomepageLayout extends React.Component {
                         <List.Item as='a' href='https://www.fullstackacademy.com/' rel='noopener noreferrer' target='_blank'>Fullstack Academy</List.Item>
                         <List.Item as='a' href='https://www.fullstackacademy.com/faq' rel='noopener noreferrer' target='_blank'>FAQ</List.Item>
                         <List.Item as='a' href='https://www.fullstackacademy.com/careers' rel='noopener noreferrer' target='_blank'>Careers</List.Item>
-                        <List.Item as='a' href=''>Mentorship Program</List.Item>
+                        <List.Item as='a' href='mailto:thenetworkFS@gmail.com'>Mentorship Program</List.Item>
                       </List>
                     </Grid.Column>
                     <Grid.Column width={7}>

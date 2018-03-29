@@ -47,7 +47,7 @@ class Navbar extends Component {
                     <Icon name='user' />
                   </Menu.Item>
                   <a className="signout-button" onClick={this.props.removeUser}>
-                    <Icon name='sign out' />
+                    <Icon name='Sign Out' />
                   </a>
                 </Menu>
               </nav>
@@ -55,7 +55,7 @@ class Navbar extends Component {
               null
             )}
         </div>
-        <div className="navbar-desktop-container">        
+        <div className="navbar-desktop-container">
           {user && user.email ? (
             <Fragment>
               <Image className="logo-desktop" floated='left' size='mini' src={FULLSTACK_LOGO_URL} />
@@ -79,7 +79,7 @@ class Navbar extends Component {
                       >
                         My Profile
                       </Menu.Item>
-                      <a className="signout-button" onClick={this.props.removeUser}>sign out</a>                  
+                      <a className="signout-button" onClick={this.props.removeUser}>Sign Out</a>
                     </div>
                     {/* <a className="signout-button" onClick={this.props.removeUser}>sign out</a> */}
                   </div>
