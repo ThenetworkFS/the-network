@@ -47,7 +47,7 @@ class Navbar extends Component {
                     <Icon name='user' />
                   </Menu.Item>
                   <a className="signout-button" onClick={this.props.removeUser}>
-                    <Icon name='Sign Out' />
+                    <Icon name='sign out' />
                   </a>
                 </Menu>
               </nav>
@@ -81,7 +81,6 @@ class Navbar extends Component {
                       </Menu.Item>
                       <a className="signout-button" onClick={this.props.removeUser}>Sign Out</a>
                     </div>
-                    {/* <a className="signout-button" onClick={this.props.removeUser}>sign out</a> */}
                   </div>
                 </Menu>
               </nav>

@@ -390,8 +390,7 @@ body {
   flex-basis: 1
 }
 .all-posts-dropdown {
-  float: right;
-  width: 85px !important;
+  min-width: 171px !important;
   border-radius: 0px 4px 4px 0px !important;
 }
 
@@ -626,7 +625,6 @@ body {
   .navbar-desktop-container {
     display: none !important;
   }
-}
 
   .feed-menu-container,
   .user-profile-container {
@@ -665,6 +663,9 @@ body {
     padding-right: 13px;
   }
 
-
+  .all-posts-dropdown {
+    min-width: 158px !important;
+  }
+}
 
 
