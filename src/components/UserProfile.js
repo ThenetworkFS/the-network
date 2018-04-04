@@ -50,7 +50,7 @@ class UserProfile extends React.Component {
             null
           )}
           {user.cohort && user.cohortId ? (
-            <Header className="user-profile-cohort" as="h4">{user.cohort} {user.cohortId}</Header>
+            <Header className="user-profile-cohort" as="h4">{user.cohort.toUpperCase()} {user.cohortId}</Header>
           ) : (
             null
           )}
@@ -60,7 +60,7 @@ class UserProfile extends React.Component {
             null
           )}
           {user.city ? (
-            <Header className="user-profile-details" as="h4">Lives in {user.city}, {user.state} {user.country}</Header>
+            <Header className="user-profile-details" as="h4">Lives in {user.city}, {user.state.toUpperCase()} {user.country}</Header>
           ) : (
             null
           )}

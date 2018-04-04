@@ -56,7 +56,7 @@ class PostCard extends Component {
               )}
             </Card.Header>
             <Card.Meta>
-              {user.cohort}-{user.cohortId}
+              {user.cohort.toUpperCase()}-{user.cohortId}
             </Card.Meta>
             {post.link ? (
               <div>
