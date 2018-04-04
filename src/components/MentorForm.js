@@ -22,11 +22,5 @@ class MentorForm extends React.Component {
 
 const mapStateToProps = ({ user: { loggedInUser }, isFetching }) => ({ loggedInUser, isFetching })
 
-
-// const mapDispatchToProps = {
-//   startFetch,
-// }
-
-
 export default connect(mapStateToProps, null)(MentorForm)
 

@@ -48,7 +48,7 @@ class EditProfile extends React.Component {
     event.preventDefault()
     this.setState({ isProfileSaved: true })
     if (
-      this.state.isWorkAdressEdited && 
+      this.state.isWorkAdressEdited &&
       !this.state.isUserDetailsEdited
     ) {
       this.getGeoCodeByAddress()
@@ -63,7 +63,7 @@ class EditProfile extends React.Component {
         this.updateUser(userWorkInfo)
       })
     } else if (
-      this.state.isWorkAdressEdited && 
+      this.state.isWorkAdressEdited &&
       this.state.isUserDetailsEdited
     ) {
       this.getGeoCodeByAddress()
