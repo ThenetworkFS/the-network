@@ -126,14 +126,14 @@ class Home extends React.Component {
                     Post
                   </Button>
                 </div>
-              </Form> 
+              </Form>
             ) : (
               <PostSearch/>
             )}
             {category === 'meetup' ? <Link className="calendar-link" to="/calendar">Calendar</Link>: null }
             {category === "forum" ? (
               <div onClick={this.code} className="add-code-snippet-link">
-                <Icon 
+                <Icon
                   name="code"
                   className={code ? "code" : "disabled code icon"}
                   size="large"
