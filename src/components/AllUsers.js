@@ -18,7 +18,7 @@ class AllUsers extends Component {
       advancedSearchIsClicked: false,
       cohort: '',
       cohortId: '',
-      city: '',
+      state: '',
       company: '',
       industry: ''
     }
@@ -68,24 +68,24 @@ class AllUsers extends Component {
       if (params.has("cohortId")) {
         query = users.where("cohortId", "==", params.get("cohortId"))
       }
-      if (params.has("city")) {
-        query = users.where("cityLower", "==", params.get("city"))
+      if (params.has("state")) {
+        query = users.where("state", "==", params.get("state"))
       }
       if (params.has("company")) {
-        query = users.where("companyLower", "==", params.get("company"))
+        query = users.where("company", "==", params.get("company"))
       }
 
       query
-      .get()
-      .then(function (users) {
-        let filteredUsers = [];
-        users.forEach(user => {
-          filteredUsers.push(user.data());
+        .get()
+        .then(function (users) {
+          let filteredUsers = [];
+          users.forEach(user => {
+            filteredUsers.push(user.data());
+          })
+          currentComponent.setState({
+            allUsers: filteredUsers
+          })
         })
-        currentComponent.setState({
-          allUsers: filteredUsers
-        })
-      })
     }
   }
 
@@ -94,7 +94,7 @@ class AllUsers extends Component {
     if (
       this.state.cohort ||
       this.state.cohortId ||
-      this.state.city ||
+      this.state.state ||
       this.state.company ||
       this.state.industry
     ) {
@@ -106,8 +106,8 @@ class AllUsers extends Component {
       if (this.state.cohortId) {
         queryParams.push(`cohortId=${this.state.cohortId}`);
       }
-      if (this.state.city) {
-        queryParams.push(`city=${this.state.city}`);
+      if (this.state.state) {
+        queryParams.push(`state=${this.state.state}`);
       }
       if (this.state.company) {
         queryParams.push(`company=${this.state.company}`);
@@ -116,12 +116,23 @@ class AllUsers extends Component {
       searchResultsUrl += queryParamsString;
       history.push(searchResultsUrl);
     }
+    this.setState({
+      cohort: '',
+      cohortId: '',
+      state: '',
+      company: '',
+      industry: ''
+    })
   }
 
 
   onInputChange = (evt, param) => {
     evt.preventDefault()
+    if(param){
     this.setState({ [param.name]: param.value.toLowerCase() })
+    } else {
+      this.setState({[evt.target.name]: evt.target.value})
+    }
   }
 
 
@@ -151,12 +162,11 @@ class AllUsers extends Component {
 
 
   render() {
-    console.log('STATE IN ALL USERS: ',this.state)
     let filteredUsers;
     if (this.state.searchVal) {
       filteredUsers = this.filterUsersOnSearch()
     }
-    const allUsers= this.state.allUsers.filter(user => user.id !== this.props.loggedInUser.id)
+    const allUsers = this.state.allUsers.filter(user => user.id !== this.props.loggedInUser.id)
     const { advancedSearchIsClicked, searchVal } = this.state
     return (
       <div>
@@ -177,14 +187,14 @@ class AllUsers extends Component {
               {advancedSearchIsClicked ? "close" : "search options"}
             </a>
           </div>
-          {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>}
+          {advancedSearchIsClicked && <AdvancedSearch onInputChange={this.onInputChange} onSubmit={this.onSubmit} />}
         </div>
         <div className="all-users-results">
           {searchVal ? (
             this.renderSearchCards(filteredUsers)
           ) : (
-            this.renderSearchCards(allUsers)
-          )}
+              this.renderSearchCards(allUsers)
+            )}
         </div>
       </div>
     )

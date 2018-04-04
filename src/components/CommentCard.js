@@ -134,7 +134,7 @@ class CommentCard extends Component {
               )}
             </Card.Header>
             <Card.Meta>
-              {user.cohort}-{user.cohortId}
+              {user.cohort.toUpperCase()}-{user.cohortId}
             </Card.Meta>
             {comment.code ? (
               <Highlight className="javascript">
