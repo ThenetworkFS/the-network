@@ -8,7 +8,7 @@ import history from '../history'
 import { Link } from 'react-router-dom'
 
 
-class AllUsers extends Component {
+export class AllUsers extends Component {
   constructor(props) {
     super(props)
 
@@ -151,7 +151,8 @@ class AllUsers extends Component {
 
 
   render() {
-    console.log('STATE IN ALL USERS: ',this.state)
+    console.log('STATE', this.state)
+    console.log('ALL USERS PROPS', this.props)
     let filteredUsers;
     if (this.state.searchVal) {
       filteredUsers = this.filterUsersOnSearch()
@@ -186,6 +187,7 @@ class AllUsers extends Component {
             this.renderSearchCards(allUsers)
           )}
         </div>
+        <SearchCard key = {1} user = {{firstName: "Jane", id: 1}}/>
       </div>
     )
   }
