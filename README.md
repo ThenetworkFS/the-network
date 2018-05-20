@@ -25,7 +25,7 @@ We deployed the network using Google Firestore.
 
 ## Authors
 
-* Tara Whirley
-* Beth Barnes
-* John Rauh
-* Gabriel Messager
+* **Tara Whirley** - [whirleyt](https://github.com/whirleyt)
+* **Beth Barnes** - [bethbarnes](https://github.com/bethbarnes)
+* **Johnny Rauh** - [johnnyrauh](https://github.com/johnnyrauh)
+* **Gabriel Messager** - [gabrielmessager](https://github.com/gabrielmessager)
