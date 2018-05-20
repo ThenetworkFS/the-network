@@ -40,4 +40,4 @@ We deployed The Network using Google Firestore.
 
 ## :clap: Credits
 
-Huge thank you to [Gabriel Lebec](https://github.com/glebec) and [Alex Villarreal](https://github.com/alexv), who advised us along the way.
+Huge thank you to [Gabriel Lebec](https://github.com/glebec) and [Alex Villarreal](https://github.com/alexv) for all their advice along the way.
