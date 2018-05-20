@@ -9,10 +9,10 @@ We decided to build The Network to address concerns from students at Fullstack A
 ## Main Features
 
 * Users can sign up/sign in using Google OAuth.
-* Users can download the app as a Progressive Web App and access some content and functionality offline
+* Users can download the app as a Progressive Web App and access some content and functionality offline.
 * Users can view, post and search in a feed of job postings, news, forum and meetups. Links and code snippets are automatically formatted.
-* Users can view the profiles of other alumni, with links to their github and LinkedIn profiles.
-* Users can search and filter alumni by location, company, and Fullstack Academt cohort, and view alumni on a map.
+* Users can view the profiles of other alumni, with links to their GitHub and LinkedIn profiles.
+* Users can search and filter alumni by location, company, and Fullstack Academy cohort, and view alumni on a map.
 
 ## Built With
 
@@ -37,3 +37,7 @@ We deployed The Network using Google Firestore.
 * **Beth Barnes** - [bethbarnes](https://github.com/bethbarnes)
 * **Johnny Rauh** - [johnnyrauh](https://github.com/johnnyrauh)
 * **Gabriel Messager** - [gabrielmessager](https://github.com/gabrielmessager)
+
+## Credits
+
+Huge thank you to [Gabriel Lebec](https://github.com/glebec) and [Alex Villarreal](https://github.com/alexv), who advised us along the way.
