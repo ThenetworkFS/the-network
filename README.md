@@ -29,7 +29,7 @@ We decided to build The Network to address concerns from students at Fullstack A
 
 ## :rocket: Deployment
 
-We deployed The Network using Google Firestore.
+We deployed The Network using Google Firestore. https://thefsnetwork.com/
 
 ## :writing_hand: Authors
 
