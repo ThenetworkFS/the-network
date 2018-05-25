@@ -77,7 +77,7 @@ class Calendar extends React.Component {
     const title = `${event.target.title.value} | ${convertedTime}`
     const start = event.target.start.value
     const end = event.target.end.value
-    
+
     const userId = this.props.loggedInUser.id
     const id = uuidv1()
     const calendarEvent = {
@@ -130,6 +130,11 @@ class Calendar extends React.Component {
     this.setState({ events: newArray })
   }
 
+  guestAlert = (event) => {
+    event.preventDefault();
+    window.alert('Please create an account or sign in to create an event.')
+  }
+
   addIsClicked = () => {
     this.setState({ addIsClicked: true })
   }
@@ -172,7 +177,7 @@ class Calendar extends React.Component {
           {this.state.addIsClicked ? (
             <EventForm
               isEditing={false}
-              onSubmit={this.onAddEventSubmit}
+              onSubmit={this.props.loggedInUser.id !== "guest1" ? this.onAddEventSubmit : this.guestAlert}
             />
           ) : (
             <div>
