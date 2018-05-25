@@ -35,6 +35,11 @@ class CommentCard extends Component {
     }
   }
 
+  guestAlert = (event) => {
+    event.preventDefault();
+    window.alert('Please create an account or sign in to leave a comment.')
+  }
+
 
   handleCommentChange = (e, { value }) => this.setState({ newComment: value })
 
@@ -57,7 +62,7 @@ class CommentCard extends Component {
       .then((doc) => {
         db.collection("posts").doc(this.props.post.id).collection("comments").doc(doc.id).update({ id: doc.id })
         this.setState({
-          comments: 
+          comments:
             this.state.comments.concat([{
             userEmail: this.props.loggedInUser.email,
             firstName: this.props.loggedInUser.firstName,
@@ -176,7 +181,7 @@ class CommentCard extends Component {
               <div>
                 <Form
                   className="comment-card-textarea-container"
-                  onSubmit={this.onAddCommentClick}
+                  onSubmit={this.props.loggedInUser.id !== "guest1" ? this.onAddCommentClick : this.guestAlert}
                 >
                   <TextArea
                     required
@@ -194,7 +199,7 @@ class CommentCard extends Component {
                 </Button>
                 {category === "forum" ? (
                   <div onClick={this.code} className="add-code-snippet-link snippet-comment">
-                    <Icon 
+                    <Icon
                       name="code"
                       className={code ? "code" : "disabled code icon"}
                       size="large"

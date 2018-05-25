@@ -27,7 +27,6 @@ class Home extends React.Component {
   }
 
 
-
   parseLinkInContent = (content) => {
     const parseLinkExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/gi;
     const regex = new RegExp(parseLinkExpression);
@@ -41,6 +40,10 @@ class Home extends React.Component {
     return link;
   }
 
+  guestAlert = (event) => {
+    event.preventDefault();
+    window.alert('Please create an account or sign in to post.')
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -108,7 +111,8 @@ class Home extends React.Component {
               </Menu>
             </nav>
             {category !== 'postSearch' ? (
-              <Form className="feed-newpost-textarea" onSubmit={this.handleSubmit}>
+              <Form className="feed-newpost-textarea"
+              onSubmit={this.props.loggedInUser.id !== "guest1" ? this.handleSubmit : this.guestAlert}>
                 <TextArea
                   required
                   id="new-post-textarea"
@@ -118,7 +122,8 @@ class Home extends React.Component {
                 />
                 <div>
                   <Button
-                    disabled={this.state.isPostSubmitted}
+                    disabled={this.state.isPostSubmitted
+                    }
                     className="feed-newpost-submit-button"
                     floated="right"
                     color="blue"
@@ -126,14 +131,14 @@ class Home extends React.Component {
                     Post
                   </Button>
                 </div>
-              </Form> 
+              </Form>
             ) : (
               <PostSearch/>
             )}
             {category === 'meetup' ? <Link className="calendar-link" to="/calendar">Calendar</Link>: null }
             {category === "forum" ? (
               <div onClick={this.code} className="add-code-snippet-link">
-                <Icon 
+                <Icon
                   name="code"
                   className={code ? "code" : "disabled code icon"}
                   size="large"

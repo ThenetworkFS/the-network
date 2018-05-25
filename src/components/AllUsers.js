@@ -156,7 +156,7 @@ class AllUsers extends Component {
     if (this.state.searchVal) {
       filteredUsers = this.filterUsersOnSearch()
     }
-    const allUsers= this.state.allUsers.filter(user => user.id !== this.props.loggedInUser.id)
+    const allUsers= this.state.allUsers.filter(user => user.id !== this.props.loggedInUser.id && user.id !=='guest1')
     const { advancedSearchIsClicked, searchVal } = this.state
     return (
       <div>
