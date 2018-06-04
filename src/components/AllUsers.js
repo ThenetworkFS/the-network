@@ -90,6 +90,7 @@ export class AllUsers extends Component {
   }
 
   onSubmit = (event) => {
+    console.log('submit event', event)
     event.preventDefault()
     if (
       this.state.cohort ||
@@ -120,6 +121,7 @@ export class AllUsers extends Component {
 
 
   onInputChange = (evt, param) => {
+    console.log('EVT', evt, param)
     evt.preventDefault()
     this.setState({ [param.name]: param.value.toLowerCase() })
   }
@@ -151,8 +153,8 @@ export class AllUsers extends Component {
 
 
   render() {
-    console.log('STATE', this.state)
-    console.log('ALL USERS PROPS', this.props)
+    // console.log('STATE', this.state)
+    // console.log('ALL USERS PROPS', this.props)
     let filteredUsers;
     if (this.state.searchVal) {
       filteredUsers = this.filterUsersOnSearch()

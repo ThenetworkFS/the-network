@@ -19,6 +19,7 @@ describe('<AllUsers />', () => {
   beforeEach(() => {
     allUsers = shallow(
         <AllUsers
+          loggedInUser = {{firstName: "Jim", id: "3"}}
           state = {{
             allUsers: [{firstName: "Jane", id: "1"}, {firstName: "John", id: "2"}],
             searchVal: '',
@@ -41,9 +42,27 @@ describe('<AllUsers />', () => {
     expect(allUsers.containsMatchingElement(<SearchCard key = {1} user = {{firstName: "Jane", id: 1}}/>)).to.equal(true);
   });
 
-  // it ('initially has exmpty state ', () => {
-  //     expect(allUsers.state().exists()).to.be(true);
-  //   });
+  it ('initially has empty state ', () => {
+    console.log(allUsers.state().allUsers)
+      expect(allUsers.state()).to.equal({
+        allUsers: [{firstName: "Jane", id: "1"}, {firstName: "John", id: "2"}],
+        searchVal: '',
+        advancedSearchIsClicked: false,
+        cohort: '',
+        cohortId: '',
+        city: '',
+        company: '',
+        industry: ''
+      });
+    });
+
+    // put this in all users
+    //can I import the handle change?
+    it('updates the state onChange', () => {
+      console.log('allUsers', allUsers)
+      allUsers.onInputChange.simulate('change', {value: '1801'})
+      // expect(allUsers.state().cohort).to.equal('1801')
+    })
 
 
 });

@@ -15,6 +15,7 @@ describe('<AdvancedSearch />', () => {
   let changeSpy = spy();
   let submitSpy = spy();
 
+
   beforeEach(() => {
     advancedSearch = shallow(
         <AdvancedSearch
@@ -36,6 +37,11 @@ describe('<AdvancedSearch />', () => {
     advancedSearch.find(".cohort").simulate('change');
     expect(changeSpy.called).to.be.true;
   });
+
+  it('calls onChange with the correct arguments', () => {
+    advancedSearch.find(".cohort-search-container").find(".cohort").simulate('change', {value: '1801'})
+    expect(changeSpy.calledWith({value: '1801'})).to.be.true
+  })
 
   it('calls onSubmit function on submit', () => {
     advancedSearch.find("Form").simulate('submit');
