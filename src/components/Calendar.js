@@ -11,7 +11,7 @@ const uuidv1 = require('uuid/v1')
 BigCalendar.momentLocalizer(moment);
 
 
-class Calendar extends React.Component {
+export class Calendar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -77,7 +77,7 @@ class Calendar extends React.Component {
     const title = `${event.target.title.value} | ${convertedTime}`
     const start = event.target.start.value
     const end = event.target.end.value
-    
+
     const userId = this.props.loggedInUser.id
     const id = uuidv1()
     const calendarEvent = {
