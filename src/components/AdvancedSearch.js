@@ -52,5 +52,4 @@ const AdvancedSearch = (props) => {
   )
 }
 
-
 export default AdvancedSearch

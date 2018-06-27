@@ -16,7 +16,7 @@ const uuidv1 = require('uuid/v1')
 
 
 class Signup extends React.Component {
- 
+
 
   signInAnonymously = (event) => {
     event.preventDefault()

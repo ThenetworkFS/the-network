@@ -11,7 +11,7 @@ const uuidv1 = require('uuid/v1')
 BigCalendar.momentLocalizer(moment);
 
 
-class Calendar extends React.Component {
+export class Calendar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

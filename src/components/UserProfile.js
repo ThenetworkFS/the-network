@@ -6,10 +6,7 @@ import { Header, Card, Icon } from 'semantic-ui-react'
 import { ANONYMOUS_USER_IMAGE_URL } from '../constants'
 import { ProjectCard } from './'
 
-
-
-class UserProfile extends React.Component {
-
+export class UserProfile extends React.Component {
 
   renderProjects = (projects) => {
     return projects.map(project => {
@@ -24,7 +21,6 @@ class UserProfile extends React.Component {
       )
     })
   }
-
 
   render() {
     const user = this.props.selectedUser;
@@ -110,9 +106,7 @@ class UserProfile extends React.Component {
   }
 }
 
-
 const mapStateToProps = ({ user: { loggedInUser, selectedUser } }) => ({ loggedInUser, selectedUser })
-
 
 const mapDispatchToProps = {
   getUser

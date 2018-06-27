@@ -8,7 +8,7 @@ import history from '../history'
 import { Link } from 'react-router-dom'
 
 
-class AllUsers extends Component {
+export class AllUsers extends Component {
   constructor(props) {
     super(props)
 
@@ -90,6 +90,7 @@ class AllUsers extends Component {
   }
 
   onSubmit = (event) => {
+    console.log('submit event', event)
     event.preventDefault()
     if (
       this.state.cohort ||
@@ -120,6 +121,7 @@ class AllUsers extends Component {
 
 
   onInputChange = (evt, param) => {
+    console.log('EVT', evt, param)
     evt.preventDefault()
     this.setState({ [param.name]: param.value.toLowerCase() })
   }
@@ -151,7 +153,8 @@ class AllUsers extends Component {
 
 
   render() {
-    console.log('STATE IN ALL USERS: ',this.state)
+    // console.log('STATE', this.state)
+    // console.log('ALL USERS PROPS', this.props)
     let filteredUsers;
     if (this.state.searchVal) {
       filteredUsers = this.filterUsersOnSearch()
@@ -186,6 +189,7 @@ class AllUsers extends Component {
             this.renderSearchCards(allUsers)
           )}
         </div>
+        <SearchCard key = {1} user = {{firstName: "Jane", id: 1}}/>
       </div>
     )
   }
