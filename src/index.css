@@ -174,7 +174,7 @@ body {
 
 .postcard-container .postcard {
   width: 100% !important;
-  /* max-width: 370px !important; */
+  max-width: 412px !important;
 }
 
 .postcard-anonymous {
@@ -666,6 +666,14 @@ body {
   .all-posts-dropdown {
     min-width: 158px !important;
   }
+}
+
+.not-fullstack {
+  font-size: 1.6rem !important;
+}
+
+.not-fs-btn {
+  font-size: 1.2rem !important;
 }
 
 
