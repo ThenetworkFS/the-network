@@ -44,40 +44,40 @@ describe('<UserProfile />', () => {
       expect(userProfile.exists()).to.equal(true);
     });
 
-  // it('renders the users image if exists', () =>{
-  //   expect(userProfile.find(".user-profile-image").exists()).to.equal(true);
+  it('renders the users image if exists', () =>{
+    expect(userProfile.find(".user-profile-image").exists()).to.equal(true);
 
-  //   expect(userProfile.containsMatchingElement(<img
-  //     alt="user"
-  //     src="https://firebasestorage.googleapis.com/v0/b/thenetwork-8d967.appspot.com/o/userImages%2Fkwood%40yahoo.com%2Fconnor.jpeg?alt=media&token=e802b67c-fea2-445c-9e42-d49f9c6e04ff"
-  //     className="user-profile-image"
-  //   />)).to.equal(true);
-  // });
+    expect(userProfile.containsMatchingElement(<img
+      alt="user"
+      src="https://firebasestorage.googleapis.com/v0/b/thenetwork-8d967.appspot.com/o/userImages%2Fkwood%40yahoo.com%2Fconnor.jpeg?alt=media&token=e802b67c-fea2-445c-9e42-d49f9c6e04ff"
+      className="user-profile-image"
+    />)).to.equal(true);
+  });
 
-  // it('renders the users first and last name', () =>{
-  //   expect(userProfile.containsAllMatchingElements([
-  //     <Header>Beth Barnes</Header>,
-  //   ])).to.equal(true)
-  // });
+  it('renders the users first and last name', () =>{
+    expect(userProfile.containsAllMatchingElements([
+      <Header>Beth Barnes</Header>,
+    ])).to.equal(true)
+  });
 
-  // it('renders the users email if exists', () =>{
-  //   expect(userProfile.find(".user-profile-header")
-  //   .containsAllMatchingElements([
-  //     <a>bethcbarnes@outlook.com</a>,
-  //   ])).to.equal(true);
-  // });
+  it('renders the users email if exists', () =>{
+    expect(userProfile.find(".user-profile-header")
+    .containsAllMatchingElements([
+      <a>bethcbarnes@outlook.com</a>,
+    ])).to.equal(true);
+  });
 
-  // it('renders link to edit profile if logged in user is on their own page', () =>{
+  it('renders link to edit profile if logged in user is on their own page', () =>{
 
-  //   expect(userProfile.find(".user-profile-edit-link")
-  //   .exists()).to.equal(true);
+    expect(userProfile.find(".user-profile-edit-link")
+    .exists()).to.equal(true);
 
-  //   expect(userProfile.containsMatchingElement(<Link
-  //     className="user-profile-edit-link"
-  //     to="/profile/12345/edit"
-  //     >edit profile
-  //   </Link>)).to.equal(true);
+    expect(userProfile.containsMatchingElement(<Link
+      className="user-profile-edit-link"
+      to="/profile/12345/edit"
+      >edit profile
+    </Link>)).to.equal(true);
 
-  // });
+  });
 
 });

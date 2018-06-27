@@ -1,11 +1,7 @@
 import React from 'react';
-import store from '../store';
 import { expect } from 'chai';
 import enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { Header } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import { Input } from 'semantic-ui-react';
 import { SearchCard } from './'
 
 import { AllUsers } from './AllUsers';
@@ -21,7 +17,7 @@ describe('<AllUsers />', () => {
         <AllUsers
           loggedInUser = {{firstName: "Jim", id: "3"}}
           state = {{
-            allUsers: [{firstName: "Jane", id: "1"}, {firstName: "John", id: "2"}],
+            allUsers: [],
             searchVal: '',
             advancedSearchIsClicked: false,
             cohort: '',
@@ -43,9 +39,8 @@ describe('<AllUsers />', () => {
   });
 
   it ('initially has empty state ', () => {
-    console.log(allUsers.state().allUsers)
-      expect(allUsers.state()).to.equal({
-        allUsers: [{firstName: "Jane", id: "1"}, {firstName: "John", id: "2"}],
+      expect(allUsers.state()).to.eql({
+        allUsers: [],
         searchVal: '',
         advancedSearchIsClicked: false,
         cohort: '',
@@ -53,16 +48,8 @@ describe('<AllUsers />', () => {
         city: '',
         company: '',
         industry: ''
-      });
-    });
-
-    // put this in all users
-    //can I import the handle change?
-    it('updates the state onChange', () => {
-      console.log('allUsers', allUsers)
-      allUsers.onInputChange.simulate('change', {value: '1801'})
-      // expect(allUsers.state().cohort).to.equal('1801')
-    })
+      })
+  })
 
 
 });
