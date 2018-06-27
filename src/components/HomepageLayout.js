@@ -50,26 +50,6 @@ class HomepageLayout extends React.Component {
                 </Grid.Row>
               </Grid>
             </Segment>
-            <Segment style={{ padding: '0em' }} vertical>
-              <Grid celled='internally' columns='equal' stackable>
-                <Grid.Row textAlign='center'>
-                  <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-                    <Header as='h3' style={{ fontSize: '2em' }}>"The Network was a huge help during my job search. They helped me connect to my current manager who is a Fullstack grad!"</Header>
-                    <p style={{ fontSize: '1.33em' }}>
-                      <Image avatar src='https://react.semantic-ui.com/assets/images/avatar/large/steve.jpg' />
-                      <b>Steve</b> Software Engineer at Google
-            </p>
-                  </Grid.Column>
-                  <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-                    <Header as='h3' style={{ fontSize: '2em' }}>"I am not sure what I would have done without The Network. They made connecting to Fullstack alumni fun and easy."</Header>
-                    <p style={{ fontSize: '1.33em' }}>
-                      <Image avatar src='https://react.semantic-ui.com/assets/images/avatar/large/jenny.jpg' />
-                      <b>Jenny</b> Systems Architect at Amazon
-            </p>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Segment>
             <Segment style={{ padding: '8em 0em', textAlign: 'center' }} vertical>
               <Container text>
                 <Header as='h3' style={{ fontSize: '2em', textAlign: 'center' }}>We Are More Than a Coding School, We Are a Community.</Header>

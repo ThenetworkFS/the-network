@@ -24,6 +24,21 @@ class Login extends React.Component {
     }
   }
 
+  loginAsGuest = (event) => {
+    event.preventDefault()
+    this.props.startFetch()
+    console.log('in the login func"')
+    const email = "guest@guest.com"
+    const password = "guest123"
+    fire.auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(err => {
+        this.setState({
+          invalidLogin: true
+        })
+        console.error(err)
+      })
+  }
 
   signInAnonymously = (event) => {
     event.preventDefault()
@@ -62,7 +77,6 @@ class Login extends React.Component {
 
 
   render() {
-    console.log('STATE LOGIN: ', this.state)
     return (
       <div className="login-form-container">
         {!this.props.isFetching ? (
@@ -110,6 +124,9 @@ class Login extends React.Component {
                 <Button className="google-login-button" color="blue" size="small" onClick={this.googleLogin}>
                   <span>Login with</span>
                   <Icon name="google" className="large google icon google-login-icon" />
+                </Button>
+                <h4 className="not-fs">Not a Fullstack Grad?</h4>
+                <Button className="not-fs-btn" color="blue" size="small" onClick={this.loginAsGuest}> Continue as Guest
                 </Button>
               </Grid.Column>
             </Grid>

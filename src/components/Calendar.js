@@ -130,6 +130,11 @@ export class Calendar extends React.Component {
     this.setState({ events: newArray })
   }
 
+  guestAlert = (event) => {
+    event.preventDefault();
+    window.alert('Please create an account or sign in to create an event.')
+  }
+
   addIsClicked = () => {
     this.setState({ addIsClicked: true })
   }
@@ -172,7 +177,7 @@ export class Calendar extends React.Component {
           {this.state.addIsClicked ? (
             <EventForm
               isEditing={false}
-              onSubmit={this.onAddEventSubmit}
+              onSubmit={this.props.loggedInUser.id !== "guest1" ? this.onAddEventSubmit : this.guestAlert}
             />
           ) : (
             <div>

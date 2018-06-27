@@ -19,12 +19,6 @@ const ProjectForm = (props) => {
             name="description"
             defaultValue={description ? description : ""}
           />
-          {/* <label className="label">Link</label>
-          <Input
-            type="text"
-            name="link"
-            defaultValue={link ? link : ""}
-          /> */}
           <Button
             className="user-profile-save-button"
             color="blue"

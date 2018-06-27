@@ -26,6 +26,10 @@ class Projects extends React.Component {
     }
   }
 
+  guestAlert = (event) => {
+    event.preventDefault()
+    window.alert('Please sign in or create an account to add or edit your projects')
+  }
   onEditProjectSubmit = (event, id) => {
     event.preventDefault()
     this.setState({
@@ -105,7 +109,7 @@ class Projects extends React.Component {
               isEditing={true}
               title={project.title}
               description={project.description}
-              onSubmit={(evt) => this.onEditProjectSubmit(evt, project.id)}
+              onSubmit={this.props.loggedInUser.id !== "guest1" ? (evt) => this.onEditProjectSubmit(evt, project.id) : this.guestAlert}
             />
           </div>
         )
@@ -116,8 +120,8 @@ class Projects extends React.Component {
               isEditing={true}
               title={project.title}
               description={project.description}
-              onEditClick={(evt) => this.editIsClicked(evt, project.id)}
-              onDeleteClick={(evt) => this.onDeleteClick(evt, project.id)}
+              onEditClick={this.props.loggedInUser.id !== "guest1" ? (evt) => this.editIsClicked(evt, project.id) : this.guestAlert}
+              onDeleteClick={this.props.loggedInUser.id !== "guest1"? (evt) => this.onDeleteClick(evt, project.id) : this.guestAlert}
             />
           </div>
         )
@@ -133,7 +137,7 @@ class Projects extends React.Component {
         {this.state.addIsClicked ? (
           <ProjectForm
             isEditing={false}
-            onSubmit={this.onAddProjectSubmit}
+            onSubmit={this.props.loggedInUser.id !== "guest1" ? this.onAddProjectSubmit : this.guestAlert}
           />
         ) : (
           <a className="add-project-link" onClick={this.addIsClicked}>

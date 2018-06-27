@@ -48,7 +48,7 @@ class EditProfile extends React.Component {
     event.preventDefault()
     this.setState({ isProfileSaved: true })
     if (
-      this.state.isWorkAdressEdited && 
+      this.state.isWorkAdressEdited &&
       !this.state.isUserDetailsEdited
     ) {
       this.getGeoCodeByAddress()
@@ -63,7 +63,7 @@ class EditProfile extends React.Component {
         this.updateUser(userWorkInfo)
       })
     } else if (
-      this.state.isWorkAdressEdited && 
+      this.state.isWorkAdressEdited &&
       this.state.isUserDetailsEdited
     ) {
       this.getGeoCodeByAddress()
@@ -89,6 +89,10 @@ class EditProfile extends React.Component {
       .then(results => getLatLng(results[0]))
   }
 
+  guestAlert = (event) => {
+    event.preventDefault()
+    window.alert('Please sign in or create and account to update your profile.')
+  }
 
   updateUser = (userAttributes) => {
     db
@@ -159,7 +163,7 @@ class EditProfile extends React.Component {
             className={!user.image ? "user-profile-image anonymous" : "user-profile-image"}
           />
           <ImagePicker />
-          <Form onSubmit={this.handleProfileSubmit}>
+          <Form onSubmit={this.props.loggedInUser.id !== "guest1" ? this.handleProfileSubmit : this.guestAlert}>
             <div className="user-profile-username edit-profile">
               <Form.Field>
                 <label className="label">First name</label>
